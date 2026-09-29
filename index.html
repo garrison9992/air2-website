@@ -6,10 +6,19 @@
     <title>AIR² — Anna Intelligence Recorder & Reminder</title>
     <style>
         :root {
-            --bg-color: #ffffff;
-            --text-color: #111111;
+            --bg-hero: #ffffff;
+            --bg-record: #f8f8f9;
+            --bg-remind: #ffffff;
+            --bg-follow: #f2f3f5;
+            --bg-footer: #0a0a0a;
+            
+            --text-primary: #111111;
             --text-muted: #666666;
-            --border-color: #eaeaea;
+            --text-inverse: #ffffff;
+            --text-inverse-muted: #999999;
+            
+            --border-light: rgba(0, 0, 0, 0.08);
+            --border-dark: rgba(255, 255, 255, 0.12);
         }
 
         * {
@@ -18,261 +27,560 @@
             padding: 0;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: var(--bg-hero);
+            color: var(--text-primary);
             font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
         }
 
-        .page-wrapper {
+        /* --- DESKTOP VIEW (Vertical Flow) --- */
+        .desktop-container {
+            display: block;
             max-width: 1140px;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 32px;
         }
 
-        /* Header / Nav */
-        header {
-            padding: 40px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .desktop-section {
+            padding: 140px 0;
+            border-bottom: 1px solid var(--border-light);
         }
 
-        .logo {
-            font-size: 1.1rem;
+        .desktop-section:last-of-type {
+            border-bottom: none;
+            padding-bottom: 100px;
+        }
+
+        .desktop-hero {
+            padding-top: 80px;
+            padding-bottom: 140px;
+        }
+
+        .brand-logo {
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
             font-weight: 600;
-            letter-spacing: -0.01em;
-            color: var(--text-color);
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
             text-decoration: none;
+            display: inline-block;
+            margin-bottom: 16px;
         }
 
-        .nav-status {
-            font-size: 0.85rem;
+        .brand-fullname {
+            font-size: 1rem;
             color: var(--text-muted);
-            letter-spacing: 0.02em;
+            letter-spacing: -0.01em;
+            margin-bottom: 60px;
+            font-weight: 400;
         }
 
-        /* Hero Section */
-        .hero {
-            padding: 120px 0 160px 0;
-            max-width: 840px;
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4.5rem);
+        .desktop-hero h1 {
+            font-size: clamp(3rem, 6vw, 5.5rem);
             font-weight: 400;
             letter-spacing: -0.03em;
-            line-height: 1.1;
+            line-height: 1.08;
             margin-bottom: 32px;
+            max-width: 900px;
         }
 
-        .hero-subtitle {
-            font-size: 1.15rem;
+        .desktop-hero p {
+            font-size: 1.25rem;
             color: var(--text-muted);
-            max-width: 600px;
-            font-weight: 400;
+            max-width: 620px;
             line-height: 1.5;
         }
 
-        /* Section Common */
-        section {
-            padding: 100px 0;
-            border-top: 1px solid var(--border-color);
-        }
-
-        h2 {
-            font-size: 1.75rem;
-            font-weight: 400;
-            letter-spacing: -0.02em;
+        .section-tag {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
             margin-bottom: 24px;
+            font-variant-numeric: tabular-nums;
+            display: block;
         }
 
-        .section-desc {
-            font-size: 1.05rem;
+        .desktop-section h2 {
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            font-weight: 400;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+            line-height: 1.15;
+            max-width: 800px;
+        }
+
+        .desktop-section p {
+            font-size: 1.15rem;
             color: var(--text-muted);
             max-width: 640px;
-            margin-bottom: 64px;
             line-height: 1.5;
         }
 
-        /* What is AIR2 Cards */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-        }
-
-        .feature-card {
-            padding: 32px 0;
-        }
-
-        .feature-number {
+        .status-meta-desktop {
+            margin-top: 24px;
             font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
             color: var(--text-muted);
-            margin-bottom: 16px;
-            font-variant-numeric: tabular-nums;
         }
 
-        .feature-card h3 {
-            font-size: 1.15rem;
+        .contact-box-desktop {
+            margin-top: 40px;
+        }
+
+        .contact-box-desktop h3 {
+            font-size: 0.95rem;
             font-weight: 500;
             margin-bottom: 12px;
             letter-spacing: -0.01em;
         }
 
-        .feature-card p {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            line-height: 1.5;
-        }
-
-        /* Current Status Section */
-        .status-box {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 12px;
-        }
-
-        .status-meta {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            letter-spacing: 0.02em;
-            text-transform: uppercase;
-        }
-
-        /* Contact Section */
-        .contact-section {
-            padding: 80px 0 40px 0;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .contact-section h3 {
-            font-size: 1rem;
-            font-weight: 500;
-            margin-bottom: 16px;
-            letter-spacing: -0.01em;
-        }
-
-        .contact-section a {
-            color: var(--text-color);
+        .contact-box-desktop a {
+            color: var(--text-primary);
             text-decoration: underline;
-            text-underline-offset: 3px;
-            font-size: 0.95rem;
+            text-underline-offset: 4px;
+            font-size: 1.1rem;
         }
 
-        .contact-section a:hover {
+        .contact-box-desktop a:hover {
             color: var(--text-muted);
         }
 
-        /* Footer */
-        footer {
-            padding: 40px 0 80px 0;
+        .desktop-footer {
+            padding: 60px 0 100px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 0.85rem;
             color: var(--text-muted);
+            border-top: 1px solid var(--border-light);
+            margin-top: 40px;
         }
 
-        /* Responsive */
+        /* --- MOBILE CONTAINER (Hidden on Desktop) --- */
+        .mobile-container {
+            display: none;
+        }
+
+        /* --- RESPONSIVE LOGIC: MOBILE HORIZONTAL SNAP --- */
         @media (max-width: 768px) {
-            .hero {
-                padding: 80px 0 100px 0;
+            .desktop-container {
+                display: none !important;
             }
 
-            section {
-                padding: 70px 0;
+            .mobile-container {
+                display: flex !important;
+                width: 100vw;
+                height: 100vh;
+                overflow-x: scroll;
+                overflow-y: hidden;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
             }
 
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 24px;
+            .mobile-container::-webkit-scrollbar {
+                display: none;
             }
 
-            footer {
+            .mobile-slide {
+                flex: 0 0 100vw;
+                width: 100vw;
+                height: 100vh;
+                scroll-snap-align: start;
+                scroll-snap-stop: always;
+                display: flex;
                 flex-direction: column;
+                justify-content: space-between;
+                padding: 48px 32px 56px 32px;
+                position: relative;
+            }
+
+            .slide-hero {
+                background-color: var(--bg-hero);
+                color: var(--text-primary);
+            }
+
+            .slide-record {
+                background-color: var(--bg-record);
+                color: var(--text-primary);
+            }
+
+            .slide-remind {
+                background-color: var(--bg-remind);
+                color: var(--text-primary);
+            }
+
+            .slide-follow {
+                background-color: var(--bg-follow);
+                color: var(--text-primary);
+            }
+
+            .slide-development {
+                background-color: var(--bg-footer);
+                color: var(--text-inverse);
+            }
+
+            .slide-top {
+                display: flex;
+                justify-content: space-between;
                 align-items: flex-start;
-                gap: 16px;
+            }
+
+            .slide-brand-sm {
+                font-size: 1.25rem;
+                font-weight: 600;
+                letter-spacing: -0.02em;
+            }
+
+            .slide-body {
+                margin: auto 0;
+                max-width: 340px;
+            }
+
+            .slide-hero-brand {
+                font-size: 2rem;
+                font-weight: 600;
+                letter-spacing: -0.02em;
+                margin-bottom: 8px;
+            }
+
+            .slide-hero-fullname {
+                font-size: 0.9rem;
+                opacity: 0.6;
+                margin-bottom: 40px;
+                font-weight: 400;
+            }
+
+            .slide-hero h1 {
+                font-size: 2.35rem;
+                font-weight: 400;
+                letter-spacing: -0.03em;
+                line-height: 1.12;
+                margin-bottom: 24px;
+            }
+
+            .slide-hero p {
+                font-size: 1.05rem;
+                opacity: 0.7;
+                line-height: 1.5;
+            }
+
+            .slide-content h2 {
+                font-size: 2.5rem;
+                font-weight: 400;
+                letter-spacing: -0.03em;
+                margin-bottom: 16px;
+                line-height: 1.1;
+            }
+
+            .slide-content p {
+                font-size: 1.1rem;
+                opacity: 0.7;
+                line-height: 1.5;
+            }
+
+            .slide-development h2 {
+                color: var(--text-inverse);
+            }
+
+            .slide-development p {
+                color: var(--text-inverse-muted);
+            }
+
+            .slide-development .slide-brand-sm {
+                color: var(--text-inverse);
+            }
+
+            .status-meta-mobile {
+                font-size: 0.75rem;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                opacity: 0.5;
+                margin-top: 16px;
+            }
+
+            .contact-mobile {
+                margin-top: 32px;
+            }
+
+            .contact-mobile h4 {
+                font-size: 0.85rem;
+                font-weight: 500;
+                margin-bottom: 8px;
+                opacity: 0.6;
+            }
+
+            .contact-mobile a {
+                color: var(--text-inverse);
+                text-decoration: underline;
+                text-underline-offset: 3px;
+                font-size: 1rem;
+            }
+
+            .slide-footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                padding-top: 16px;
+            }
+
+            /* Pagination Dots Styling */
+            .pagination-dots {
+                display: flex;
+                gap: 8px;
+                align-items: center;
+            }
+
+            .dot-indicator {
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background-color: var(--text-primary);
+                opacity: 0.2;
+                transition: opacity 0.3s ease, transform 0.3s ease;
+            }
+
+            .dot-indicator.active {
+                opacity: 0.85;
+                transform: scale(1.2);
+            }
+
+            /* Last slide (dark background) dot theme */
+            .mobile-slide.is-dark .dot-indicator {
+                background-color: #ffffff;
+                opacity: 0.25;
+            }
+
+            .mobile-slide.is-dark .dot-indicator.active {
+                opacity: 0.95;
+            }
+
+            .slide-footer-info {
+                font-size: 0.75rem;
+                opacity: 0.5;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="page-wrapper">
-        <!-- Header -->
-        <header>
-            <a href="#" class="logo">AIR²</a>
-            <div class="nav-status">Prototype · 2026</div>
-        </header>
-
+    <!-- ================= DESKTOP VIEW ================= -->
+    <div class="desktop-container">
+        
         <!-- Hero Section -->
-        <main>
-            <section class="hero" style="border-top: none; padding-top: 40px;">
+        <section class="desktop-section desktop-hero">
+            <div class="brand-logo">AIR²</div>
+            <div class="brand-fullname">Anna Intelligence Recorder & Reminder</div>
+            <h1>
+                Record what matters.<br>
+                Be reminded when it matters.
+            </h1>
+            <p>
+                A voice-first product designed to help people record what matters and be reminded when it matters.
+            </p>
+        </section>
+
+        <!-- Record Section -->
+        <section class="desktop-section">
+            <span class="section-tag">01 — Record</span>
+            <h2>RECORD</h2>
+            <p>Tell Anna naturally what you want to remember.</p>
+        </section>
+
+        <!-- Remind Section -->
+        <section class="desktop-section">
+            <span class="section-tag">02 — Remind</span>
+            <h2>REMIND</h2>
+            <p>When the right time comes, Anna reminds you.</p>
+        </section>
+
+        <!-- Follow up Section -->
+        <section class="desktop-section">
+            <span class="section-tag">03 — Follow up</span>
+            <h2>FOLLOW UP</h2>
+            <p>Confirm it, postpone it, or continue when needed.</p>
+        </section>
+
+        <!-- Development / Contact Section -->
+        <section class="desktop-section" style="background-color: var(--bg-footer); color: var(--text-inverse); margin: 0 -32px; padding-left: 32px; padding-right: 32px; border-bottom: none;">
+            <div style="max-width: 1076px; margin: 0 auto;">
+                <span class="section-tag" style="color: var(--text-inverse-muted);">04 — Status & Contact</span>
+                <h2 style="color: var(--text-inverse);">AIR² is in development.</h2>
+                <p style="color: var(--text-inverse-muted); margin-bottom: 24px;">The first prototype is currently under testing.</p>
+                <div class="status-meta-desktop" style="color: var(--text-inverse-muted);">Prototype · 2026</div>
+
+                <div class="contact-box-desktop">
+                    <h3 style="color: var(--text-inverse-muted);">Contact</h3>
+                    <a href="mailto:cn9992@foxmail.com" style="color: var(--text-inverse);">cn9992@foxmail.com</a>
+                </div>
+
+                <div class="desktop-footer" style="border-top: 1px solid var(--border-dark); margin-top: 80px;">
+                    <div style="color: var(--text-inverse-muted);">AIR² — Anna Intelligence Recorder & Reminder</div>
+                    <div style="color: var(--text-inverse-muted);">© 2026</div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+
+    <!-- ================= MOBILE HORIZONTAL SNAP VIEW ================= -->
+    <div class="mobile-container" id="mobileContainer">
+        
+        <!-- Screen 01 — Hero -->
+        <div class="mobile-slide slide-hero">
+            <div class="slide-top">
+                <div class="slide-brand-sm">AIR²</div>
+            </div>
+            <div class="slide-body">
+                <div class="slide-hero-brand">AIR²</div>
+                <div class="slide-hero-fullname">Anna Intelligence Recorder & Reminder</div>
                 <h1>
                     Record what matters.<br>
                     Be reminded when it matters.
                 </h1>
-                <p class="hero-subtitle">
+                <p>
                     A voice-first product designed to help people record what matters and be reminded when it matters.
                 </p>
-            </section>
-
-            <!-- What is AIR2? -->
-            <section>
-                <h2>What is AIR²?</h2>
-                <p class="section-desc">
-                    Tell Anna what you want to remember in your own words.<br>
-                    AIR² turns that moment into a record — and, when needed, a reminder.
-                </p>
-
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-number">01</div>
-                        <h3>Record</h3>
-                        <p>Tell Anna naturally what you want to remember.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-number">02</div>
-                        <h3>Remind</h3>
-                        <p>When the right time comes, Anna reminds you.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-number">03</div>
-                        <h3>Follow up</h3>
-                        <p>Confirm it, postpone it, or continue when needed.</p>
-                    </div>
+            </div>
+            <div class="slide-footer">
+                <div class="pagination-dots">
+                    <span class="dot-indicator active"></span>
+                    <span class="dot-indicator"></span>
+                    <span class="dot-indicator"></span>
+                    <span class="dot-indicator"></span>
+                    <span class="dot-indicator"></span>
                 </div>
-            </section>
+                <div class="slide-footer-info">AIR²</div>
+            </div>
+        </div>
 
-            <!-- Current Status -->
-            <section>
+        <!-- Screen 02 — Record -->
+        <div class="mobile-slide slide-record">
+            <div class="slide-top">
+                <div class="slide-brand-sm">AIR²</div>
+            </div>
+            <div class="slide-body slide-content">
+                <h2>RECORD</h2>
+                <p>Tell Anna naturally what you want to remember.</p>
+            </div>
+            <div class="slide-footer">
+                <div class="pagination-dots">
+                    <span class="dot-indicator active"></span>
+                    <span class="dot-indicator"></span>
+                    <span class="dot-indicator"></span>
+                    <span class="dot-indicator"></span>
+                    <span class="dot-indicator"></span>
+                </div>
+                <div class="slide-footer-info">AIR²</div>
+            </div>
+        </div>
+
+        <!-- Screen 03 — Remind -->
+        <div class="mobile-slide slide-remind">
+            <div class="slide-top">
+                <div class="slide-brand-sm">AIR²</div>
+            </div>
+            <div class="slide-body slide-content">
+                <h2>REMIND</h2>
+                <p>When the right time comes, Anna reminds you.</p>
+            </div>
+            <div class="slide-footer">
+                <div class="pagination-dots">
+                    <span class="dot-indicator active"></span>
+                    <span class="dot-indicator"></span>
+                    <span class="dot-indicator"></span>
+                    <span class="dot-indicator"></span>
+                    <span class="dot-indicator"></span>
+                </div>
+                <div class="slide-footer-info">AIR²</div>
+            </div>
+        </div>
+
+        <!-- Screen 04 — Follow up -->
+        <div class="mobile-slide slide-follow">
+            <div class="slide-top">
+                <div class="slide-brand-sm">AIR²</div>
+            </div>
+            <div class="slide-body slide-content">
+                <h2>FOLLOW UP</h2>
+                <p>Confirm it, postpone it, or continue when needed.</p>
+            </div>
+            <div class="slide-footer">
+                <div class="pagination-dots">
+                    <span class="dot-indicator active"></span>
+                    <span class="dot-indicator"></span>
+                    <span class="dot-indicator"></span>
+                    <span class="dot-indicator"></span>
+                    <span class="dot-indicator"></span>
+                </div>
+                <div class="slide-footer-info">AIR²</div>
+            </div>
+        </div>
+
+        <!-- Screen 05 — Development / Contact -->
+        <div class="mobile-slide slide-development is-dark">
+            <div class="slide-top">
+                <div class="slide-brand-sm">AIR²</div>
+            </div>
+            <div class="slide-body slide-content">
                 <h2>AIR² is in development.</h2>
-                <div class="status-box">
-                    <p class="section-desc" style="margin-bottom: 0;">
-                        The first prototype is currently under testing.
-                    </p>
-                    <div class="status-meta" style="margin-top: 16px;">Prototype · 2026</div>
+                <p>The first prototype is currently under testing.</p>
+                <div class="status-meta-mobile">Prototype · 2026</div>
+
+                <div class="contact-mobile">
+                    <h4>Contact</h4>
+                    <a href="mailto:cn9992@foxmail.com">cn9992@foxmail.com</a>
                 </div>
-            </section>
+            </div>
+            <div class="slide-footer">
+                <div class="pagination-dots">
+                    <span class="dot-indicator active"></span>
+                    <span class="dot-indicator"></span>
+                    <span class="dot-indicator"></span>
+                    <span class="dot-indicator"></span>
+                    <span class="dot-indicator"></span>
+                </div>
+                <div class="slide-footer-info">© 2026</div>
+            </div>
+        </div>
 
-            <!-- Contact Section -->
-            <section class="contact-section">
-                <h3>Contact</h3>
-                <a href="mailto:cn9992@foxmail.com">cn9992@foxmail.com</a>
-            </section>
-        </main>
-
-        <!-- Footer -->
-        <footer>
-            <div>AIR² — Anna Intelligence Recorder & Reminder</div>
-            <div>© 2026</div>
-        </footer>
     </div>
 
+    <!-- Corrected Global Pagination Script -->
+    <script>
+        const container = document.getElementById('mobileContainer');
+        const slides = document.querySelectorAll('.mobile-slide');
+        
+        if (container && slides.length > 0) {
+            container.addEventListener('scroll', () => {
+                const scrollLeft = container.scrollLeft;
+                const slideWidth = container.clientWidth;
+                const currentIndex = Math.round(scrollLeft / slideWidth);
+
+                // Synchronize all slides' pagination dots globally based on currentIndex
+                slides.forEach((slide) => {
+                    const dots = slide.querySelectorAll('.dot-indicator');
+                    dots.forEach((dot, dotIndex) => {
+                        if (dotIndex === currentIndex) {
+                            dot.classList.add('active');
+                        } else {
+                            dot.classList.remove('active');
+                        }
+                    });
+                });
+            }, { passive: true });
+        }
+    </script>
 </body>
 </html>
