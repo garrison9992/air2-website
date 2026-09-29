@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIR² — Anna Intelligence Recorder & Reminder</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #111111;
+            --text-muted: #666666;
+            --border-color: #eaeaea;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .page-wrapper {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header / Nav */
+        header {
+            padding: 40px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .nav-status {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            letter-spacing: 0.02em;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 160px 0;
+            max-width: 840px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 400;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 32px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        /* Section Common */
+        section {
+            padding: 100px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+        }
+
+        .section-desc {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            max-width: 640px;
+            margin-bottom: 64px;
+            line-height: 1.5;
+        }
+
+        /* What is AIR2 Cards */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .feature-card {
+            padding: 32px 0;
+        }
+
+        .feature-number {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .feature-card h3 {
+            font-size: 1.15rem;
+            font-weight: 500;
+            margin-bottom: 12px;
+            letter-spacing: -0.01em;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Current Status Section */
+        .status-box {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .status-meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 80px 0 40px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .contact-section h3 {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 16px;
+            letter-spacing: -0.01em;
+        }
+
+        .contact-section a {
+            color: var(--text-color);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            font-size: 0.95rem;
+        }
+
+        .contact-section a:hover {
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0 80px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 80px 0 100px 0;
+            }
+
+            section {
+                padding: 70px 0;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-wrapper">
+        <!-- Header -->
+        <header>
+            <a href="#" class="logo">AIR²</a>
+            <div class="nav-status">Prototype · 2026</div>
+        </header>
+
+        <!-- Hero Section -->
+        <main>
+            <section class="hero" style="border-top: none; padding-top: 40px;">
+                <h1>
+                    Record what matters.<br>
+                    Be reminded when it matters.
+                </h1>
+                <p class="hero-subtitle">
+                    A voice-first product designed to help people record what matters and be reminded when it matters.
+                </p>
+            </section>
+
+            <!-- What is AIR2? -->
+            <section>
+                <h2>What is AIR²?</h2>
+                <p class="section-desc">
+                    Tell Anna what you want to remember in your own words.<br>
+                    AIR² turns that moment into a record — and, when needed, a reminder.
+                </p>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-number">01</div>
+                        <h3>Record</h3>
+                        <p>Tell Anna naturally what you want to remember.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-number">02</div>
+                        <h3>Remind</h3>
+                        <p>When the right time comes, Anna reminds you.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-number">03</div>
+                        <h3>Follow up</h3>
+                        <p>Confirm it, postpone it, or continue when needed.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Current Status -->
+            <section>
+                <h2>AIR² is in development.</h2>
+                <div class="status-box">
+                    <p class="section-desc" style="margin-bottom: 0;">
+                        The first prototype is currently under testing.
+                    </p>
+                    <div class="status-meta" style="margin-top: 16px;">Prototype · 2026</div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section class="contact-section">
+                <h3>Contact</h3>
+                <a href="mailto:cn9992@foxmail.com">cn9992@foxmail.com</a>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <div>AIR² — Anna Intelligence Recorder & Reminder</div>
+            <div>© 2026</div>
+        </footer>
+    </div>
+
+</body>
+</html>
