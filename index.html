@@ -150,7 +150,7 @@
         }
 
         .contact-box-desktop a {
-            color: var(--text-inverse);
+            color: var(--text-primary);
             text-decoration: none;
             font-size: 1.1rem;
         }
@@ -165,8 +165,8 @@
             justify-content: space-between;
             align-items: center;
             font-size: 0.85rem;
-            color: var(--text-inverse-muted);
-            border-top: 1px solid var(--border-dark);
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-light);
             margin-top: 40px;
         }
 
@@ -466,7 +466,7 @@
     <div class="mobile-container" id="mobileContainer">
         
         <!-- Screen 01 — Hero -->
-        <div class="mobile-slide slide-hero">
+        <div class="mobile-slide slide-hero" data-speech="Record what matters. Be reminded when it matters. A voice-first product designed to help people record what matters and be reminded when it matters.">
             <div class="slide-top">
                 <div class="slide-brand-sm">AIR² Aim</div>
             </div>
@@ -494,7 +494,7 @@
         </div>
 
         <!-- Screen 02 — Record -->
-        <div class="mobile-slide slide-record">
+        <div class="mobile-slide slide-record" data-speech="Record. Thoughts, tasks, plans. Captured when they matter.">
             <div class="slide-top">
                 <div class="slide-brand-sm">AIR² Aim</div>
             </div>
@@ -518,7 +518,7 @@
         </div>
 
         <!-- Screen 03 — Remind -->
-        <div class="mobile-slide slide-remind">
+        <div class="mobile-slide slide-remind" data-speech="Remind. The right thing, at the right time. Brought back when it matters.">
             <div class="slide-top">
                 <div class="slide-brand-sm">AIR² Aim</div>
             </div>
@@ -542,7 +542,7 @@
         </div>
 
         <!-- Screen 04 — Follow up -->
-        <div class="mobile-slide slide-follow">
+        <div class="mobile-slide slide-follow" data-speech="Follow up. A reminder becomes a moment to act. Confirm. Postpone. Keep moving.">
             <div class="slide-top">
                 <div class="slide-brand-sm">AIR² Aim</div>
             </div>
@@ -566,7 +566,7 @@
         </div>
 
         <!-- Screen 05 — Development / Contact -->
-        <div class="mobile-slide slide-development is-dark">
+        <div class="mobile-slide slide-development is-dark" data-speech="AIR 2 Aim in development. Prototype under testing.">
             <div class="slide-top">
                 <div class="slide-brand-sm">AIR² Aim</div>
             </div>
@@ -597,7 +597,7 @@
 
     </div>
 
-    <!-- Global Pagination & Auto-Loop Script -->
+    <!-- Global Pagination, Auto-Loop & TTS Speech Script -->
     <script>
         const container = document.getElementById('mobileContainer');
         const slides = document.querySelectorAll('.mobile-slide');
@@ -605,7 +605,18 @@
         if (container && slides.length > 0) {
             let currentIndex = 0;
             let autoPlayTimer = null;
-            const intervalTime = 3000; // 每 3 秒自动切换一页
+            const intervalTime = 4000; // 延长至 4 秒，留出充足语音播报时间
+
+            // TTS 语音播报函数
+            function speakSlideText(text) {
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel(); // 停止上一句未读完的语音
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.lang = 'en-US';
+                    utterance.rate = 0.95; // 语速适中，自然清晰
+                    window.speechSynthesis.speak(utterance);
+                }
+            }
 
             function updateDots(activeIdx) {
                 slides.forEach((slide) => {
@@ -620,7 +631,7 @@
                 });
             }
 
-            function goToSlide(index) {
+            function goToSlide(index, speak = true) {
                 currentIndex = index;
                 const slideWidth = container.clientWidth;
                 container.scrollTo({
@@ -628,6 +639,13 @@
                     behavior: 'smooth'
                 });
                 updateDots(currentIndex);
+
+                if (speak && window.innerWidth <= 768) {
+                    const speechText = slides[currentIndex].getAttribute('data-speech');
+                    if (speechText) {
+                        speakSlideText(speechText);
+                    }
+                }
             }
 
             function startAutoPlay() {
@@ -636,7 +654,7 @@
                     if (currentIndex >= slides.length) {
                         currentIndex = 0; // 循环回到第一页
                     }
-                    goToSlide(currentIndex);
+                    goToSlide(currentIndex, true);
                 }, intervalTime);
             }
 
@@ -647,6 +665,17 @@
                 }
             }
 
+            // 初始化：进入页面时播报第一页（首次交互后生效）
+            window.addEventListener('load', () => {
+                if (window.innerWidth <= 768 && slides[0]) {
+                    const firstText = slides[0].getAttribute('data-speech');
+                    // 尝试静默预热或等待用户触摸
+                    document.body.addEventListener('click', () => {
+                        speakSlideText(firstText);
+                    }, { once: true });
+                }
+            });
+
             // 监听用户手动滑动同步当前索引
             container.addEventListener('scroll', () => {
                 const scrollLeft = container.scrollLeft;
@@ -655,6 +684,12 @@
                 if (calculatedIndex !== currentIndex && calculatedIndex >= 0 && calculatedIndex < slides.length) {
                     currentIndex = calculatedIndex;
                     updateDots(currentIndex);
+                    if (window.innerWidth <= 768) {
+                        const speechText = slides[currentIndex].getAttribute('data-speech');
+                        if (speechText) {
+                            speakSlideText(speechText);
+                        }
+                    }
                 }
             }, { passive: true });
 
