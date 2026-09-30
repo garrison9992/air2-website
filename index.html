@@ -623,7 +623,7 @@
 
     </div>
 
-    <!-- Unidirectional Seamless Loop & Strict Isolated Speech Script -->
+    <!-- Perfect Unidirectional Loop & Strict Isolated Speech Script -->
     <script>
         const container = document.getElementById('mobileContainer');
         const slides = document.querySelectorAll('.mobile-slide');
@@ -647,15 +647,16 @@
                 });
             }
 
-            // 严格隔离播报：只念当前页文案，不混杂其他页
+            // 严格隔离：只播报当前索引对应页面的文字，绝不混淆
             function speakSlide(index) {
                 if ('speechSynthesis' in window) {
-                    window.speechSynthesis.cancel(); // 彻底清理上一页残留音频
+                    window.speechSynthesis.cancel(); // 掐断上一页任何残留声音
                     
                     if (!isSoundEnabled || !isAudioUnlocked) return;
 
                     const text = slides[index].getAttribute('data-speech');
                     if (text) {
+                        // 稳定停顿 350ms 后发声，防止首个单词卡断
                         setTimeout(() => {
                             if (!isSoundEnabled || currentIndex !== index) return;
                             
@@ -667,12 +668,12 @@
                                 if (isSoundEnabled && currentIndex === index) {
                                     setTimeout(() => {
                                         moveToNextSlide();
-                                    }, 500); // 念完后停顿 0.5 秒
+                                    }, 500); // 每一页念完后优雅停顿 0.5 秒
                                 }
                             };
 
                             window.speechSynthesis.speak(utterance);
-                        }, 350); // 开始前缓冲 350ms 避免卡顿
+                        }, 350);
                     }
                 }
             }
@@ -695,7 +696,7 @@
                 const slideWidth = container.clientWidth;
                 
                 if (instantJump) {
-                    // 无动画瞬间拉回第一页，实现单向无缝循环
+                    // 当从第 5 页回到第 1 页时：瞬间无痕重置到最左侧（无回滚动画）
                     container.scrollTo({
                         left: 0,
                         behavior: 'auto'
@@ -714,24 +715,25 @@
             }
 
             function moveToNextSlide() {
-                currentIndex++;
-                if (currentIndex >= slides.length) {
-                    // 走到最后一页之后，瞬间无痕重置回第一页，实现朝同一个方向循环
+                if (currentIndex < slides.length - 1) {
+                    // 常规页：向左平滑翻到下一页
+                    currentIndex++;
+                    goToSlide(currentIndex, true, false);
+                } else {
+                    // 已经是第 5 页（最后一页）：在第 5 页完整读完并停顿 0.5 秒后，瞬间无缝回到第 1 页，继续向左循环
                     currentIndex = 0;
                     goToSlide(0, true, true);
-                } else {
-                    goToSlide(currentIndex, true, false);
                 }
             }
 
-            // 兜底定时器（8秒防卡住）
+            // 兜底定时器（延长至 10 秒，确保第 5 页较长内容也能充分读完）
             function startFallbackTimer() {
                 if (fallbackTimer) clearInterval(fallbackTimer);
                 fallbackTimer = setInterval(() => {
                     if (!isSoundEnabled || !window.speechSynthesis.speaking) {
                         moveToNextSlide();
                     }
-                }, 8000);
+                }, 10000);
             }
 
             function unlockAudio() {
