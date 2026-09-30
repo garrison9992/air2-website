@@ -623,7 +623,7 @@
 
     </div>
 
-    <!-- Speech Completion, Dual Pause (0.5s end & 0.4s start buffer) & Sound Toggle Script -->
+    <!-- Unidirectional Seamless Loop & Strict Isolated Speech Script -->
     <script>
         const container = document.getElementById('mobileContainer');
         const slides = document.querySelectorAll('.mobile-slide');
@@ -632,10 +632,8 @@
             let currentIndex = 0;
             let isSoundEnabled = true;
             let isAudioUnlocked = false;
-            let currentUtterance = null;
             let fallbackTimer = null;
 
-            // 更新所有页面的声音按钮状态同步
             function updateSoundButtons() {
                 const buttons = document.querySelectorAll('.tts-toggle-btn');
                 buttons.forEach(btn => {
@@ -649,35 +647,32 @@
                 });
             }
 
-            // 语音播报核心：加入开始缓冲（350ms）和结束停顿（500ms）
-            function speakAndSync(index) {
+            // 严格隔离播报：只念当前页文案，不混杂其他页
+            function speakSlide(index) {
                 if ('speechSynthesis' in window) {
-                    window.speechSynthesis.cancel(); // 停止上一句
+                    window.speechSynthesis.cancel(); // 彻底清理上一页残留音频
                     
-                    if (!isSoundEnabled || !isAudioUnlocked) {
-                        return;
-                    }
+                    if (!isSoundEnabled || !isAudioUnlocked) return;
 
                     const text = slides[index].getAttribute('data-speech');
                     if (text) {
-                        // 新页面滚动停稳后，等待 350ms 再发音，彻底解决首个单词被卡断的问题
                         setTimeout(() => {
-                            if (!isSoundEnabled) return;
-                            currentUtterance = new SpeechSynthesisUtterance(text);
-                            currentUtterance.lang = 'en-US';
-                            currentUtterance.rate = 0.92; // 自然柔和的语速
+                            if (!isSoundEnabled || currentIndex !== index) return;
+                            
+                            const utterance = new SpeechSynthesisUtterance(text);
+                            utterance.lang = 'en-US';
+                            utterance.rate = 0.92;
 
-                            // 核心：当当前页“完全念完”时，停顿 500ms（0.5秒）再切到下一页
-                            currentUtterance.onend = () => {
-                                if (isSoundEnabled) {
+                            utterance.onend = () => {
+                                if (isSoundEnabled && currentIndex === index) {
                                     setTimeout(() => {
                                         moveToNextSlide();
-                                    }, 500); // 0.5秒优雅停顿
+                                    }, 500); // 念完后停顿 0.5 秒
                                 }
                             };
 
-                            window.speechSynthesis.speak(currentUtterance);
-                        }, 350); // 350ms 开始前缓冲延迟
+                            window.speechSynthesis.speak(utterance);
+                        }, 350); // 开始前缓冲 350ms 避免卡顿
                     }
                 }
             }
@@ -695,29 +690,41 @@
                 });
             }
 
-            function goToSlide(index, playSpeech = true) {
+            function goToSlide(index, playSpeech = true, instantJump = false) {
                 currentIndex = index;
                 const slideWidth = container.clientWidth;
-                container.scrollTo({
-                    left: currentIndex * slideWidth,
-                    behavior: 'smooth'
-                });
+                
+                if (instantJump) {
+                    // 无动画瞬间拉回第一页，实现单向无缝循环
+                    container.scrollTo({
+                        left: 0,
+                        behavior: 'auto'
+                    });
+                } else {
+                    container.scrollTo({
+                        left: currentIndex * slideWidth,
+                        behavior: 'smooth'
+                    });
+                }
                 updateDots(currentIndex);
 
                 if (window.innerWidth <= 768 && playSpeech) {
-                    speakAndSync(currentIndex);
+                    speakSlide(currentIndex);
                 }
             }
 
             function moveToNextSlide() {
                 currentIndex++;
                 if (currentIndex >= slides.length) {
-                    currentIndex = 0; // 无限循环
+                    // 走到最后一页之后，瞬间无痕重置回第一页，实现朝同一个方向循环
+                    currentIndex = 0;
+                    goToSlide(0, true, true);
+                } else {
+                    goToSlide(currentIndex, true, false);
                 }
-                goToSlide(currentIndex, true);
             }
 
-            // 兜底定时器：防止某些浏览器没有触发 onend 时页面卡住（8秒兜底）
+            // 兜底定时器（8秒防卡住）
             function startFallbackTimer() {
                 if (fallbackTimer) clearInterval(fallbackTimer);
                 fallbackTimer = setInterval(() => {
@@ -727,19 +734,18 @@
                 }, 8000);
             }
 
-            // 解锁移动端音频
             function unlockAudio() {
                 if (!isAudioUnlocked) {
                     isAudioUnlocked = true;
                     if ('speechSynthesis' in window) {
                         window.speechSynthesis.resume();
-                        goToSlide(currentIndex, true);
+                        goToSlide(currentIndex, true, false);
                         startFallbackTimer();
                     }
                 }
             }
 
-            // 绑定所有页面的 Sound 开关按钮事件
+            // 声音开关按钮事件
             document.querySelectorAll('.tts-toggle-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -749,7 +755,7 @@
                         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
                     } else {
                         unlockAudio();
-                        speakAndSync(currentIndex);
+                        speakSlide(currentIndex);
                     }
                 });
             });
@@ -759,18 +765,24 @@
 
             startFallbackTimer();
 
-            // 监听用户手动滑动同步当前索引
+            // 滚动同步处理
+            let scrollTimeout;
             container.addEventListener('scroll', () => {
-                const scrollLeft = container.scrollLeft;
-                const slideWidth = container.clientWidth;
-                const calculatedIndex = Math.round(scrollLeft / slideWidth);
-                if (calculatedIndex !== currentIndex && calculatedIndex >= 0 && calculatedIndex < slides.length) {
-                    currentIndex = calculatedIndex;
-                    updateDots(currentIndex);
-                    if (window.innerWidth <= 768) {
-                        speakAndSync(currentIndex);
+                if ('speechSynthesis' in window && window.speechSynthesis.speaking) return;
+                
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    const scrollLeft = container.scrollLeft;
+                    const slideWidth = container.clientWidth;
+                    const calculatedIndex = Math.round(scrollLeft / slideWidth);
+                    if (calculatedIndex !== currentIndex && calculatedIndex >= 0 && calculatedIndex < slides.length) {
+                        currentIndex = calculatedIndex;
+                        updateDots(currentIndex);
+                        if (window.innerWidth <= 768) {
+                            speakSlide(currentIndex);
+                        }
                     }
-                }
+                }, 150);
             }, { passive: true });
         }
     </script>
