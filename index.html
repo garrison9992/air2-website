@@ -623,7 +623,7 @@
 
     </div>
 
-    <!-- Speech Completion & Sound Toggle Script -->
+    <!-- Speech Completion, 0.5s Pause & Sound Toggle Script -->
     <script>
         const container = document.getElementById('mobileContainer');
         const slides = document.querySelectorAll('.mobile-slide');
@@ -633,7 +633,7 @@
             let isSoundEnabled = true;
             let isAudioUnlocked = false;
             let currentUtterance = null;
-            let autoTimer = null;
+            let fallbackTimer = null;
 
             // 更新所有页面的声音按钮状态同步
             function updateSoundButtons() {
@@ -649,13 +649,12 @@
                 });
             }
 
-            // 语音播报核心：监听 onend 事件，念完后立刻切到下一页
+            // 语音播报核心：念完后停顿 0.5 秒再切到下一页
             function speakAndSync(index) {
                 if ('speechSynthesis' in window) {
                     window.speechSynthesis.cancel(); // 停止上一句
                     
                     if (!isSoundEnabled || !isAudioUnlocked) {
-                        // 如果静音了，直接纯靠定时器推进
                         return;
                     }
 
@@ -663,12 +662,14 @@
                     if (text) {
                         currentUtterance = new SpeechSynthesisUtterance(text);
                         currentUtterance.lang = 'en-US';
-                        currentUtterance.rate = 0.95;
+                        currentUtterance.rate = 0.92; // 稍微放慢一点点，更有呼吸感
 
-                        // 核心：当语音“完全念完”的那一刻，触发自动翻到下一页
+                        // 核心：当语音“完全念完”时，加入 500ms（0.5秒）的优雅停顿再翻页
                         currentUtterance.onend = () => {
                             if (isSoundEnabled) {
-                                moveToNextSlide();
+                                setTimeout(() => {
+                                    moveToNextSlide();
+                                }, 500); // 0.5秒停顿
                             }
                         };
 
@@ -700,7 +701,10 @@
                 updateDots(currentIndex);
 
                 if (window.innerWidth <= 768 && playSpeech) {
-                    speakAndSync(currentIndex);
+                    // 翻页到达后，给新页面加上一个极短的起始微调延迟（比如 200ms 让画面停稳后再出声）
+                    setTimeout(() => {
+                        speakAndSync(currentIndex);
+                    }, 200);
                 }
             }
 
@@ -712,15 +716,14 @@
                 goToSlide(currentIndex, true);
             }
 
-            // 备用定时器：防止某些浏览器不支持 utterance.onend 时页面卡住（给予充足的 6 秒兜底）
+            // 兜底定时器：防止某些浏览器没有触发 onend 时页面卡住（7秒兜底）
             function startFallbackTimer() {
-                if (autoTimer) clearInterval(autoTimer);
-                autoTimer = setInterval(() => {
-                    // 只有在未开启语音或语音静止时由定时器推进兜底
+                if (fallbackTimer) clearInterval(fallbackTimer);
+                fallbackTimer = setInterval(() => {
                     if (!isSoundEnabled || !window.speechSynthesis.speaking) {
                         moveToNextSlide();
                     }
-                }, 6000);
+                }, 7000);
             }
 
             // 解锁移动端音频
@@ -753,7 +756,6 @@
             document.body.addEventListener('touchstart', unlockAudio, { once: true, passive: true });
             document.body.addEventListener('click', unlockAudio, { once: true });
 
-            // 初始启动兜底定时器
             startFallbackTimer();
 
             // 监听用户手动滑动同步当前索引
