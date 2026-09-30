@@ -237,13 +237,34 @@
             .slide-top {
                 display: flex;
                 justify-content: space-between;
-                align-items: flex-start;
+                align-items: center;
             }
 
             .slide-brand-sm {
                 font-size: 1.25rem;
                 font-weight: 600;
                 letter-spacing: -0.02em;
+            }
+
+            /* 极简静音/喇叭切换按钮样式 */
+            .tts-toggle-btn {
+                background: none;
+                border: 1px solid currentColor;
+                opacity: 0.4;
+                color: inherit;
+                font-size: 0.7rem;
+                font-family: inherit;
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+                padding: 4px 10px;
+                border-radius: 20px;
+                cursor: pointer;
+                transition: opacity 0.3s ease;
+            }
+
+            .tts-toggle-btn.active {
+                opacity: 0.9;
+                border-color: currentColor;
             }
 
             .slide-body {
@@ -469,6 +490,7 @@
         <div class="mobile-slide slide-hero" data-speech="Record what matters. Be reminded when it matters. A voice-first product designed to help people record what matters and be reminded when it matters.">
             <div class="slide-top">
                 <div class="slide-brand-sm">AIR² Aim</div>
+                <button class="tts-toggle-btn active" id="ttsToggle">Sound: ON</button>
             </div>
             <div class="slide-body">
                 <div class="slide-hero-brand">AIR² Aim</div>
@@ -497,6 +519,7 @@
         <div class="mobile-slide slide-record" data-speech="Record. Thoughts, tasks, plans. Captured when they matter.">
             <div class="slide-top">
                 <div class="slide-brand-sm">AIR² Aim</div>
+                <button class="tts-toggle-btn active tts-toggle-btn-sync">Sound: ON</button>
             </div>
             <div class="slide-body slide-content">
                 <h2>RECORD</h2>
@@ -521,6 +544,7 @@
         <div class="mobile-slide slide-remind" data-speech="Remind. The right thing, at the right time. Brought back when it matters.">
             <div class="slide-top">
                 <div class="slide-brand-sm">AIR² Aim</div>
+                <button class="tts-toggle-btn active tts-toggle-btn-sync">Sound: ON</button>
             </div>
             <div class="slide-body slide-content">
                 <h2>REMIND</h2>
@@ -545,6 +569,7 @@
         <div class="mobile-slide slide-follow" data-speech="Follow up. A reminder becomes a moment to act. Confirm. Postpone. Keep moving.">
             <div class="slide-top">
                 <div class="slide-brand-sm">AIR² Aim</div>
+                <button class="tts-toggle-btn active tts-toggle-btn-sync">Sound: ON</button>
             </div>
             <div class="slide-body slide-content">
                 <h2>FOLLOW UP</h2>
@@ -569,6 +594,7 @@
         <div class="mobile-slide slide-development is-dark" data-speech="AIR 2 Aim in development. Prototype under testing.">
             <div class="slide-top">
                 <div class="slide-brand-sm">AIR² Aim</div>
+                <button class="tts-toggle-btn active tts-toggle-btn-sync" style="border-color: #ffffff; color: #ffffff;">Sound: ON</button>
             </div>
             <div class="slide-body slide-content">
                 <h2>AIR² Aim in development.</h2>
@@ -597,24 +623,57 @@
 
     </div>
 
-    <!-- Continuous Auto-Loop & Continuous TTS Script -->
+    <!-- Speech Completion & Sound Toggle Script -->
     <script>
         const container = document.getElementById('mobileContainer');
         const slides = document.querySelectorAll('.mobile-slide');
         
         if (container && slides.length > 0) {
             let currentIndex = 0;
-            const intervalTime = 4000; // 每 4 秒自动切换一页
+            let isSoundEnabled = true;
             let isAudioUnlocked = false;
+            let currentUtterance = null;
+            let autoTimer = null;
 
-            // TTS 语音播报函数
-            function speakSlideText(text) {
-                if ('speechSynthesis' in window && isAudioUnlocked) {
-                    window.speechSynthesis.cancel(); // 停止上一句未读完的语音
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    utterance.lang = 'en-US';
-                    utterance.rate = 0.95; // 语速自然
-                    window.speechSynthesis.speak(utterance);
+            // 更新所有页面的声音按钮状态同步
+            function updateSoundButtons() {
+                const buttons = document.querySelectorAll('.tts-toggle-btn');
+                buttons.forEach(btn => {
+                    if (isSoundEnabled) {
+                        btn.textContent = 'Sound: ON';
+                        btn.classList.add('active');
+                    } else {
+                        btn.textContent = 'Sound: OFF';
+                        btn.classList.remove('active');
+                    }
+                });
+            }
+
+            // 语音播报核心：监听 onend 事件，念完后立刻切到下一页
+            function speakAndSync(index) {
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel(); // 停止上一句
+                    
+                    if (!isSoundEnabled || !isAudioUnlocked) {
+                        // 如果静音了，直接纯靠定时器推进
+                        return;
+                    }
+
+                    const text = slides[index].getAttribute('data-speech');
+                    if (text) {
+                        currentUtterance = new SpeechSynthesisUtterance(text);
+                        currentUtterance.lang = 'en-US';
+                        currentUtterance.rate = 0.95;
+
+                        // 核心：当语音“完全念完”的那一刻，触发自动翻到下一页
+                        currentUtterance.onend = () => {
+                            if (isSoundEnabled) {
+                                moveToNextSlide();
+                            }
+                        };
+
+                        window.speechSynthesis.speak(currentUtterance);
+                    }
                 }
             }
 
@@ -631,7 +690,7 @@
                 });
             }
 
-            function goToSlide(index) {
+            function goToSlide(index, playSpeech = true) {
                 currentIndex = index;
                 const slideWidth = container.clientWidth;
                 container.scrollTo({
@@ -640,40 +699,64 @@
                 });
                 updateDots(currentIndex);
 
-                if (window.innerWidth <= 768) {
-                    const speechText = slides[currentIndex].getAttribute('data-speech');
-                    if (speechText) {
-                        speakSlideText(speechText);
-                    }
+                if (window.innerWidth <= 768 && playSpeech) {
+                    speakAndSync(currentIndex);
                 }
             }
 
-            // 手机浏览器音频权限解锁（用户轻触屏幕任意位置一次即可彻底激活语音）
+            function moveToNextSlide() {
+                currentIndex++;
+                if (currentIndex >= slides.length) {
+                    currentIndex = 0; // 无限循环
+                }
+                goToSlide(currentIndex, true);
+            }
+
+            // 备用定时器：防止某些浏览器不支持 utterance.onend 时页面卡住（给予充足的 6 秒兜底）
+            function startFallbackTimer() {
+                if (autoTimer) clearInterval(autoTimer);
+                autoTimer = setInterval(() => {
+                    // 只有在未开启语音或语音静止时由定时器推进兜底
+                    if (!isSoundEnabled || !window.speechSynthesis.speaking) {
+                        moveToNextSlide();
+                    }
+                }, 6000);
+            }
+
+            // 解锁移动端音频
             function unlockAudio() {
                 if (!isAudioUnlocked) {
                     isAudioUnlocked = true;
                     if ('speechSynthesis' in window) {
                         window.speechSynthesis.resume();
-                        // 解锁后立即播报当前页
-                        const speechText = slides[currentIndex].getAttribute('data-speech');
-                        speakSlideText(speechText);
+                        goToSlide(currentIndex, true);
+                        startFallbackTimer();
                     }
                 }
             }
 
+            // 绑定所有页面的 Sound 开关按钮事件
+            document.querySelectorAll('.tts-toggle-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    isSoundEnabled = !isSoundEnabled;
+                    updateSoundButtons();
+                    if (!isSoundEnabled) {
+                        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+                    } else {
+                        unlockAudio();
+                        speakAndSync(currentIndex);
+                    }
+                });
+            });
+
             document.body.addEventListener('touchstart', unlockAudio, { once: true, passive: true });
             document.body.addEventListener('click', unlockAudio, { once: true });
 
-            // 持续不断的自动轮播定时器（不管用户碰不碰，到时间雷打不动自动翻页循环）
-            setInterval(() => {
-                currentIndex++;
-                if (currentIndex >= slides.length) {
-                    currentIndex = 0; // 到底后直接从头无限循环
-                }
-                goToSlide(currentIndex);
-            }, intervalTime);
+            // 初始启动兜底定时器
+            startFallbackTimer();
 
-            // 滚动同步（用户手动滑动时也能正常同步指示点）
+            // 监听用户手动滑动同步当前索引
             container.addEventListener('scroll', () => {
                 const scrollLeft = container.scrollLeft;
                 const slideWidth = container.clientWidth;
@@ -681,6 +764,9 @@
                 if (calculatedIndex !== currentIndex && calculatedIndex >= 0 && calculatedIndex < slides.length) {
                     currentIndex = calculatedIndex;
                     updateDots(currentIndex);
+                    if (window.innerWidth <= 768) {
+                        speakAndSync(currentIndex);
+                    }
                 }
             }, { passive: true });
         }
