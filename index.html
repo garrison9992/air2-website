@@ -587,17 +587,17 @@
 
     </div>
 
-    <!-- Global Pagination Script -->
+    <!-- Global Pagination & Auto-Loop Script -->
     <script>
         const container = document.getElementById('mobileContainer');
         const slides = document.querySelectorAll('.mobile-slide');
         
         if (container && slides.length > 0) {
-            container.addEventListener('scroll', () => {
-                const scrollLeft = container.scrollLeft;
-                const slideWidth = container.clientWidth;
-                const currentIndex = Math.round(scrollLeft / slideWidth);
+            let autoPlayTimer = null;
+            const intervalTime = 3000; // 每隔 3 秒自动切换一页
 
+            // 更新圆点高亮状态的函数
+            function updateDots(currentIndex) {
                 slides.forEach((slide) => {
                     const dots = slide.querySelectorAll('.dot-indicator');
                     dots.forEach((dot, dotIndex) => {
@@ -608,7 +608,48 @@
                         }
                     });
                 });
+            }
+
+            // 自动轮播核心逻辑
+            function startAutoPlay() {
+                autoPlayTimer = setInterval(() => {
+                    const slideWidth = container.clientWidth;
+                    const maxScrollLeft = slideWidth * (slides.length - 1);
+                    let nextScrollLeft = container.scrollLeft + slideWidth;
+
+                    // 如果已经滚动到最后一页，则直接无缝循环跳回第一页 (index 0)
+                    if (container.scrollLeft >= maxScrollLeft - 10) {
+                        nextScrollLeft = 0;
+                    }
+
+                    container.scrollTo({
+                        left: nextScrollLeft,
+                        behavior: 'smooth'
+                    });
+                }, intervalTime);
+            }
+
+            function stopAutoPlay() {
+                if (autoPlayTimer) {
+                    clearInterval(autoPlayTimer);
+                    autoPlayTimer = null;
+                }
+            }
+
+            // 监听滚动事件，同步更新底部圆点
+            container.addEventListener('scroll', () => {
+                const scrollLeft = container.scrollLeft;
+                const slideWidth = container.clientWidth;
+                const currentIndex = Math.round(scrollLeft / slideWidth);
+                updateDots(currentIndex);
             }, { passive: true });
+
+            // 手机上手动触控/滑动时，暂停自动轮播，体验更自然
+            container.addEventListener('touchstart', stopAutoPlay, { passive: true });
+            container.addEventListener('mousedown', stopAutoPlay, { passive: true });
+
+            // 启动自动轮播
+            startAutoPlay();
         }
     </script>
 </body>
