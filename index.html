@@ -587,21 +587,21 @@
 
     </div>
 
-    <!-- Global Pagination & Auto-Loop Script -->
+    <!-- Enhanced Auto-Loop Script -->
     <script>
         const container = document.getElementById('mobileContainer');
         const slides = document.querySelectorAll('.mobile-slide');
         
         if (container && slides.length > 0) {
+            let currentIndex = 0;
             let autoPlayTimer = null;
-            const intervalTime = 3000; // 每隔 3 秒自动切换一页
+            const intervalTime = 3000; // 每 3 秒切换一页
 
-            // 更新圆点高亮状态的函数
-            function updateDots(currentIndex) {
+            function updateDots(activeIdx) {
                 slides.forEach((slide) => {
                     const dots = slide.querySelectorAll('.dot-indicator');
                     dots.forEach((dot, dotIndex) => {
-                        if (dotIndex === currentIndex) {
+                        if (dotIndex === activeIdx) {
                             dot.classList.add('active');
                         } else {
                             dot.classList.remove('active');
@@ -610,22 +610,23 @@
                 });
             }
 
-            // 自动轮播核心逻辑
+            function goToSlide(index) {
+                currentIndex = index;
+                const slideWidth = container.clientWidth;
+                container.scrollTo({
+                    left: currentIndex * slideWidth,
+                    behavior: 'smooth'
+                });
+                updateDots(currentIndex);
+            }
+
             function startAutoPlay() {
                 autoPlayTimer = setInterval(() => {
-                    const slideWidth = container.clientWidth;
-                    const maxScrollLeft = slideWidth * (slides.length - 1);
-                    let nextScrollLeft = container.scrollLeft + slideWidth;
-
-                    // 如果已经滚动到最后一页，则直接无缝循环跳回第一页 (index 0)
-                    if (container.scrollLeft >= maxScrollLeft - 10) {
-                        nextScrollLeft = 0;
+                    currentIndex++;
+                    if (currentIndex >= slides.length) {
+                        currentIndex = 0; // 循环回到第一页
                     }
-
-                    container.scrollTo({
-                        left: nextScrollLeft,
-                        behavior: 'smooth'
-                    });
+                    goToSlide(currentIndex);
                 }, intervalTime);
             }
 
@@ -636,19 +637,22 @@
                 }
             }
 
-            // 监听滚动事件，同步更新底部圆点
+            // 监听用户手动滑动同步当前索引
             container.addEventListener('scroll', () => {
                 const scrollLeft = container.scrollLeft;
                 const slideWidth = container.clientWidth;
-                const currentIndex = Math.round(scrollLeft / slideWidth);
-                updateDots(currentIndex);
+                const calculatedIndex = Math.round(scrollLeft / slideWidth);
+                if (calculatedIndex !== currentIndex && calculatedIndex >= 0 && calculatedIndex < slides.length) {
+                    currentIndex = calculatedIndex;
+                    updateDots(currentIndex);
+                }
             }, { passive: true });
 
-            // 手机上手动触控/滑动时，暂停自动轮播，体验更自然
+            // 用户触摸手机时暂停自动播放，避免打扰手动操作
             container.addEventListener('touchstart', stopAutoPlay, { passive: true });
             container.addEventListener('mousedown', stopAutoPlay, { passive: true });
 
-            // 启动自动轮播
+            // 启动定时轮播
             startAutoPlay();
         }
     </script>
