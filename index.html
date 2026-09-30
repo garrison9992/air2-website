@@ -375,10 +375,18 @@
                 opacity: 0.95;
             }
 
+            /* Optimized right-side footer text for small/varying mobile screens */
             .slide-footer-info {
-                font-size: 0.7rem;
+                font-size: 0.62rem;
                 opacity: 0.6;
-                line-height: 1.4;
+                line-height: 1.45;
+                text-align: right;
+                max-width: 62%;
+            }
+            
+            .slide-footer-info .footer-line-2 {
+                display: block;
+                margin-top: 3px;
             }
         }
     </style>
@@ -580,7 +588,10 @@
                     <span class="dot-indicator"></span>
                     <span class="dot-indicator active"></span>
                 </div>
-                <div class="slide-footer-info">AIR² — Anna Intelligence Recorder & Reminder<br>Developed in Yerevan, Armenia · 2026</div>
+                <div class="slide-footer-info">
+                    AIR² — Anna Intelligence Recorder & Reminder
+                    <span class="footer-line-2">Developed in Yerevan, Armenia · 2026</span>
+                </div>
             </div>
         </div>
 
