@@ -597,23 +597,23 @@
 
     </div>
 
-    <!-- Global Pagination, Auto-Loop & TTS Speech Script -->
+    <!-- Continuous Auto-Loop & Continuous TTS Script -->
     <script>
         const container = document.getElementById('mobileContainer');
         const slides = document.querySelectorAll('.mobile-slide');
         
         if (container && slides.length > 0) {
             let currentIndex = 0;
-            let autoPlayTimer = null;
-            const intervalTime = 4000; // 延长至 4 秒，留出充足语音播报时间
+            const intervalTime = 4000; // 每 4 秒自动切换一页
+            let isAudioUnlocked = false;
 
             // TTS 语音播报函数
             function speakSlideText(text) {
-                if ('speechSynthesis' in window) {
+                if ('speechSynthesis' in window && isAudioUnlocked) {
                     window.speechSynthesis.cancel(); // 停止上一句未读完的语音
                     const utterance = new SpeechSynthesisUtterance(text);
                     utterance.lang = 'en-US';
-                    utterance.rate = 0.95; // 语速适中，自然清晰
+                    utterance.rate = 0.95; // 语速自然
                     window.speechSynthesis.speak(utterance);
                 }
             }
@@ -631,7 +631,7 @@
                 });
             }
 
-            function goToSlide(index, speak = true) {
+            function goToSlide(index) {
                 currentIndex = index;
                 const slideWidth = container.clientWidth;
                 container.scrollTo({
@@ -640,7 +640,7 @@
                 });
                 updateDots(currentIndex);
 
-                if (speak && window.innerWidth <= 768) {
+                if (window.innerWidth <= 768) {
                     const speechText = slides[currentIndex].getAttribute('data-speech');
                     if (speechText) {
                         speakSlideText(speechText);
@@ -648,35 +648,32 @@
                 }
             }
 
-            function startAutoPlay() {
-                autoPlayTimer = setInterval(() => {
-                    currentIndex++;
-                    if (currentIndex >= slides.length) {
-                        currentIndex = 0; // 循环回到第一页
+            // 手机浏览器音频权限解锁（用户轻触屏幕任意位置一次即可彻底激活语音）
+            function unlockAudio() {
+                if (!isAudioUnlocked) {
+                    isAudioUnlocked = true;
+                    if ('speechSynthesis' in window) {
+                        window.speechSynthesis.resume();
+                        // 解锁后立即播报当前页
+                        const speechText = slides[currentIndex].getAttribute('data-speech');
+                        speakSlideText(speechText);
                     }
-                    goToSlide(currentIndex, true);
-                }, intervalTime);
-            }
-
-            function stopAutoPlay() {
-                if (autoPlayTimer) {
-                    clearInterval(autoPlayTimer);
-                    autoPlayTimer = null;
                 }
             }
 
-            // 初始化：进入页面时播报第一页（首次交互后生效）
-            window.addEventListener('load', () => {
-                if (window.innerWidth <= 768 && slides[0]) {
-                    const firstText = slides[0].getAttribute('data-speech');
-                    // 尝试静默预热或等待用户触摸
-                    document.body.addEventListener('click', () => {
-                        speakSlideText(firstText);
-                    }, { once: true });
-                }
-            });
+            document.body.addEventListener('touchstart', unlockAudio, { once: true, passive: true });
+            document.body.addEventListener('click', unlockAudio, { once: true });
 
-            // 监听用户手动滑动同步当前索引
+            // 持续不断的自动轮播定时器（不管用户碰不碰，到时间雷打不动自动翻页循环）
+            setInterval(() => {
+                currentIndex++;
+                if (currentIndex >= slides.length) {
+                    currentIndex = 0; // 到底后直接从头无限循环
+                }
+                goToSlide(currentIndex);
+            }, intervalTime);
+
+            // 滚动同步（用户手动滑动时也能正常同步指示点）
             container.addEventListener('scroll', () => {
                 const scrollLeft = container.scrollLeft;
                 const slideWidth = container.clientWidth;
@@ -684,21 +681,8 @@
                 if (calculatedIndex !== currentIndex && calculatedIndex >= 0 && calculatedIndex < slides.length) {
                     currentIndex = calculatedIndex;
                     updateDots(currentIndex);
-                    if (window.innerWidth <= 768) {
-                        const speechText = slides[currentIndex].getAttribute('data-speech');
-                        if (speechText) {
-                            speakSlideText(speechText);
-                        }
-                    }
                 }
             }, { passive: true });
-
-            // 用户触摸手机时暂停自动播放，避免打扰手动操作
-            container.addEventListener('touchstart', stopAutoPlay, { passive: true });
-            container.addEventListener('mousedown', stopAutoPlay, { passive: true });
-
-            // 启动定时轮播
-            startAutoPlay();
         }
     </script>
 </body>
