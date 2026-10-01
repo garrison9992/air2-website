@@ -234,6 +234,19 @@
             font-size: 1.15rem;
         }
 
+        /* 最后一页 Contact 下方的说明文案样式 */
+        .contact-info-block {
+            margin-top: 28px;
+            font-size: 0.75rem;
+            opacity: 0.6;
+            line-height: 1.45;
+        }
+
+        .contact-info-block .info-line-2 {
+            display: block;
+            margin-top: 3px;
+        }
+
         .slide-footer {
             display: flex;
             justify-content: space-between;
@@ -278,16 +291,38 @@
             opacity: 0.95;
         }
 
-        .slide-footer-info {
-            font-size: 0.75rem;
-            opacity: 0.6;
-            line-height: 1.45;
-            text-align: right;
+        /* 右下角单行语言选择器样式 */
+        .slide-footer-lang {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.5;
+            white-space: nowrap;
+            display: flex;
+            gap: 8px;
+            align-items: center;
         }
-        
-        .slide-footer-info .footer-line-2 {
-            display: block;
-            margin-top: 3px;
+
+        .slide-footer-lang a {
+            color: inherit;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .slide-footer-lang a:hover {
+            opacity: 1;
+        }
+
+        .slide-footer-lang span.active {
+            opacity: 1;
+            font-weight: 600;
+            border-bottom: 1px solid currentColor;
+            padding-bottom: 1px;
+        }
+
+        .slide-footer-lang span.inactive {
+            opacity: 0.35;
+            cursor: default;
         }
     </style>
 </head>
@@ -321,7 +356,9 @@
                     <span class="dot-indicator" data-index="3"></span>
                     <span class="dot-indicator" data-index="4"></span>
                 </div>
-                <div class="slide-footer-info">AIR² Aim</div>
+                <div class="slide-footer-lang">
+                    <span class="active">EN</span> · <a href="/zh/">中文</a> · <span class="inactive">日本語</span> · <span class="inactive">Русский</span> · <span class="inactive">FR</span>
+                </div>
             </div>
         </div>
 
@@ -349,7 +386,9 @@
                     <span class="dot-indicator" data-index="3"></span>
                     <span class="dot-indicator" data-index="4"></span>
                 </div>
-                <div class="slide-footer-info">AIR² Aim</div>
+                <div class="slide-footer-lang">
+                    <span class="active">EN</span> · <a href="/zh/">中文</a> · <span class="inactive">日本語</span> · <span class="inactive">Русский</span> · <span class="inactive">FR</span>
+                </div>
             </div>
         </div>
 
@@ -374,7 +413,9 @@
                     <span class="dot-indicator" data-index="3"></span>
                     <span class="dot-indicator" data-index="4"></span>
                 </div>
-                <div class="slide-footer-info">AIR² Aim</div>
+                <div class="slide-footer-lang">
+                    <span class="active">EN</span> · <a href="/zh/">中文</a> · <span class="inactive">日本語</span> · <span class="inactive">Русский</span> · <span class="inactive">FR</span>
+                </div>
             </div>
         </div>
 
@@ -400,7 +441,9 @@
                     <span class="dot-indicator" data-index="3"></span>
                     <span class="dot-indicator" data-index="4"></span>
                 </div>
-                <div class="slide-footer-info">AIR² Aim</div>
+                <div class="slide-footer-lang">
+                    <span class="active">EN</span> · <a href="/zh/">中文</a> · <span class="inactive">日本語</span> · <span class="inactive">Русский</span> · <span class="inactive">FR</span>
+                </div>
             </div>
         </div>
 
@@ -418,6 +461,11 @@
                 <div class="contact-mobile">
                     <h4>Contact</h4>
                     <a href="mailto:hahasmilegood@hotmail.com">hahasmilegood@hotmail.com</a>
+                    
+                    <div class="contact-info-block">
+                        Anna Intelligence Recorder & Reminder
+                        <span class="info-line-2">Developed in Yerevan, Armenia · 2026</span>
+                    </div>
                 </div>
             </div>
             <div class="slide-footer">
@@ -428,9 +476,8 @@
                     <span class="dot-indicator" data-index="3"></span>
                     <span class="dot-indicator" data-index="4"></span>
                 </div>
-                <div class="slide-footer-info">
-                    AIR² — Anna Intelligence Recorder & Reminder
-                    <span class="footer-line-2">Developed in Yerevan, Armenia · 2026</span>
+                <div class="slide-footer-lang">
+                    <span class="active">EN</span> · <a href="/zh/">中文</a> · <span class="inactive">日本語</span> · <span class="inactive">Русский</span> · <span class="inactive">FR</span>
                 </div>
             </div>
         </div>
@@ -446,7 +493,7 @@
             let currentIndex = 0;
             let isSoundEnabled = true;
             let isAudioUnlocked = false;
-            let currentSessionId = 0; // 会话 ID，用于严格丢弃旧页面的未完成回调
+            let currentSessionId = 0;
 
             function updateSoundButtons() {
                 const buttons = document.querySelectorAll('.tts-toggle-btn');
@@ -461,10 +508,8 @@
                 });
             }
 
-            // 核心：逐段朗读当前页面的 chunks
             function speakSlideChunks(index) {
                 if ('speechSynthesis' in window) {
-                    // 立即掐断任何正在进行的朗读
                     window.speechSynthesis.cancel();
                     
                     if (!isSoundEnabled || !isAudioUnlocked) return;
@@ -476,7 +521,6 @@
                         const chunks = JSON.parse(rawChunks);
                         if (!Array.isArray(chunks) || chunks.length === 0) return;
 
-                        // 开启新会话
                         const sessionId = ++currentSessionId;
 
                         setTimeout(() => {
@@ -499,10 +543,8 @@
                                         if (!isSoundEnabled || currentIndex !== index || sessionId !== currentSessionId) return;
                                         
                                         if (chunkIndex < chunks.length) {
-                                            // 段落之间停顿 0.5 秒
                                             setTimeout(playNextChunk, 500);
                                         } else {
-                                            // 当前页所有段落完美读完后，停顿 0.5 秒再进入下一页
                                             setTimeout(() => {
                                                 if (isSoundEnabled && currentIndex === index && sessionId === currentSessionId) {
                                                     moveToNextSlide();
@@ -538,7 +580,6 @@
             }
 
             function goToSlide(index, playSpeech = true, instantJump = false) {
-                // 手动或自动切换时，递增 Session ID 废弃上一个页面的所有未完成回调
                 currentSessionId++;
                 if ('speechSynthesis' in window) {
                     window.speechSynthesis.cancel();
@@ -585,7 +626,6 @@
                 }
             }
 
-            // 点击底部圆点直接跳转（立即切断当前并朗读新页）
             document.querySelectorAll('.dot-indicator').forEach(dot => {
                 dot.addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -597,7 +637,6 @@
                 });
             });
 
-            // 电脑端键盘支持（立即切断当前并朗读新页）
             window.addEventListener('keydown', (e) => {
                 if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
                     e.preventDefault();
@@ -612,7 +651,6 @@
                 }
             });
 
-            // 声音开关按钮事件
             document.querySelectorAll('.tts-toggle-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -632,7 +670,6 @@
 
             updateDots(currentIndex);
 
-            // 手动滑动滚动同步处理（当用户手指滑动页面停稳后，立即切断上一页语音并开始朗读新页面）
             let scrollTimeout;
             container.addEventListener('scroll', () => {
                 clearTimeout(scrollTimeout);
