@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AIR²Aim — Anna Intelligence Recorder & Reminder</title>
+    <style>
+        :root {
+            --bg-hero: #ffffff;
+            --bg-record: #f8f8f9;
+            --bg-remind: #ffffff;
+            --bg-follow: #f2f3f5;
+            --bg-footer: #0a0a0a;
+            
+            --text-primary: #111111;
+            --text-muted: #666666;
+            --text-inverse: #ffffff;
+            --text-inverse-muted: #999999;
+            
+            --border-light: rgba(0, 0, 0, 0.08);
+            --border-dark: rgba(255, 255, 255, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--bg-hero);
+            color: var(--text-primary);
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* --- UNIFIED FULL-SCREEN STORY CONTAINER --- */
+        .story-container {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        .story-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .story-slide {
+            flex: 0 0 100vw;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 60px 80px;
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .story-slide {
+                padding: 48px 32px 56px 32px;
+            }
+        }
+
+        .slide-hero {
+            background-color: var(--bg-hero);
+            color: var(--text-primary);
+        }
+
+        .slide-record {
+            background-color: var(--bg-record);
+            color: var(--text-primary);
+        }
+
+        .slide-remind {
+            background-color: var(--bg-remind);
+            color: var(--text-primary);
+        }
+
+        .slide-follow {
+            background-color: var(--bg-follow);
+            color: var(--text-primary);
+        }
+
+        .slide-development {
+            background-color: var(--bg-footer);
+            color: var(--text-inverse);
+        }
+
+        .slide-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .slide-brand-sm {
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            word-spacing: -0.15em;
+        }
+
+        /* 极简静音/喇叭切换按钮样式 */
+        .tts-toggle-btn {
+            background: none;
+            border: 1px solid currentColor;
+            opacity: 0.4;
+            color: inherit;
+            font-size: 0.7rem;
+            font-family: inherit;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .tts-toggle-btn.active {
+            opacity: 0.9;
+            border-color: currentColor;
+        }
+
+        .slide-body {
+            margin: auto 0;
+            max-width: 720px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .slide-hero-brand {
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+            word-spacing: -0.15em;
+        }
+
+        .slide-hero-fullname {
+            font-size: 1rem;
+            opacity: 0.6;
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        .slide-hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 400;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .slide-hero p {
+            font-size: clamp(1.1rem, 2vw, 1.35rem);
+            opacity: 0.7;
+            line-height: 1.5;
+        }
+
+        .slide-content h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 400;
+            letter-spacing: -0.03em;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .slide-content p {
+            font-size: clamp(1.15rem, 2vw, 1.4rem);
+            opacity: 0.7;
+            line-height: 1.5;
+        }
+
+        .slide-content p br {
+            display: block;
+            content: "";
+            margin-top: 6px;
+        }
+
+        .slide-development h2 {
+            color: var(--text-inverse);
+        }
+
+        .slide-development p {
+            color: var(--text-inverse-muted);
+        }
+
+        .slide-development .slide-brand-sm {
+            color: var(--text-inverse);
+        }
+
+        .status-meta-mobile {
+            font-size: 0.85rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            opacity: 0.5;
+            margin-top: 20px;
+        }
+
+        .contact-mobile {
+            margin-top: 36px;
+        }
+
+        .contact-mobile h4 {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+            opacity: 0.6;
+        }
+
+        .contact-mobile a {
+            color: var(--text-inverse);
+            text-decoration: none;
+            font-size: 1.15rem;
+        }
+
+        .contact-info-block {
+            margin-top: 28px;
+            font-size: 0.75rem;
+            opacity: 0.6;
+            line-height: 1.45;
+        }
+
+        .contact-info-block .info-line-2 {
+            display: block;
+            margin-top: 3px;
+        }
+
+        .slide-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding-top: 20px;
+        }
+
+        /* Pagination Dots Styling */
+        .pagination-dots {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .dot-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--text-primary);
+            opacity: 0.2;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .dot-indicator.active {
+            opacity: 0.85;
+            transform: scale(1.25);
+        }
+
+        /* Last slide (dark background) dot theme */
+        .mobile-slide.is-dark .dot-indicator,
+        .story-slide.is-dark .dot-indicator {
+            background-color: #ffffff;
+            opacity: 0.25;
+        }
+
+        .mobile-slide.is-dark .dot-indicator.active,
+        .story-slide.is-dark .dot-indicator.active {
+            opacity: 0.95;
+        }
+
+        /* 右下角单行语言选择器样式 */
+        .slide-footer-lang {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.5;
+            white-space: nowrap;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .slide-footer-lang a {
+            color: inherit;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+            opacity: 1;
+            font-weight: 600;
+            border-bottom: 1px solid currentColor;
+            padding-bottom: 1px;
+        }
+
+        .slide-footer-lang a:hover {
+            opacity: 0.8;
+        }
+
+        .slide-footer-lang span.current-lang {
+            opacity: 0.35;
+            font-weight: 400;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .slide-footer-lang span.inactive {
+            opacity: 1;
+            font-weight: 600;
+            border-bottom: 1px solid currentColor;
+            padding-bottom: 1px;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= UNIFIED FULL-SCREEN STORY CONTAINER ================= -->
+    <div class="story-container" id="storyContainer">
+        
+        <!-- Screen 01 — Hero -->
+        <div class="story-slide slide-hero" data-speech-chunks='["Air 2 Aim. Anna. Intelligence Recorder and Reminder.", "Записывайте то, что важно. Получайте напоминания вовремя.", "Голосовое приложение, созданное для фиксации главного и своевременных напоминаний."]'>
+            <div class="slide-top">
+                <div class="slide-brand-sm">AIR² Aim</div>
+                <button class="tts-toggle-btn active" id="ttsToggle">Sound: ON</button>
+            </div>
+            <div class="slide-body">
+                <div class="slide-hero-brand">AIR² Aim</div>
+                <div class="slide-hero-fullname">Anna Intelligence Recorder & Reminder</div>
+                <h1>
+                    Записывайте то, что важно.<br>
+                    Получайте напоминания вовремя.
+                </h1>
+                <p>
+                    Голосовое приложение, созданное для фиксации главного и своевременных напоминаний.
+                </p>
+            </div>
+            <div class="slide-footer">
+                <div class="pagination-dots">
+                    <span class="dot-indicator" data-index="0"></span>
+                    <span class="dot-indicator" data-index="1"></span>
+                    <span class="dot-indicator" data-index="2"></span>
+                    <span class="dot-indicator" data-index="3"></span>
+                    <span class="dot-indicator" data-index="4"></span>
+                </div>
+                <div class="slide-footer-lang">
+                    <a href="/">EN</a> · <a href="/zh/">中文</a> · <span class="inactive">日本語</span> · <span class="current-lang">Русский</span> · <span class="inactive">FR</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 02 — Record -->
+        <div class="story-slide slide-record" data-speech-chunks='["ЗАПИСЬ", "Мысли, задачи, планы. Зафиксировано вовремя.", "Скажите.", "Сформулируйте.", "Сохраните."]'>
+            <div class="slide-top">
+                <div class="slide-brand-sm">AIR² Aim</div>
+                <button class="tts-toggle-btn active tts-toggle-btn-sync">Sound: ON</button>
+            </div>
+            <div class="slide-body slide-content">
+                <h2>ЗАПИСЬ</h2>
+                <p>
+                    Мысли, задачи, планы.<br>
+                    Зафиксировано вовремя.<br>
+                    Скажите.<br>
+                    Сформулируйте.<br>
+                    Сохраните.
+                </p>
+            </div>
+            <div class="slide-footer">
+                <div class="pagination-dots">
+                    <span class="dot-indicator" data-index="0"></span>
+                    <span class="dot-indicator" data-index="1"></span>
+                    <span class="dot-indicator" data-index="2"></span>
+                    <span class="dot-indicator" data-index="3"></span>
+                    <span class="dot-indicator" data-index="4"></span>
+                </div>
+                <div class="slide-footer-lang">
+                    <a href="/">EN</a> · <a href="/zh/">中文</a> · <span class="inactive">日本語</span> · <span class="current-lang">Русский</span> · <span class="inactive">FR</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 03 — Remind -->
+        <div class="story-slide slide-remind" data-speech-chunks='["НАПОМИНАНИЕ", "Именно то, что нужно, в нужный момент.", "Точно тогда, когда это важно."]'>
+            <div class="slide-top">
+                <div class="slide-brand-sm">AIR² Aim</div>
+                <button class="tts-toggle-btn active tts-toggle-btn-sync">Sound: ON</button>
+            </div>
+            <div class="slide-body slide-content">
+                <h2>НАПОМИНАНИЕ</h2>
+                <p>
+                    Именно то, что нужно, в нужный момент.<br>
+                    Точно тогда, когда это важно.
+                </p>
+            </div>
+            <div class="slide-footer">
+                <div class="pagination-dots">
+                    <span class="dot-indicator" data-index="0"></span>
+                    <span class="dot-indicator" data-index="1"></span>
+                    <span class="dot-indicator" data-index="2"></span>
+                    <span class="dot-indicator" data-index="3"></span>
+                    <span class="dot-indicator" data-index="4"></span>
+                </div>
+                <div class="slide-footer-lang">
+                    <a href="/">EN</a> · <a href="/zh/">中文</a> · <span class="inactive">日本語</span> · <span class="current-lang">Русский</span> · <span class="inactive">FR</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 04 — Follow up -->
+        <div class="story-slide slide-follow" data-speech-chunks='["ПРОДОЛЖЕНИЕ", "Напоминание становится моментом для действия.", "Подтвердить. Отложить. Двигаться дальше.", "Один момент ведет к другому."]'>
+            <div class="slide-top">
+                <div class="slide-brand-sm">AIR² Aim</div>
+                <button class="tts-toggle-btn active tts-toggle-btn-sync">Sound: ON</button>
+            </div>
+            <div class="slide-body slide-content">
+                <h2>ПРОДОЛЖЕНИЕ</h2>
+                <p>
+                    Напоминание становится моментом для действия.<br>
+                    Подтвердить. Отложить. Двигаться дальше.<br>
+                    Один момент ведет к другому.
+                </p>
+            </div>
+            <div class="slide-footer">
+                <div class="pagination-dots">
+                    <span class="dot-indicator" data-index="0"></span>
+                    <span class="dot-indicator" data-index="1"></span>
+                    <span class="dot-indicator" data-index="2"></span>
+                    <span class="dot-indicator" data-index="3"></span>
+                    <span class="dot-indicator" data-index="4"></span>
+                </div>
+                <div class="slide-footer-lang">
+                    <a href="/">EN</a> · <a href="/zh/">中文</a> · <span class="inactive">日本語</span> · <span class="current-lang">Русский</span> · <span class="inactive">FR</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 05 — Development / Contact -->
+        <div class="story-slide slide-development is-dark" data-speech-chunks='["Air 2 Aim in development.", "Prototype under testing."]'>
+            <div class="slide-top">
+                <div class="slide-brand-sm">AIR² Aim</div>
+                <button class="tts-toggle-btn active tts-toggle-btn-sync" style="border-color: #ffffff; color: #ffffff;">Sound: ON</button>
+            </div>
+            <div class="slide-body slide-content">
+                <h2>AIR² Aim in development.</h2>
+                <p>Prototype under testing.</p>
+                <div class="status-meta-mobile">Prototype · 2026</div>
+
+                <div class="contact-mobile">
+                    <h4>Contact</h4>
+                    <a href="mailto:hahasmilegood@hotmail.com">hahasmilegood@hotmail.com</a>
+                    
+                    <div class="contact-info-block">
+                        Anna Intelligence Recorder & Reminder
+                        <span class="info-line-2">Developed in Yerevan, Armenia · 2026</span>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="pagination-dots">
+                    <span class="dot-indicator" data-index="0"></span>
+                    <span class="dot-indicator" data-index="1"></span>
+                    <span class="dot-indicator" data-index="2"></span>
+                    <span class="dot-indicator" data-index="3"></span>
+                    <span class="dot-indicator" data-index="4"></span>
+                </div>
+                <div class="slide-footer-lang">
+                    <a href="/">EN</a> · <a href="/zh/">中文</a> · <span class="inactive">日本語</span> · <span class="current-lang">Русский</span> · <span class="inactive">FR</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Unified Story Mode & Robust Russian Speech Script -->
+    <script>
+        const container = document.getElementById('storyContainer');
+        const slides = document.querySelectorAll('.story-slide');
+        
+        if (container && slides.length > 0) {
+            let currentIndex = 0;
+            let isSoundEnabled = true;
+            let isAudioUnlocked = false;
+            let currentSessionId = 0;
+
+            function updateSoundButtons() {
+                const buttons = document.querySelectorAll('.tts-toggle-btn');
+                buttons.forEach(btn => {
+                    if (isSoundEnabled) {
+                        btn.textContent = 'Sound: ON';
+                        btn.classList.add('active');
+                    } else {
+                        btn.textContent = 'Sound: OFF';
+                        btn.classList.remove('active');
+                    }
+                });
+            }
+
+            function speakSlideChunks(index) {
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel();
+                    
+                    if (!isSoundEnabled || !isAudioUnlocked) return;
+
+                    const rawChunks = slides[index].getAttribute('data-speech-chunks');
+                    if (!rawChunks) return;
+
+                    try {
+                        const chunks = JSON.parse(rawChunks);
+                        if (!Array.isArray(chunks) || chunks.length === 0) return;
+
+                        const sessionId = ++currentSessionId;
+
+                        setTimeout(() => {
+                            if (!isSoundEnabled || currentIndex !== index || sessionId !== currentSessionId) return;
+
+                            let chunkIndex = 0;
+
+                            function playNextChunk() {
+                                if (!isSoundEnabled || currentIndex !== index || sessionId !== currentSessionId) return;
+
+                                if (chunkIndex < chunks.length) {
+                                    const text = chunks[chunkIndex];
+                                    chunkIndex++;
+
+                                    const utterance = new SpeechSynthesisUtterance(text);
+                                    if (index === 0 && chunkIndex === 1) {
+                                        utterance.lang = 'en-US';
+                                    } else if (index === 4) {
+                                        utterance.lang = 'en-US';
+                                    } else {
+                                        utterance.lang = 'ru-RU';
+                                    }
+                                    utterance.rate = 0.90;
+
+                                    utterance.onend = () => {
+                                        if (!isSoundEnabled || currentIndex !== index || sessionId !== currentSessionId) return;
+                                        
+                                        if (chunkIndex < chunks.length) {
+                                            setTimeout(playNextChunk, 500);
+                                        } else {
+                                            setTimeout(() => {
+                                                if (isSoundEnabled && currentIndex === index && sessionId === currentSessionId) {
+                                                    moveToNextSlide();
+                                                }
+                                            }, 500);
+                                        }
+                                    };
+
+                                    window.speechSynthesis.speak(utterance);
+                                }
+                            }
+
+                            playNextChunk();
+                        }, 350);
+                    } catch (e) {
+                        console.error(e);
+                    }
+                }
+            }
+
+            function updateDots(activeIdx) {
+                slides.forEach((slide) => {
+                    const dots = slide.querySelectorAll('.dot-indicator');
+                    dots.forEach((dot) => {
+                        const dotIdx = parseInt(dot.getAttribute('data-index'));
+                        if (dotIdx === activeIdx) {
+                            dot.classList.add('active');
+                        } else {
+                            dot.classList.remove('active');
+                        }
+                    });
+                });
+            }
+
+            function goToSlide(index, playSpeech = true, instantJump = false) {
+                currentSessionId++;
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel();
+                }
+
+                currentIndex = index;
+                const slideWidth = container.clientWidth;
+                
+                if (instantJump) {
+                    container.scrollTo({
+                        left: 0,
+                        behavior: 'auto'
+                    });
+                } else {
+                    container.scrollTo({
+                        left: currentIndex * slideWidth,
+                        behavior: 'smooth'
+                    });
+                }
+                updateDots(currentIndex);
+
+                if (playSpeech) {
+                    speakSlideChunks(currentIndex);
+                }
+            }
+
+            function moveToNextSlide() {
+                if (currentIndex < slides.length - 1) {
+                    currentIndex++;
+                    goToSlide(currentIndex, true, false);
+                } else {
+                    currentIndex = 0;
+                    goToSlide(0, true, true);
+                }
+            }
+
+            function unlockAudio() {
+                if (!isAudioUnlocked) {
+                    isAudioUnlocked = true;
+                    if ('speechSynthesis' in window) {
+                        window.speechSynthesis.resume();
+                        goToSlide(currentIndex, true, false);
+                    }
+                }
+            }
+
+            document.querySelectorAll('.dot-indicator').forEach(dot => {
+                dot.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const targetIndex = parseInt(dot.getAttribute('data-index'));
+                    if (!isNaN(targetIndex) && targetIndex !== currentIndex) {
+                        unlockAudio();
+                        goToSlide(targetIndex, isSoundEnabled, false);
+                    }
+                });
+            });
+
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+                    e.preventDefault();
+                    unlockAudio();
+                    moveToNextSlide();
+                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    unlockAudio();
+                    let prevIndex = currentIndex - 1;
+                    if (prevIndex < 0) prevIndex = slides.length - 1;
+                    goToSlide(prevIndex, isSoundEnabled, false);
+                }
+            });
+
+            document.querySelectorAll('.tts-toggle-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    isSoundEnabled = !isSoundEnabled;
+                    updateSoundButtons();
+                    if (!isSoundEnabled) {
+                        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+                    } else {
+                        unlockAudio();
+                        speakSlideChunks(currentIndex);
+                    }
+                });
+            });
+
+            document.body.addEventListener('touchstart', unlockAudio, { once: true, passive: true });
+            document.body.addEventListener('click', unlockAudio, { once: true });
+
+            updateDots(currentIndex);
+
+            let scrollTimeout;
+            container.addEventListener('scroll', () => {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    const scrollLeft = container.scrollLeft;
+                    const slideWidth = container.clientWidth;
+                    const calculatedIndex = Math.round(scrollLeft / slideWidth);
+                    if (calculatedIndex !== currentIndex && calculatedIndex >= 0 && calculatedIndex < slides.length) {
+                        currentIndex = calculatedIndex;
+                        updateDots(currentIndex);
+                        if (isSoundEnabled) {
+                            speakSlideChunks(currentIndex);
+                        } else {
+                            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+                        }
+                    }
+                }, 200);
+            }, { passive: true });
+        }
+    </script>
+</body>
+</html>
