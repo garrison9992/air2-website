@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIR² Aim — Anna Intelligence Recorder & Reminder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AIR²Aim — Anna Intelligence Recorder & Reminder</title>
     <style>
         :root {
             --bg-hero: #ffffff;
@@ -27,467 +27,277 @@
             padding: 0;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
             background-color: var(--bg-hero);
             color: var(--text-primary);
             font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            overflow-x: hidden;
         }
 
-        /* --- DESKTOP VIEW (Vertical Flow) --- */
-        .desktop-container {
-            display: block;
-            max-width: 1140px;
+        /* --- UNIFIED FULL-SCREEN STORY CONTAINER --- */
+        .story-container {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        .story-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .story-slide {
+            flex: 0 0 100vw;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 60px 80px;
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .story-slide {
+                padding: 48px 32px 56px 32px;
+            }
+        }
+
+        .slide-hero {
+            background-color: var(--bg-hero);
+            color: var(--text-primary);
+        }
+
+        .slide-record {
+            background-color: var(--bg-record);
+            color: var(--text-primary);
+        }
+
+        .slide-remind {
+            background-color: var(--bg-remind);
+            color: var(--text-primary);
+        }
+
+        .slide-follow {
+            background-color: var(--bg-follow);
+            color: var(--text-primary);
+        }
+
+        .slide-development {
+            background-color: var(--bg-footer);
+            color: var(--text-inverse);
+        }
+
+        .slide-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            width: 100%;
             margin: 0 auto;
-            padding: 0 32px;
         }
 
-        .desktop-section {
-            padding: 140px 0;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .desktop-section:last-of-type {
-            border-bottom: none;
-            padding-bottom: 100px;
-        }
-
-        .desktop-hero {
-            padding-top: 80px;
-            padding-bottom: 140px;
-        }
-
-        .brand-logo {
-            font-size: clamp(1.5rem, 3vw, 2.2rem);
+        .slide-brand-sm {
+            font-size: 1.25rem;
             font-weight: 600;
             letter-spacing: -0.02em;
-            color: var(--text-primary);
-            text-decoration: none;
-            display: inline-block;
-            margin-bottom: 16px;
+            word-spacing: -0.15em;
         }
 
-        .brand-fullname {
-            font-size: 1rem;
-            color: var(--text-muted);
-            letter-spacing: -0.01em;
-            margin-bottom: 60px;
-            font-weight: 400;
-        }
-
-        .desktop-hero h1 {
-            font-size: clamp(3rem, 6vw, 5.5rem);
-            font-weight: 400;
-            letter-spacing: -0.03em;
-            line-height: 1.08;
-            margin-bottom: 32px;
-            max-width: 900px;
-        }
-
-        .desktop-hero p {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            max-width: 620px;
-            line-height: 1.5;
-        }
-
-        .section-tag {
-            font-size: 0.85rem;
+        /* 极简静音/喇叭切换按钮样式 */
+        .tts-toggle-btn {
+            background: none;
+            border: 1px solid currentColor;
+            opacity: 0.4;
+            color: inherit;
+            font-size: 0.7rem;
+            font-family: inherit;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-muted);
-            margin-bottom: 24px;
-            font-variant-numeric: tabular-nums;
-            display: block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
         }
 
-        .desktop-section h2 {
-            font-size: clamp(2.2rem, 4vw, 3.5rem);
+        .tts-toggle-btn.active {
+            opacity: 0.9;
+            border-color: currentColor;
+        }
+
+        .slide-body {
+            margin: auto 0;
+            max-width: 720px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .slide-hero-brand {
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+            word-spacing: -0.15em;
+        }
+
+        .slide-hero-fullname {
+            font-size: 1rem;
+            opacity: 0.6;
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        .slide-hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
             font-weight: 400;
             letter-spacing: -0.03em;
+            line-height: 1.1;
             margin-bottom: 24px;
-            line-height: 1.15;
-            max-width: 800px;
         }
 
-        .desktop-section p {
-            font-size: 1.15rem;
-            color: var(--text-muted);
-            max-width: 640px;
+        .slide-hero p {
+            font-size: clamp(1.1rem, 2vw, 1.35rem);
+            opacity: 0.7;
             line-height: 1.5;
         }
 
-        .desktop-section p br {
+        .slide-content h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 400;
+            letter-spacing: -0.03em;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .slide-content p {
+            font-size: clamp(1.15rem, 2vw, 1.4rem);
+            opacity: 0.7;
+            line-height: 1.5;
+        }
+
+        .slide-content p br {
             display: block;
             content: "";
             margin-top: 6px;
         }
 
-        .status-meta-desktop {
-            margin-top: 24px;
+        .slide-development h2 {
+            color: var(--text-inverse);
+        }
+
+        .slide-development p {
+            color: var(--text-inverse-muted);
+        }
+
+        .slide-development .slide-brand-sm {
+            color: var(--text-inverse);
+        }
+
+        .status-meta-mobile {
             font-size: 0.85rem;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            color: var(--text-muted);
+            opacity: 0.5;
+            margin-top: 20px;
         }
 
-        .contact-box-desktop {
-            margin-top: 40px;
+        .contact-mobile {
+            margin-top: 36px;
         }
 
-        .contact-box-desktop h3 {
-            font-size: 0.95rem;
+        .contact-mobile h4 {
+            font-size: 0.9rem;
             font-weight: 500;
-            margin-bottom: 12px;
-            letter-spacing: -0.01em;
+            margin-bottom: 10px;
+            opacity: 0.6;
         }
 
-        .contact-box-desktop a {
-            color: var(--text-primary);
+        .contact-mobile a {
+            color: var(--text-inverse);
             text-decoration: none;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
         }
 
-        .contact-box-desktop a:hover {
-            opacity: 0.7;
-        }
-
-        .desktop-footer {
-            padding: 60px 0 100px 0;
+        .slide-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            border-top: 1px solid var(--border-light);
-            margin-top: 40px;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding-top: 20px;
         }
 
-        /* --- MOBILE CONTAINER (Hidden on Desktop) --- */
-        .mobile-container {
-            display: none;
+        /* Pagination Dots Styling */
+        .pagination-dots {
+            display: flex;
+            gap: 10px;
+            align-items: center;
         }
 
-        /* --- RESPONSIVE LOGIC: MOBILE HORIZONTAL SNAP --- */
-        @media (max-width: 768px) {
-            .desktop-container {
-                display: none !important;
-            }
+        .dot-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--text-primary);
+            opacity: 0.2;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+        }
 
-            .mobile-container {
-                display: flex !important;
-                width: 100vw;
-                height: 100vh;
-                overflow-x: scroll;
-                overflow-y: hidden;
-                scroll-snap-type: x mandatory;
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: none;
-            }
+        .dot-indicator.active {
+            opacity: 0.85;
+            transform: scale(1.25);
+        }
 
-            .mobile-container::-webkit-scrollbar {
-                display: none;
-            }
+        /* Last slide (dark background) dot theme */
+        .mobile-slide.is-dark .dot-indicator,
+        .story-slide.is-dark .dot-indicator {
+            background-color: #ffffff;
+            opacity: 0.25;
+        }
 
-            .mobile-slide {
-                flex: 0 0 100vw;
-                width: 100vw;
-                height: 100vh;
-                scroll-snap-align: start;
-                scroll-snap-stop: always;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                padding: 48px 32px 56px 32px;
-                position: relative;
-            }
+        .mobile-slide.is-dark .dot-indicator.active,
+        .story-slide.is-dark .dot-indicator.active {
+            opacity: 0.95;
+        }
 
-            .slide-hero {
-                background-color: var(--bg-hero);
-                color: var(--text-primary);
-            }
-
-            .slide-record {
-                background-color: var(--bg-record);
-                color: var(--text-primary);
-            }
-
-            .slide-remind {
-                background-color: var(--bg-remind);
-                color: var(--text-primary);
-            }
-
-            .slide-follow {
-                background-color: var(--bg-follow);
-                color: var(--text-primary);
-            }
-
-            .slide-development {
-                background-color: var(--bg-footer);
-                color: var(--text-inverse);
-            }
-
-            .slide-top {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            .slide-brand-sm {
-                font-size: 1.25rem;
-                font-weight: 600;
-                letter-spacing: -0.02em;
-            }
-
-            /* 极简静音/喇叭切换按钮样式 */
-            .tts-toggle-btn {
-                background: none;
-                border: 1px solid currentColor;
-                opacity: 0.4;
-                color: inherit;
-                font-size: 0.7rem;
-                font-family: inherit;
-                letter-spacing: 0.05em;
-                text-transform: uppercase;
-                padding: 4px 10px;
-                border-radius: 20px;
-                cursor: pointer;
-                transition: opacity 0.3s ease;
-            }
-
-            .tts-toggle-btn.active {
-                opacity: 0.9;
-                border-color: currentColor;
-            }
-
-            .slide-body {
-                margin: auto 0;
-                max-width: 340px;
-            }
-
-            .slide-hero-brand {
-                font-size: 2rem;
-                font-weight: 600;
-                letter-spacing: -0.02em;
-                margin-bottom: 8px;
-            }
-
-            .slide-hero-fullname {
-                font-size: 0.9rem;
-                opacity: 0.6;
-                margin-bottom: 40px;
-                font-weight: 400;
-            }
-
-            .slide-hero h1 {
-                font-size: 2.35rem;
-                font-weight: 400;
-                letter-spacing: -0.03em;
-                line-height: 1.12;
-                margin-bottom: 24px;
-            }
-
-            .slide-hero p {
-                font-size: 1.05rem;
-                opacity: 0.7;
-                line-height: 1.5;
-            }
-
-            .slide-content h2 {
-                font-size: 2.5rem;
-                font-weight: 400;
-                letter-spacing: -0.03em;
-                margin-bottom: 16px;
-                line-height: 1.1;
-            }
-
-            .slide-content p {
-                font-size: 1.1rem;
-                opacity: 0.7;
-                line-height: 1.5;
-            }
-
-            .slide-content p br {
-                display: block;
-                content: "";
-                margin-top: 4px;
-            }
-
-            .slide-development h2 {
-                color: var(--text-inverse);
-            }
-
-            .slide-development p {
-                color: var(--text-inverse-muted);
-            }
-
-            .slide-development .slide-brand-sm {
-                color: var(--text-inverse);
-            }
-
-            .status-meta-mobile {
-                font-size: 0.75rem;
-                letter-spacing: 0.08em;
-                text-transform: uppercase;
-                opacity: 0.5;
-                margin-top: 16px;
-            }
-
-            .contact-mobile {
-                margin-top: 32px;
-            }
-
-            .contact-mobile h4 {
-                font-size: 0.85rem;
-                font-weight: 500;
-                margin-bottom: 8px;
-                opacity: 0.6;
-            }
-
-            .contact-mobile a {
-                color: var(--text-inverse);
-                text-decoration: none;
-                font-size: 1rem;
-            }
-
-            .slide-footer {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                width: 100%;
-                padding-top: 16px;
-            }
-
-            /* Pagination Dots Styling */
-            .pagination-dots {
-                display: flex;
-                gap: 8px;
-                align-items: center;
-            }
-
-            .dot-indicator {
-                width: 7px;
-                height: 7px;
-                border-radius: 50%;
-                background-color: var(--text-primary);
-                opacity: 0.2;
-                transition: opacity 0.3s ease, transform 0.3s ease;
-            }
-
-            .dot-indicator.active {
-                opacity: 0.85;
-                transform: scale(1.2);
-            }
-
-            /* Last slide (dark background) dot theme */
-            .mobile-slide.is-dark .dot-indicator {
-                background-color: #ffffff;
-                opacity: 0.25;
-            }
-
-            .mobile-slide.is-dark .dot-indicator.active {
-                opacity: 0.95;
-            }
-
-            /* Optimized right-side footer text for small/varying mobile screens */
-            .slide-footer-info {
-                font-size: 0.62rem;
-                opacity: 0.6;
-                line-height: 1.45;
-                text-align: right;
-                max-width: 62%;
-            }
-            
-            .slide-footer-info .footer-line-2 {
-                display: block;
-                margin-top: 3px;
-            }
+        .slide-footer-info {
+            font-size: 0.75rem;
+            opacity: 0.6;
+            line-height: 1.45;
+            text-align: right;
+        }
+        
+        .slide-footer-info .footer-line-2 {
+            display: block;
+            margin-top: 3px;
         }
     </style>
 </head>
 <body>
 
-    <!-- ================= DESKTOP VIEW ================= -->
-    <div class="desktop-container">
-        
-        <!-- Hero Section -->
-        <section class="desktop-section desktop-hero">
-            <div class="brand-logo">AIR² Aim</div>
-            <div class="brand-fullname">Anna Intelligence Recorder & Reminder</div>
-            <h1>
-                Record what matters.<br>
-                Be reminded when it matters.
-            </h1>
-            <p>
-                A voice-first product designed to help people record what matters and be reminded when it matters.
-            </p>
-        </section>
-
-        <!-- Record Section -->
-        <section class="desktop-section">
-            <span class="section-tag">01 — Record</span>
-            <h2>RECORD</h2>
-            <p>
-                Thoughts, tasks, plans.<br>
-                Captured when they matter.
-            </p>
-        </section>
-
-        <!-- Remind Section -->
-        <section class="desktop-section">
-            <span class="section-tag">02 — Remind</span>
-            <h2>REMIND</h2>
-            <p>
-                The right thing, at the right time.<br>
-                Brought back when it matters.
-            </p>
-        </section>
-
-        <!-- Follow up Section -->
-        <section class="desktop-section">
-            <span class="section-tag">03 — Follow up</span>
-            <h2>FOLLOW UP</h2>
-            <p>
-                A reminder becomes a moment to act.<br>
-                Confirm. Postpone. Keep moving.
-            </p>
-        </section>
-
-        <!-- Development / Contact Section -->
-        <section class="desktop-section" style="background-color: var(--bg-footer); color: var(--text-inverse); margin: 0 -32px; padding-left: 32px; padding-right: 32px; border-bottom: none;">
-            <div style="max-width: 1076px; margin: 0 auto;">
-                <span class="section-tag" style="color: var(--text-inverse-muted);">04 — Status & Contact</span>
-                <h2 style="color: var(--text-inverse);">AIR² Aim in development.</h2>
-                <p style="color: var(--text-inverse-muted); margin-bottom: 24px;">Prototype under testing.</p>
-                <div class="status-meta-desktop" style="color: var(--text-inverse-muted);">Prototype · 2026</div>
-
-                <div class="contact-box-desktop">
-                    <h3 style="color: var(--text-inverse-muted);">Contact</h3>
-                    <a href="mailto:hahasmilegood@hotmail.com">hahasmilegood@hotmail.com</a>
-                </div>
-
-                <div class="desktop-footer">
-                    <div>AIR² — Anna Intelligence Recorder & Reminder</div>
-                    <div>Developed in Yerevan, Armenia · 2026</div>
-                </div>
-            </div>
-        </section>
-
-    </div>
-
-
-    <!-- ================= MOBILE HORIZONTAL SNAP VIEW ================= -->
-    <div class="mobile-container" id="mobileContainer">
+    <!-- ================= UNIFIED FULL-SCREEN STORY CONTAINER ================= -->
+    <div class="story-container" id="storyContainer">
         
         <!-- Screen 01 — Hero -->
-        <div class="mobile-slide slide-hero" data-speech="Record what matters. Be reminded when it matters. A voice-first product designed to help people record what matters and be reminded when it matters.">
+        <div class="story-slide slide-hero" data-speech-chunks='["AIR² Aim, an intelligence recorder and reminder.", "Record what matters. Be reminded when it matters.", "A voice-first product designed to help people record what matters and be reminded when it matters."]'>
             <div class="slide-top">
                 <div class="slide-brand-sm">AIR² Aim</div>
                 <button class="tts-toggle-btn active" id="ttsToggle">Sound: ON</button>
@@ -505,18 +315,18 @@
             </div>
             <div class="slide-footer">
                 <div class="pagination-dots">
-                    <span class="dot-indicator active"></span>
-                    <span class="dot-indicator"></span>
-                    <span class="dot-indicator"></span>
-                    <span class="dot-indicator"></span>
-                    <span class="dot-indicator"></span>
+                    <span class="dot-indicator" data-index="0"></span>
+                    <span class="dot-indicator" data-index="1"></span>
+                    <span class="dot-indicator" data-index="2"></span>
+                    <span class="dot-indicator" data-index="3"></span>
+                    <span class="dot-indicator" data-index="4"></span>
                 </div>
                 <div class="slide-footer-info">AIR² Aim</div>
             </div>
         </div>
 
         <!-- Screen 02 — Record -->
-        <div class="mobile-slide slide-record" data-speech="Record. Thoughts, tasks, plans. Captured when they matter.">
+        <div class="story-slide slide-record" data-speech-chunks='["RECORD", "Thoughts, tasks, plans. Captured when they matter.", "Say it.", "Shape it.", "Save it."]'>
             <div class="slide-top">
                 <div class="slide-brand-sm">AIR² Aim</div>
                 <button class="tts-toggle-btn active tts-toggle-btn-sync">Sound: ON</button>
@@ -525,23 +335,26 @@
                 <h2>RECORD</h2>
                 <p>
                     Thoughts, tasks, plans.<br>
-                    Captured when they matter.
+                    Captured when they matter.<br>
+                    Say it.<br>
+                    Shape it.<br>
+                    Save it.
                 </p>
             </div>
             <div class="slide-footer">
                 <div class="pagination-dots">
-                    <span class="dot-indicator"></span>
-                    <span class="dot-indicator active"></span>
-                    <span class="dot-indicator"></span>
-                    <span class="dot-indicator"></span>
-                    <span class="dot-indicator"></span>
+                    <span class="dot-indicator" data-index="0"></span>
+                    <span class="dot-indicator" data-index="1"></span>
+                    <span class="dot-indicator" data-index="2"></span>
+                    <span class="dot-indicator" data-index="3"></span>
+                    <span class="dot-indicator" data-index="4"></span>
                 </div>
                 <div class="slide-footer-info">AIR² Aim</div>
             </div>
         </div>
 
         <!-- Screen 03 — Remind -->
-        <div class="mobile-slide slide-remind" data-speech="Remind. The right thing, at the right time. Brought back when it matters.">
+        <div class="story-slide slide-remind" data-speech-chunks='["REMIND", "The right thing, at the right time.", "Right when it matters."]'>
             <div class="slide-top">
                 <div class="slide-brand-sm">AIR² Aim</div>
                 <button class="tts-toggle-btn active tts-toggle-btn-sync">Sound: ON</button>
@@ -550,23 +363,23 @@
                 <h2>REMIND</h2>
                 <p>
                     The right thing, at the right time.<br>
-                    Brought back when it matters.
+                    Right when it matters.
                 </p>
             </div>
             <div class="slide-footer">
                 <div class="pagination-dots">
-                    <span class="dot-indicator"></span>
-                    <span class="dot-indicator"></span>
-                    <span class="dot-indicator active"></span>
-                    <span class="dot-indicator"></span>
-                    <span class="dot-indicator"></span>
+                    <span class="dot-indicator" data-index="0"></span>
+                    <span class="dot-indicator" data-index="1"></span>
+                    <span class="dot-indicator" data-index="2"></span>
+                    <span class="dot-indicator" data-index="3"></span>
+                    <span class="dot-indicator" data-index="4"></span>
                 </div>
                 <div class="slide-footer-info">AIR² Aim</div>
             </div>
         </div>
 
         <!-- Screen 04 — Follow up -->
-        <div class="mobile-slide slide-follow" data-speech="Follow up. A reminder becomes a moment to act. Confirm. Postpone. Keep moving.">
+        <div class="story-slide slide-follow" data-speech-chunks='["FOLLOW UP", "A reminder becomes a moment to act.", "Confirm. Postpone. Keep moving.", "One moment leads to the next."]'>
             <div class="slide-top">
                 <div class="slide-brand-sm">AIR² Aim</div>
                 <button class="tts-toggle-btn active tts-toggle-btn-sync">Sound: ON</button>
@@ -575,23 +388,24 @@
                 <h2>FOLLOW UP</h2>
                 <p>
                     A reminder becomes a moment to act.<br>
-                    Confirm. Postpone. Keep moving.
+                    Confirm. Postpone. Keep moving.<br>
+                    One moment leads to the next.
                 </p>
             </div>
             <div class="slide-footer">
                 <div class="pagination-dots">
-                    <span class="dot-indicator"></span>
-                    <span class="dot-indicator"></span>
-                    <span class="dot-indicator"></span>
-                    <span class="dot-indicator active"></span>
-                    <span class="dot-indicator"></span>
+                    <span class="dot-indicator" data-index="0"></span>
+                    <span class="dot-indicator" data-index="1"></span>
+                    <span class="dot-indicator" data-index="2"></span>
+                    <span class="dot-indicator" data-index="3"></span>
+                    <span class="dot-indicator" data-index="4"></span>
                 </div>
                 <div class="slide-footer-info">AIR² Aim</div>
             </div>
         </div>
 
         <!-- Screen 05 — Development / Contact -->
-        <div class="mobile-slide slide-development is-dark" data-speech="AIR 2 Aim in development. Prototype under testing.">
+        <div class="story-slide slide-development is-dark" data-speech-chunks='["AIR 2 Aim in development.", "Prototype under testing."]'>
             <div class="slide-top">
                 <div class="slide-brand-sm">AIR² Aim</div>
                 <button class="tts-toggle-btn active tts-toggle-btn-sync" style="border-color: #ffffff; color: #ffffff;">Sound: ON</button>
@@ -608,11 +422,11 @@
             </div>
             <div class="slide-footer">
                 <div class="pagination-dots">
-                    <span class="dot-indicator"></span>
-                    <span class="dot-indicator"></span>
-                    <span class="dot-indicator"></span>
-                    <span class="dot-indicator"></span>
-                    <span class="dot-indicator active"></span>
+                    <span class="dot-indicator" data-index="0"></span>
+                    <span class="dot-indicator" data-index="1"></span>
+                    <span class="dot-indicator" data-index="2"></span>
+                    <span class="dot-indicator" data-index="3"></span>
+                    <span class="dot-indicator" data-index="4"></span>
                 </div>
                 <div class="slide-footer-info">
                     AIR² — Anna Intelligence Recorder & Reminder
@@ -623,16 +437,17 @@
 
     </div>
 
-    <!-- Perfect Unidirectional Loop & Strict Isolated Speech Script -->
+    <!-- Unified Story Mode & Multi-chunk Paragraph Paused Speech Script -->
     <script>
-        const container = document.getElementById('mobileContainer');
-        const slides = document.querySelectorAll('.mobile-slide');
+        const container = document.getElementById('storyContainer');
+        const slides = document.querySelectorAll('.story-slide');
         
         if (container && slides.length > 0) {
             let currentIndex = 0;
             let isSoundEnabled = true;
             let isAudioUnlocked = false;
             let fallbackTimer = null;
+            let activeUtterance = null;
 
             function updateSoundButtons() {
                 const buttons = document.querySelectorAll('.tts-toggle-btn');
@@ -647,33 +462,57 @@
                 });
             }
 
-            // 严格隔离：只播报当前索引对应页面的文字，绝不混淆
-            function speakSlide(index) {
+            // 按段落数组依次播报，段落间停顿 0.5 秒
+            function speakSlideChunks(index) {
                 if ('speechSynthesis' in window) {
-                    window.speechSynthesis.cancel(); // 掐断上一页任何残留声音
+                    window.speechSynthesis.cancel();
                     
                     if (!isSoundEnabled || !isAudioUnlocked) return;
 
-                    const text = slides[index].getAttribute('data-speech');
-                    if (text) {
-                        // 稳定停顿 350ms 后发声，防止首个单词卡断
+                    const rawChunks = slides[index].getAttribute('data-speech-chunks');
+                    if (!rawChunks) return;
+
+                    try {
+                        const chunks = JSON.parse(rawChunks);
+                        if (!Array.isArray(chunks) || chunks.length === 0) return;
+
                         setTimeout(() => {
                             if (!isSoundEnabled || currentIndex !== index) return;
-                            
-                            const utterance = new SpeechSynthesisUtterance(text);
-                            utterance.lang = 'en-US';
-                            utterance.rate = 0.92;
 
-                            utterance.onend = () => {
-                                if (isSoundEnabled && currentIndex === index) {
-                                    setTimeout(() => {
-                                        moveToNextSlide();
-                                    }, 500); // 每一页念完后优雅停顿 0.5 秒
+                            let chunkIndex = 0;
+
+                            function playNextChunk() {
+                                if (!isSoundEnabled || currentIndex !== index) return;
+
+                                if (chunkIndex < chunks.length) {
+                                    const text = chunks[chunkIndex];
+                                    chunkIndex++;
+
+                                    activeUtterance = new SpeechSynthesisUtterance(text);
+                                    activeUtterance.lang = 'en-US';
+                                    activeUtterance.rate = 0.92;
+
+                                    activeUtterance.onend = () => {
+                                        if (!isSoundEnabled || currentIndex !== index) return;
+                                        if (chunkIndex < chunks.length) {
+                                            // 段落与段落之间的 0.5 秒停顿
+                                            setTimeout(playNextChunk, 500);
+                                        } else {
+                                            // 整个页面所有段落读完后，停顿 0.5 秒再翻到下一页
+                                            setTimeout(() => {
+                                                moveToNextSlide();
+                                            }, 500);
+                                        }
+                                    };
+
+                                    window.speechSynthesis.speak(activeUtterance);
                                 }
-                            };
+                            }
 
-                            window.speechSynthesis.speak(utterance);
+                            playNextChunk();
                         }, 350);
+                    } catch (e) {
+                        console.error(e);
                     }
                 }
             }
@@ -681,8 +520,9 @@
             function updateDots(activeIdx) {
                 slides.forEach((slide) => {
                     const dots = slide.querySelectorAll('.dot-indicator');
-                    dots.forEach((dot, dotIndex) => {
-                        if (dotIndex === activeIdx) {
+                    dots.forEach((dot) => {
+                        const dotIdx = parseInt(dot.getAttribute('data-index'));
+                        if (dotIdx === activeIdx) {
                             dot.classList.add('active');
                         } else {
                             dot.classList.remove('active');
@@ -696,7 +536,6 @@
                 const slideWidth = container.clientWidth;
                 
                 if (instantJump) {
-                    // 当从第 5 页回到第 1 页时：瞬间无痕重置到最左侧（无回滚动画）
                     container.scrollTo({
                         left: 0,
                         behavior: 'auto'
@@ -709,31 +548,28 @@
                 }
                 updateDots(currentIndex);
 
-                if (window.innerWidth <= 768 && playSpeech) {
-                    speakSlide(currentIndex);
+                if (playSpeech) {
+                    speakSlideChunks(currentIndex);
                 }
             }
 
             function moveToNextSlide() {
                 if (currentIndex < slides.length - 1) {
-                    // 常规页：向左平滑翻到下一页
                     currentIndex++;
                     goToSlide(currentIndex, true, false);
                 } else {
-                    // 已经是第 5 页（最后一页）：在第 5 页完整读完并停顿 0.5 秒后，瞬间无缝回到第 1 页，继续向左循环
                     currentIndex = 0;
                     goToSlide(0, true, true);
                 }
             }
 
-            // 兜底定时器（延长至 10 秒，确保第 5 页较长内容也能充分读完）
             function startFallbackTimer() {
                 if (fallbackTimer) clearInterval(fallbackTimer);
                 fallbackTimer = setInterval(() => {
                     if (!isSoundEnabled || !window.speechSynthesis.speaking) {
                         moveToNextSlide();
                     }
-                }, 10000);
+                }, 14000);
             }
 
             function unlockAudio() {
@@ -747,6 +583,33 @@
                 }
             }
 
+            // 点击底部圆点直接跳转
+            document.querySelectorAll('.dot-indicator').forEach(dot => {
+                dot.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const targetIndex = parseInt(dot.getAttribute('data-index'));
+                    if (!isNaN(targetIndex)) {
+                        unlockAudio();
+                        goToSlide(targetIndex, isSoundEnabled, false);
+                    }
+                });
+            });
+
+            // 电脑端键盘支持
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+                    e.preventDefault();
+                    unlockAudio();
+                    moveToNextSlide();
+                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    unlockAudio();
+                    let prevIndex = currentIndex - 1;
+                    if (prevIndex < 0) prevIndex = slides.length - 1;
+                    goToSlide(prevIndex, isSoundEnabled, false);
+                }
+            });
+
             // 声音开关按钮事件
             document.querySelectorAll('.tts-toggle-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
@@ -757,7 +620,7 @@
                         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
                     } else {
                         unlockAudio();
-                        speakSlide(currentIndex);
+                        speakSlideChunks(currentIndex);
                     }
                 });
             });
@@ -766,6 +629,8 @@
             document.body.addEventListener('click', unlockAudio, { once: true });
 
             startFallbackTimer();
+
+            updateDots(currentIndex);
 
             // 滚动同步处理
             let scrollTimeout;
@@ -780,9 +645,7 @@
                     if (calculatedIndex !== currentIndex && calculatedIndex >= 0 && calculatedIndex < slides.length) {
                         currentIndex = calculatedIndex;
                         updateDots(currentIndex);
-                        if (window.innerWidth <= 768) {
-                            speakSlide(currentIndex);
-                        }
+                        speakSlideChunks(currentIndex);
                     }
                 }, 150);
             }, { passive: true });
