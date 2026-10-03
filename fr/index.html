@@ -6,19 +6,13 @@
     <title>AIR²Aim — Anna Intelligence Recorder & Reminder</title>
     <style>
         :root {
-            --bg-hero: #ffffff;
-            --bg-record: #f8f8f9;
-            --bg-remind: #ffffff;
-            --bg-follow: #f2f3f5;
-            --bg-footer: #0a0a0a;
-            
-            --text-primary: #111111;
-            --text-muted: #666666;
+            --text-primary: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.7);
             --text-inverse: #ffffff;
-            --text-inverse-muted: #999999;
+            --text-inverse-muted: rgba(255, 255, 255, 0.6);
             
-            --border-light: rgba(0, 0, 0, 0.08);
-            --border-dark: rgba(255, 255, 255, 0.12);
+            --border-light: rgba(255, 255, 255, 0.2);
+            --border-dark: rgba(255, 255, 255, 0.2);
         }
 
         * {
@@ -31,11 +25,98 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background-color: var(--bg-hero);
             color: var(--text-primary);
             font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* --- 完美收紧背景容器，防止任何山峰与边缘溢出 --- */
+        .bg-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            background-color: #111111;
+        }
+
+        .parallax-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            will-change: transform, opacity;
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* 各页面的背景图层分配：初始状态全屏稳固居中（支持从子目录退回根目录读取图片） */
+        #bgLayer0 {
+            background-image: url('../bg1.jpg');
+            opacity: 1;
+            transform: scale(1.12);
+            animation: bgInitialZoom 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        #bgLayer1 {
+            background-image: url('../bg2.jpg');
+            opacity: 0;
+            transform: scale(1.05);
+        }
+        #bgLayer2 {
+            background-image: url('../bg1.jpg');
+            opacity: 0;
+            transform: scale(1.05);
+        }
+        #bgLayer3 {
+            background-image: url('../bg2.jpg');
+            opacity: 0;
+            transform: scale(1.05);
+        }
+        #bgLayer4 {
+            background-image: url('../bg1.jpg');
+            opacity: 0;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            #bgLayer0 { background-image: url('../bg2.jpg'); }
+            #bgLayer1 { background-image: url('../bg1.jpg'); }
+            #bgLayer2 { background-image: url('../bg2.jpg'); }
+            #bgLayer3 { background-image: url('../bg1.jpg'); }
+            #bgLayer4 { background-image: url('../bg2.jpg'); }
+        }
+
+        /* 初次加载动画：优雅缩放与渐显 */
+        @keyframes bgInitialZoom {
+            0% {
+                opacity: 0;
+                transform: scale(1.12);
+            }
+            30% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes contentFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* --- UNIFIED FULL-SCREEN STORY CONTAINER --- */
@@ -70,37 +151,20 @@
             justify-content: space-between;
             padding: 60px 80px;
             position: relative;
+            background: rgba(0, 0, 0, 0.38);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            color: #ffffff;
+            /* 为所有文字加入微弱阴影，增强立体感与可读性 */
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            animation: contentFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+            opacity: 0;
         }
 
         @media (max-width: 768px) {
             .story-slide {
                 padding: 48px 32px 56px 32px;
             }
-        }
-
-        .slide-hero {
-            background-color: var(--bg-hero);
-            color: var(--text-primary);
-        }
-
-        .slide-record {
-            background-color: var(--bg-record);
-            color: var(--text-primary);
-        }
-
-        .slide-remind {
-            background-color: var(--bg-remind);
-            color: var(--text-primary);
-        }
-
-        .slide-follow {
-            background-color: var(--bg-follow);
-            color: var(--text-primary);
-        }
-
-        .slide-development {
-            background-color: var(--bg-footer);
-            color: var(--text-inverse);
         }
 
         .slide-top {
@@ -117,14 +181,14 @@
             font-weight: 600;
             letter-spacing: -0.02em;
             word-spacing: -0.15em;
+            color: #ffffff;
         }
 
-        /* 极简静音/喇叭切换按钮样式 */
         .tts-toggle-btn {
-            background: none;
-            border: 1px solid currentColor;
-            opacity: 0.4;
-            color: inherit;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            opacity: 0.6;
+            color: #ffffff;
             font-size: 0.7rem;
             font-family: inherit;
             letter-spacing: 0.05em;
@@ -136,8 +200,8 @@
         }
 
         .tts-toggle-btn.active {
-            opacity: 0.9;
-            border-color: currentColor;
+            opacity: 1;
+            border-color: #ffffff;
         }
 
         .slide-body {
@@ -154,67 +218,92 @@
             letter-spacing: -0.02em;
             margin-bottom: 12px;
             word-spacing: -0.15em;
+            color: #ffffff;
         }
 
         .slide-hero-fullname {
             font-size: 1rem;
-            opacity: 0.6;
+            opacity: 0.8;
             margin-bottom: 40px;
             font-weight: 400;
+            color: #ffffff;
         }
 
         .slide-hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-size: clamp(2.3rem, 4.5vw, 4rem);
             font-weight: 400;
             letter-spacing: -0.03em;
-            line-height: 1.1;
-            margin-bottom: 24px;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            color: #ffffff;
         }
 
         .slide-hero p {
-            font-size: clamp(1.1rem, 2vw, 1.35rem);
-            opacity: 0.7;
+            font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+            opacity: 0.9;
             line-height: 1.5;
+            margin-bottom: 16px;
+            color: #ffffff;
+        }
+
+        .slide-hero-tagline {
+            font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            opacity: 0.95;
+            color: #ffffff;
         }
 
         .slide-content h2 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-size: clamp(2.2rem, 4.5vw, 3.5rem);
             font-weight: 400;
             letter-spacing: -0.03em;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             line-height: 1.1;
+            color: #ffffff;
         }
 
-        .slide-content p {
-            font-size: clamp(1.15rem, 2vw, 1.4rem);
-            opacity: 0.7;
+        .slide-content-main {
+            font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            margin-bottom: 20px;
+            line-height: 1.35;
+            color: #ffffff;
+        }
+
+        .slide-content-body {
+            font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+            opacity: 0.9;
             line-height: 1.5;
+            margin-bottom: 20px;
+            color: #ffffff;
         }
 
-        .slide-content p br {
-            display: block;
-            content: "";
-            margin-top: 6px;
+        .slide-content-body p {
+            margin-bottom: 10px;
         }
 
-        .slide-development h2 {
-            color: var(--text-inverse);
+        .slide-content-body p:last-child {
+            margin-bottom: 0;
         }
 
-        .slide-development p {
-            color: var(--text-inverse-muted);
-        }
-
-        .slide-development .slide-brand-sm {
-            color: var(--text-inverse);
+        .slide-content-caption {
+            font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+            opacity: 0.95;
+            margin-top: 16px;
+            margin-bottom: 16px;
+            font-weight: 500;
+            color: #ffffff;
         }
 
         .status-meta-mobile {
             font-size: 0.85rem;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            opacity: 0.5;
+            opacity: 0.7;
             margin-top: 20px;
+            color: #ffffff;
         }
 
         .contact-mobile {
@@ -225,20 +314,24 @@
             font-size: 0.9rem;
             font-weight: 500;
             margin-bottom: 10px;
-            opacity: 0.6;
+            opacity: 0.8;
+            color: #ffffff;
         }
 
         .contact-mobile a {
-            color: var(--text-inverse);
+            color: #ffffff;
             text-decoration: none;
             font-size: 1.15rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+            padding-bottom: 2px;
         }
 
         .contact-info-block {
             margin-top: 28px;
             font-size: 0.75rem;
-            opacity: 0.6;
+            opacity: 0.8;
             line-height: 1.45;
+            color: #ffffff;
         }
 
         .contact-info-block .info-line-2 {
@@ -256,7 +349,6 @@
             padding-top: 20px;
         }
 
-        /* Pagination Dots Styling */
         .pagination-dots {
             display: flex;
             gap: 10px;
@@ -267,39 +359,27 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background-color: var(--text-primary);
-            opacity: 0.2;
+            background-color: #ffffff;
+            opacity: 0.3;
             transition: opacity 0.3s ease, transform 0.3s ease;
             cursor: pointer;
         }
 
         .dot-indicator.active {
-            opacity: 0.85;
+            opacity: 1;
             transform: scale(1.25);
         }
 
-        /* Last slide (dark background) dot theme */
-        .mobile-slide.is-dark .dot-indicator,
-        .story-slide.is-dark .dot-indicator {
-            background-color: #ffffff;
-            opacity: 0.25;
-        }
-
-        .mobile-slide.is-dark .dot-indicator.active,
-        .story-slide.is-dark .dot-indicator.active {
-            opacity: 0.95;
-        }
-
-        /* 右下角单行语言选择器样式 */
         .slide-footer-lang {
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            opacity: 0.5;
+            opacity: 0.7;
             white-space: nowrap;
             display: flex;
             gap: 8px;
             align-items: center;
+            color: #ffffff;
         }
 
         .slide-footer-lang a {
@@ -312,47 +392,45 @@
             padding-bottom: 1px;
         }
 
-        .slide-footer-lang a:hover {
-            opacity: 0.8;
-        }
-
         .slide-footer-lang span.current-lang {
-            opacity: 0.35;
+            opacity: 0.5;
             font-weight: 400;
-            border-bottom: none;
-            padding-bottom: 0;
         }
 
         .slide-footer-lang span.inactive {
             opacity: 1;
             font-weight: 600;
             border-bottom: 1px solid currentColor;
-            padding-bottom: 1px;
             cursor: default;
         }
     </style>
 </head>
 <body>
 
+    <!-- 动态视差与渐变背景容器 -->
+    <div class="bg-wrapper">
+        <div class="parallax-bg" id="bgLayer0"></div>
+        <div class="parallax-bg" id="bgLayer1"></div>
+        <div class="parallax-bg" id="bgLayer2"></div>
+        <div class="parallax-bg" id="bgLayer3"></div>
+        <div class="parallax-bg" id="bgLayer4"></div>
+    </div>
+
     <!-- ================= UNIFIED FULL-SCREEN STORY CONTAINER ================= -->
     <div class="story-container" id="storyContainer">
         
         <!-- Screen 01 — Hero -->
-        <div class="story-slide slide-hero" data-speech-chunks='["Air 2 Aim. Anna. Intelligence Recorder and Reminder.", "Enregistrez ce qui compte. Soyez rappelé au bon moment.", "Une application vocale conçue pour enregistrer ce qui compte et vous le rappeler au moment voulu."]'>
+        <div class="story-slide slide-hero" data-speech-chunks='["Dites-le. AIR²Aim l’enregistre.", "Une application d’IA vocale qui vous permet de dire ce qui compte, de le structurer et de vous le rappeler au moment où vous en avez besoin.", "Dites-le. Structurez-le. Enregistrez-le."]'>
             <div class="slide-top">
-                <div class="slide-brand-sm">AIR² Aim</div>
+                <div class="slide-brand-sm">AIR²Aim</div>
                 <button class="tts-toggle-btn active" id="ttsToggle">Sound: ON</button>
             </div>
             <div class="slide-body">
-                <div class="slide-hero-brand">AIR² Aim</div>
+                <div class="slide-hero-brand">AIR²Aim</div>
                 <div class="slide-hero-fullname">Anna Intelligence Recorder & Reminder</div>
-                <h1>
-                    Enregistrez ce qui compte.<br>
-                    Soyez rappelé au bon moment.
-                </h1>
-                <p>
-                    Une application vocale conçue pour enregistrer ce qui compte et vous le rappeler au moment voulu.
-                </p>
+                <h1>Dites-le. AIR²Aim l’enregistre.</h1>
+                <p>Une application d’IA vocale qui vous permet de dire ce qui compte, de le structurer et de vous le rappeler au moment où vous en avez besoin.</p>
+                <p class="slide-hero-tagline">Dites-le. Structurez-le. Enregistrez-le.</p>
             </div>
             <div class="slide-footer">
                 <div class="pagination-dots">
@@ -369,20 +447,20 @@
         </div>
 
         <!-- Screen 02 — Record -->
-        <div class="story-slide slide-record" data-speech-chunks='["ENREGISTRER", "Pensées, tâches, projets. Enregistrez ce qui compte, au moment où cela compte.", "Dites-le.", "Formulez-le.", "Enregistrez-le."]'>
+        <div class="story-slide slide-record" data-speech-chunks='["ENREGISTRER", "Dites simplement à AIR²Aim ce que vous voulez retenir.", "Pas de formulaires. Pas de menus compliqués.", "Parlez naturellement — une tâche, un projet ou quelque chose que vous ne voulez pas oublier.", "AIR²Aim comprend ce que vous voulez dire, le structure et vous permet de le confirmer.", "Vous le dites. AIR²Aim le structure. Vous confirmez."]'>
             <div class="slide-top">
-                <div class="slide-brand-sm">AIR² Aim</div>
+                <div class="slide-brand-sm">AIR²Aim</div>
                 <button class="tts-toggle-btn active tts-toggle-btn-sync">Sound: ON</button>
             </div>
             <div class="slide-body slide-content">
                 <h2>ENREGISTRER</h2>
-                <p>
-                    Pensées, tâches, projets.<br>
-                    Enregistrez ce qui compte, au moment où cela compte.<br>
-                    Dites-le.<br>
-                    Formulez-le.<br>
-                    Enregistrez-le.
-                </p>
+                <p class="slide-content-main">Dites simplement à AIR²Aim ce que vous voulez retenir.</p>
+                <div class="slide-content-body">
+                    <p>Pas de formulaires. Pas de menus compliqués.</p>
+                    <p>Parlez naturellement — une tâche, un projet ou quelque chose que vous ne voulez pas oublier.</p>
+                    <p>AIR²Aim comprend ce que vous voulez dire, le structure et vous permet de le confirmer.</p>
+                </div>
+                <p class="slide-content-caption">Vous le dites. AIR²Aim le structure. Vous confirmez.</p>
             </div>
             <div class="slide-footer">
                 <div class="pagination-dots">
@@ -399,17 +477,20 @@
         </div>
 
         <!-- Screen 03 — Remind -->
-        <div class="story-slide slide-remind" data-speech-chunks='["RAPPELER", "La bonne chose, au bon moment.", "Juste au moment où cela compte."]'>
+        <div class="story-slide slide-remind" data-speech-chunks='["RAPPELER", "Quand le moment arrive, AIR²Aim vous le rappelle.", "Une fois ce que vous voulez retenir confirmé, AIR²Aim l’enregistre et vous le rappelle au bon moment.", "Quoi. Quand. Répéter.", "Vous n’avez pas besoin de surveiller constamment l’heure ou de consulter une liste.", "AIR²Aim vous le rappelle au moment où cela compte."]'>
             <div class="slide-top">
-                <div class="slide-brand-sm">AIR² Aim</div>
+                <div class="slide-brand-sm">AIR²Aim</div>
                 <button class="tts-toggle-btn active tts-toggle-btn-sync">Sound: ON</button>
             </div>
             <div class="slide-body slide-content">
                 <h2>RAPPELER</h2>
-                <p>
-                    La bonne chose, au bon moment.<br>
-                    Juste au moment où cela compte.
-                </p>
+                <p class="slide-content-main">Quand le moment arrive, AIR²Aim vous le rappelle.</p>
+                <div class="slide-content-body">
+                    <p>Une fois ce que vous voulez retenir confirmé, AIR²Aim l’enregistre et vous le rappelle au bon moment.</p>
+                    <p>Quoi. Quand. Répéter.</p>
+                    <p>Vous n’avez pas besoin de surveiller constamment l’heure ou de consulter une liste.</p>
+                    <p>AIR²Aim vous le rappelle au moment où cela compte.</p>
+                </div>
             </div>
             <div class="slide-footer">
                 <div class="pagination-dots">
@@ -426,18 +507,21 @@
         </div>
 
         <!-- Screen 04 — Follow up -->
-        <div class="story-slide slide-follow" data-speech-chunks='["POURSUIVRE", "Un rappel devient un moment pour agir.", "Confirmer. Reporter. Continuer.", "Un moment mène au suivant."]'>
+        <div class="story-slide slide-follow" data-speech-chunks='["SUIVRE", "Un rappel, c’est l’étape suivante.", "Lorsque AIR²Aim vous rappelle quelque chose, vous pouvez lui répondre naturellement.", "Confirmer. Reporter. Continuer.", "Si quelque chose change, dites-le simplement à AIR²Aim.", "Votre prochaine action peut devenir un nouvel enregistrement ou un nouveau rappel.", "Enregistrer. Rappeler. Suivre"]'>
             <div class="slide-top">
-                <div class="slide-brand-sm">AIR² Aim</div>
+                <div class="slide-brand-sm">AIR²Aim</div>
                 <button class="tts-toggle-btn active tts-toggle-btn-sync">Sound: ON</button>
             </div>
             <div class="slide-body slide-content">
-                <h2>POURSUIVRE</h2>
-                <p>
-                    Un rappel devient un moment pour agir.<br>
-                    Confirmer. Reporter. Continuer.<br>
-                    Un moment mène au suivant.
-                </p>
+                <h2>SUIVRE</h2>
+                <p class="slide-content-main">Un rappel, c’est l’étape suivante.</p>
+                <div class="slide-content-body">
+                    <p>Lorsque AIR²Aim vous rappelle quelque chose, vous pouvez lui répondre naturellement.</p>
+                    <p>Confirmer. Reporter. Continuer.</p>
+                    <p>Si quelque chose change, dites-le simplement à AIR²Aim.</p>
+                    <p>Votre prochaine action peut devenir un nouvel enregistrement ou un nouveau rappel.</p>
+                </div>
+                <p class="slide-content-caption">Enregistrer → Rappeler → Suivre</p>
             </div>
             <div class="slide-footer">
                 <div class="pagination-dots">
@@ -454,14 +538,14 @@
         </div>
 
         <!-- Screen 05 — Development / Contact -->
-        <div class="story-slide slide-development is-dark" data-speech-chunks='["Air 2 Aim in development.", "Prototype under testing."]'>
+        <div class="story-slide slide-development" data-speech-chunks='["AIR²Aim en développement.", "Prototype en cours de test."]'>
             <div class="slide-top">
-                <div class="slide-brand-sm">AIR² Aim</div>
+                <div class="slide-brand-sm">AIR²Aim</div>
                 <button class="tts-toggle-btn active tts-toggle-btn-sync" style="border-color: #ffffff; color: #ffffff;">Sound: ON</button>
             </div>
             <div class="slide-body slide-content">
-                <h2>AIR² Aim in development.</h2>
-                <p>Prototype under testing.</p>
+                <h2>AIR²Aim en développement.</h2>
+                <p>Prototype en cours de test.</p>
                 <div class="status-meta-mobile">Prototype · 2026</div>
 
                 <div class="contact-mobile">
@@ -469,8 +553,8 @@
                     <a href="mailto:hahasmilegood@hotmail.com">hahasmilegood@hotmail.com</a>
                     
                     <div class="contact-info-block">
-                        AI Intelligence Recorder and Reminder
-                        <span class="info-line-2">Developed in Yerevan, Armenia · 2026</span>
+                        Anna Intelligence Recorder & Reminder
+                        <span class="info-line-2">Développé à Erevan, Arménie · 2026</span>
                     </div>
                 </div>
             </div>
@@ -490,10 +574,11 @@
 
     </div>
 
-    <!-- Unified Story Mode & Robust French Speech Script -->
+    <!-- 优化视差幅度的滚动控制脚本 -->
     <script>
         const container = document.getElementById('storyContainer');
         const slides = document.querySelectorAll('.story-slide');
+        const bgLayers = document.querySelectorAll('.parallax-bg');
         
         if (container && slides.length > 0) {
             let currentIndex = 0;
@@ -517,43 +602,26 @@
             function speakSlideChunks(index) {
                 if ('speechSynthesis' in window) {
                     window.speechSynthesis.cancel();
-                    
                     if (!isSoundEnabled || !isAudioUnlocked) return;
-
                     const rawChunks = slides[index].getAttribute('data-speech-chunks');
                     if (!rawChunks) return;
-
                     try {
                         const chunks = JSON.parse(rawChunks);
                         if (!Array.isArray(chunks) || chunks.length === 0) return;
-
                         const sessionId = ++currentSessionId;
-
                         setTimeout(() => {
                             if (!isSoundEnabled || currentIndex !== index || sessionId !== currentSessionId) return;
-
                             let chunkIndex = 0;
-
                             function playNextChunk() {
                                 if (!isSoundEnabled || currentIndex !== index || sessionId !== currentSessionId) return;
-
                                 if (chunkIndex < chunks.length) {
                                     const text = chunks[chunkIndex];
                                     chunkIndex++;
-
                                     const utterance = new SpeechSynthesisUtterance(text);
-                                    if (index === 0 && chunkIndex === 1) {
-                                        utterance.lang = 'en-US';
-                                    } else if (index === 4) {
-                                        utterance.lang = 'en-US';
-                                    } else {
-                                        utterance.lang = 'fr-FR';
-                                    }
+                                    utterance.lang = 'fr-FR';
                                     utterance.rate = 0.90;
-
                                     utterance.onend = () => {
                                         if (!isSoundEnabled || currentIndex !== index || sessionId !== currentSessionId) return;
-                                        
                                         if (chunkIndex < chunks.length) {
                                             setTimeout(playNextChunk, 500);
                                         } else {
@@ -564,11 +632,9 @@
                                             }, 500);
                                         }
                                     };
-
                                     window.speechSynthesis.speak(utterance);
                                 }
                             }
-
                             playNextChunk();
                         }, 350);
                     } catch (e) {
@@ -591,28 +657,39 @@
                 });
             }
 
+            function updateParallaxAndFade() {
+                const scrollLeft = container.scrollLeft;
+                const slideWidth = container.clientWidth;
+                if (slideWidth === 0) return;
+
+                const exactIndex = scrollLeft / slideWidth;
+
+                bgLayers.forEach((layer, idx) => {
+                    const distance = Math.abs(exactIndex - idx);
+                    if (distance < 1) {
+                        layer.style.opacity = 1 - distance;
+                    } else {
+                        layer.style.opacity = 0;
+                    }
+
+                    const offset = (scrollLeft - idx * slideWidth) * 0.04;
+                    layer.style.transform = `translateX(${offset}px) scale(1.05)`;
+                });
+            }
+
             function goToSlide(index, playSpeech = true, instantJump = false) {
                 currentSessionId++;
                 if ('speechSynthesis' in window) {
                     window.speechSynthesis.cancel();
                 }
-
                 currentIndex = index;
                 const slideWidth = container.clientWidth;
-                
                 if (instantJump) {
-                    container.scrollTo({
-                        left: 0,
-                        behavior: 'auto'
-                    });
+                    container.scrollTo({ left: 0, behavior: 'auto' });
                 } else {
-                    container.scrollTo({
-                        left: currentIndex * slideWidth,
-                        behavior: 'smooth'
-                    });
+                    container.scrollTo({ left: currentIndex * slideWidth, behavior: 'smooth' });
                 }
                 updateDots(currentIndex);
-
                 if (playSpeech) {
                     speakSlideChunks(currentIndex);
                 }
@@ -679,11 +756,12 @@
 
             document.body.addEventListener('touchstart', unlockAudio, { once: true, passive: true });
             document.body.addEventListener('click', unlockAudio, { once: true });
-
             updateDots(currentIndex);
 
             let scrollTimeout;
             container.addEventListener('scroll', () => {
+                updateParallaxAndFade();
+
                 clearTimeout(scrollTimeout);
                 scrollTimeout = setTimeout(() => {
                     const scrollLeft = container.scrollLeft;
