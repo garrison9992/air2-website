@@ -57,9 +57,9 @@
             transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* 各页面的背景图层分配：初始状态全屏稳固居中 */
+        /* 各页面的背景图层分配：初始状态全屏稳固居中（支持从子目录退回根目录读取图片） */
         #bgLayer0 {
-            background-image: url('../bg1.jpg'); /* 如果图片在根目录，请用 '../bg1.jpg'，若在同级可改为 'bg1.jpg' */
+            background-image: url('../bg1.jpg');
             opacity: 1;
             transform: scale(1.12);
             animation: bgInitialZoom 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -420,7 +420,7 @@
     <div class="story-container" id="storyContainer">
         
         <!-- Screen 01 — Hero -->
-        <div class="story-slide slide-hero" data-speech-chunks='["Скажите. AIR²Aim запишет.", "Голосовое AI-приложение, которое позволяет сказать, что для вас важно, помогает структурировать это и напоминает об этом тогда, когда нужно.", "Скажите. Уточните. Сохраните."]'>
+        <div class="story-slide slide-hero" data-speech-chunks='["Скажите. Air 2 Aim запишет.", "Голосовое AI-приложение, которое позволяет сказать, что для вас важно, помогает структурировать это и напоминает об этом тогда, когда нужно.", "Скажите. Уточните. Сохраните."]'>
             <div class="slide-top">
                 <div class="slide-brand-sm">AIR²Aim</div>
                 <button class="tts-toggle-btn active" id="ttsToggle">Sound: ON</button>
@@ -447,7 +447,7 @@
         </div>
 
         <!-- Screen 02 — Record -->
-        <div class="story-slide slide-record" data-speech-chunks='["ЗАПИСЬ", "Просто скажите AIR²Aim, что вы хотите запомнить.", "Без форм. Без сложных меню.", "Говорите естественно — о задаче, плане или о том, что вы не хотите забыть.", "AIR²Aim понимает, что вы имеете в виду, структурирует информацию и позволяет вам её подтвердить.", "Вы говорите. AIR²Aim структурирует. Вы подтверждаете."]'>
+        <div class="story-slide slide-record" data-speech-chunks='["ЗАПИСЬ", "Просто скажите Air 2 Aim, что вы хотите запомнить.", "Без форм. Без сложных меню.", "Говорите естественно — о задаче, плане или о том, что вы не хотите забыть.", "Air 2 Aim понимает, что вы имеете в виду, структурирует информацию и позволяет вам её подтвердить.", "Вы говорите. Air 2 Aim структурирует. Вы подтверждаете."]'>
             <div class="slide-top">
                 <div class="slide-brand-sm">AIR²Aim</div>
                 <button class="tts-toggle-btn active tts-toggle-btn-sync">Sound: ON</button>
@@ -477,7 +477,7 @@
         </div>
 
         <!-- Screen 03 — Remind -->
-        <div class="story-slide slide-remind" data-speech-chunks='["НАПОМИНАНИЕ", "Когда приходит нужное время, AIR²Aim напоминает вам.", "После вашего подтверждения AIR²Aim сохраняет информацию и напоминает о ней в нужный момент.", "Что. Когда. Повторение.", "Вам не нужно постоянно следить за временем или проверять список.", "AIR²Aim напомнит вам тогда, когда это действительно важно."]'>
+        <div class="story-slide slide-remind" data-speech-chunks='["НАПОМИНАНИЕ", "Когда приходит нужное время, Air 2 Aim напоминает вам.", "После вашего подтверждения Air 2 Aim сохраняет информацию и напоминает о ней в нужный момент.", "Что. Когда. Повторение.", "Вам не нужно постоянно следить за временем или проверять список.", "Air 2 Aim напомнит вам тогда, когда это действительно важно."]'>
             <div class="slide-top">
                 <div class="slide-brand-sm">AIR²Aim</div>
                 <button class="tts-toggle-btn active tts-toggle-btn-sync">Sound: ON</button>
@@ -507,7 +507,7 @@
         </div>
 
         <!-- Screen 04 — Follow up -->
-        <div class="story-slide slide-follow" data-speech-chunks='["СЛЕДУЮЩИЙ ШАГ", "Напоминание — это следующий шаг.", "Когда AIR²Aim напоминает вам, вы можете ответить естественным образом.", "Подтвердить. Отложить. Двигаться дальше.", "Если что-то изменилось, просто скажите об этом AIR²Aim.", "Следующее действие может стать новой записью или новым напоминанием.", "Запись → Напоминание → Следующий шаг"]'>
+        <div class="story-slide slide-follow" data-speech-chunks='["СЛЕДУЮЩИЙ ШАГ", "Напоминание — это следующий шаг.", "Когда Air 2 Aim напоминает вам, вы можете ответить естественным образом.", "Подтвердить. Отложить. Двигаться дальше.", "Если что-то изменилось, просто скажите об этом Air 2 Aim.", "Следующее действие может стать новой записью или новым напоминанием.", "Запись → Напоминание → Следующий шаг"]'>
             <div class="slide-top">
                 <div class="slide-brand-sm">AIR²Aim</div>
                 <button class="tts-toggle-btn active tts-toggle-btn-sync">Sound: ON</button>
@@ -538,7 +538,7 @@
         </div>
 
         <!-- Screen 05 — Development / Contact -->
-        <div class="story-slide slide-development" data-speech-chunks='["AIR²Aim в разработке.", "Прототип на стадии тестирования."]'>
+        <div class="story-slide slide-development" data-speech-chunks='["Air 2 Aim в разработке.", "Прототип на стадии тестирования."]'>
             <div class="slide-top">
                 <div class="slide-brand-sm">AIR²Aim</div>
                 <button class="tts-toggle-btn active tts-toggle-btn-sync" style="border-color: #ffffff; color: #ffffff;">Sound: ON</button>
@@ -546,7 +546,7 @@
             <div class="slide-body slide-content">
                 <h2>AIR²Aim в разработке.</h2>
                 <p>Прототип на стадии тестирования.</p>
-                <div class="status-meta-mobile">Прототип · 2026</div>
+                <div class="status-meta-mobile">Prototype · 2026</div>
 
                 <div class="contact-mobile">
                     <h4>Контакты</h4>
