@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>APK download — AIR²Aim</title>
+    <style>
+        :root {
+            --text-primary: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.7);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            color: var(--text-primary);
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* --- 背景容器与视差图层（复用现有风格） --- */
+        .bg-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            background-color: #111111;
+        }
+
+        .parallax-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-image: url('../bg1.jpg');
+            transform: scale(1.05);
+            animation: bgInitialZoom 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @media (max-width: 768px) {
+            .parallax-bg {
+                background-image: url('../bg2.jpg');
+            }
+        }
+
+        @keyframes bgInitialZoom {
+            0% {
+                opacity: 0;
+                transform: scale(1.12);
+            }
+            30% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes contentFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- 独立完整页面容器 --- */
+        .standalone-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 60px 80px;
+            background: rgba(0, 0, 0, 0.38);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            color: #ffffff;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            animation: contentFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+            opacity: 0;
+        }
+
+        @media (max-width: 768px) {
+            .standalone-container {
+                padding: 48px 32px 56px 32px;
+            }
+        }
+
+        .page-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .page-brand-sm {
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            word-spacing: -0.15em;
+            color: #ffffff;
+        }
+
+        .page-body {
+            margin: auto 0;
+            max-width: 720px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .page-body h2 {
+            font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+            font-weight: 400;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+            line-height: 1.1;
+            color: #ffffff;
+        }
+
+        .status-meta-mobile {
+            font-size: 0.85rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            opacity: 0.7;
+            margin-top: 20px;
+            color: #ffffff;
+        }
+
+        .contact-mobile {
+            margin-top: 36px;
+        }
+
+        .contact-mobile h4 {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+            opacity: 0.8;
+            color: #ffffff;
+        }
+
+        .contact-mobile a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.15rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+            padding-bottom: 2px;
+        }
+
+        .contact-info-block {
+            margin-top: 28px;
+            font-size: 0.75rem;
+            opacity: 0.8;
+            line-height: 1.45;
+            color: #ffffff;
+        }
+
+        .contact-info-block .info-line-2 {
+            display: block;
+            margin-top: 3px;
+        }
+
+        .page-footer {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 背景图层 -->
+    <div class="bg-wrapper">
+        <div class="parallax-bg"></div>
+    </div>
+
+    <!-- 独立内容区块容器 -->
+    <div class="standalone-container">
+        <div class="page-top">
+            <div class="page-brand-sm">AIR²Aim</div>
+        </div>
+        
+        <div class="page-body">
+            <h2>APK download/下载</h2>
+            <div class="status-meta-mobile">Prototype · 2026</div>
+
+            <div class="contact-mobile">
+                <h4>Contact</h4>
+                <a href="mailto:hahasmilegood@hotmail.com">hahasmilegood@hotmail.com</a>
+                
+                <div class="contact-info-block">
+                    Anna Intelligence Recorder & Reminder
+                    <span class="info-line-2">Developed in Yerevan, Armenia · 2026</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-footer"></div>
+    </div>
+
+</body>
+</html>
