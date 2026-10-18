@@ -19,14 +19,15 @@
         html, body {
             width: 100%;
             height: 100%;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
             color: var(--text-primary);
             font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* --- 背景容器与视差图层（复用现有风格） --- */
+        /* --- 背景容器与视差图层 --- */
         .bg-wrapper {
             position: fixed;
             top: 0;
@@ -36,6 +37,7 @@
             height: 100dvh;
             overflow: hidden;
             background-color: #111111;
+            z-index: -1;
         }
 
         .parallax-bg {
@@ -86,19 +88,15 @@
 
         /* --- 独立完整页面容器 --- */
         .standalone-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            height: 100dvh;
+            min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 60px 80px;
-            background: rgba(0, 0, 0, 0.38);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
+            padding: 50px 80px;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
             color: #ffffff;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
             animation: contentFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
@@ -107,7 +105,7 @@
 
         @media (max-width: 768px) {
             .standalone-container {
-                padding: 48px 32px 56px 32px;
+                padding: 36px 24px 44px 24px;
             }
         }
 
@@ -129,57 +127,145 @@
         }
 
         .page-body {
-            margin: auto 0;
+            margin: 40px auto;
             max-width: 720px;
             width: 100%;
-            margin-left: auto;
-            margin-right: auto;
         }
 
         .page-body h2 {
-            font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+            font-size: clamp(2rem, 4vw, 3.2rem);
             font-weight: 400;
             letter-spacing: -0.03em;
-            margin-bottom: 16px;
+            margin-bottom: 24px;
             line-height: 1.1;
             color: #ffffff;
         }
 
+        /* --- 下载按钮样式 --- */
+        .download-btn-wrapper {
+            margin-bottom: 28px;
+        }
+
+        .apk-download-btn {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 12px 28px;
+            border-radius: 30px;
+            backdrop-filter: blur(4px);
+            transition: all 0.3s ease;
+        }
+
+        .apk-download-btn:hover {
+            background: rgba(255, 255, 255, 0.28);
+            border-color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* --- 三语折叠说明区域 (Accordion) --- */
+        .instructions-section {
+            margin-top: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .lang-details {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: border-color 0.3s ease;
+        }
+
+        .lang-details[open] {
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(0, 0, 0, 0.35);
+        }
+
+        .lang-summary {
+            padding: 14px 20px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        /* 自定义折叠小箭头 */
+        .lang-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            font-weight: 300;
+            transition: transform 0.3s ease;
+        }
+
+        .lang-details[open] .lang-summary::after {
+            transform: rotate(45deg);
+        }
+
+        .lang-summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .lang-content {
+            padding: 0 20px 18px 20px;
+            font-size: 0.88rem;
+            line-height: 1.6;
+            opacity: 0.85;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 12px;
+        }
+
+        .lang-content p {
+            margin-bottom: 8px;
+        }
+
+        .lang-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* --- 联系与版权区块 --- */
         .status-meta-mobile {
             font-size: 0.85rem;
             letter-spacing: 0.08em;
             text-transform: uppercase;
             opacity: 0.7;
-            margin-top: 20px;
-            color: #ffffff;
+            margin-top: 24px;
         }
 
         .contact-mobile {
-            margin-top: 36px;
+            margin-top: 28px;
         }
 
         .contact-mobile h4 {
             font-size: 0.9rem;
             font-weight: 500;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             opacity: 0.8;
-            color: #ffffff;
         }
 
         .contact-mobile a {
             color: #ffffff;
             text-decoration: none;
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.4);
             padding-bottom: 2px;
         }
 
         .contact-info-block {
-            margin-top: 28px;
+            margin-top: 24px;
             font-size: 0.75rem;
             opacity: 0.8;
             line-height: 1.45;
-            color: #ffffff;
         }
 
         .contact-info-block .info-line-2 {
@@ -209,7 +295,57 @@
         </div>
         
         <div class="page-body">
-            <h2>APK download/下载</h2>
+            <h2>APK download / 下载</h2>
+
+            <!-- 下载链接按钮 -->
+            <div class="download-btn-wrapper">
+                <!-- 请将 href="#" 替换为您的实际 APK 文件下载链接，例如 href="/downloads/air2aim.apk" -->
+                <a href="#" class="apk-download-btn" download>
+                    Download APK &nbsp;↓
+                </a>
+            </div>
+
+            <!-- 三语折叠说明区域 (Instructions Accordion) -->
+            <div class="instructions-section">
+
+                <!-- 1. English Instructions -->
+                <details class="lang-details">
+                    <summary class="lang-summary">Usage Instructions (English)</summary>
+                    <div class="lang-content">
+                        <p>After installation, please go to your phone's <strong>Settings</strong> and enable the following permissions to ensure proper alarm notifications:</p>
+                        <p>• <strong>Notifications</strong>: Allow notifications so alarms and reminders arrive on time.</p>
+                        <p>• <strong>Microphone</strong>: Allow microphone access for voice input and recording.</p>
+                        <p>• <strong>Battery Optimization</strong>: Disable battery optimization to prevent the app from background sleep.</p>
+                        <p>• <strong>Background Activity</strong>: Allow background activity to ensure real-time reminders.</p>
+                    </div>
+                </details>
+
+                <!-- 2. Russian Instructions -->
+                <details class="lang-details">
+                    <summary class="lang-summary">Инструкция по использованию (Русский)</summary>
+                    <div class="lang-content">
+                        <p>После установки перейдите в <strong>Настройки</strong> телефона и включите следующие разрешения для корректной работы напоминаний:</p>
+                        <p>• <strong>Уведомления</strong>: Разрешите уведомления, чтобы будильники и напоминания приходили вовремя.</p>
+                        <p>• <strong>Микрофон</strong>: Разрешите доступ к микрофону для голосового ввода.</p>
+                        <p>• <strong>Оптимизация батареи</strong>: Отключите оптимизацию батареи, чтобы приложение не выгружалось в фоне.</p>
+                        <p>• <strong>Фоновая активность</strong>: Разрешите работу в фоне для стабильной работы таймера.</p>
+                    </div>
+                </details>
+
+                <!-- 3. Chinese Instructions -->
+                <details class="lang-details">
+                    <summary class="lang-summary">使用说明 (中文)</summary>
+                    <div class="lang-content">
+                        <p>安装后，为了确保闹铃与提醒正常工作，请前往手机<strong>“设置”</strong>界面开启以下权限与配置：</p>
+                        <p>• <strong>通知权限</strong>：允许应用发送通知，确保闹铃准时送达。</p>
+                        <p>• <strong>麦克风权限</strong>：允许使用麦克风，以支持语音输入。</p>
+                        <p>• <strong>关闭电池优化</strong>：防止系统在后台强制休眠应用。</p>
+                        <p>• <strong>允许后台活动</strong>：保障定时提醒机制的实时性与稳定性。</p>
+                    </div>
+                </details>
+
+            </div>
+
             <div class="status-meta-mobile">Prototype · 2026</div>
 
             <div class="contact-mobile">
