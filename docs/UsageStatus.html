@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>APK download — AIR²Aim</title>
+    <title>使用状态说明 — AIR²Aim</title>
     <style>
         :root {
             --text-primary: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(255, 255, 255, 0.72);
         }
 
         * {
@@ -18,7 +18,7 @@
 
         html, body {
             width: 100%;
-            height: 100%;
+            min-height: 100%;
             overflow-x: hidden;
             overflow-y: auto;
             color: var(--text-primary);
@@ -78,7 +78,7 @@
         @keyframes contentFadeIn {
             0% {
                 opacity: 0;
-                transform: translateY(12px);
+                transform: translateY(10px);
             }
             100% {
                 opacity: 1;
@@ -86,26 +86,26 @@
             }
         }
 
-        /* --- 独立完整页面容器 --- */
+        /* --- 单页紧凑容器 --- */
         .standalone-container {
             min-height: 100vh;
             min-height: 100dvh;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 50px 80px;
+            padding: 24px 48px;
             background: rgba(0, 0, 0, 0.45);
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
             color: #ffffff;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-            animation: contentFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+            animation: contentFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
             opacity: 0;
         }
 
         @media (max-width: 768px) {
             .standalone-container {
-                padding: 36px 24px 44px 24px;
+                padding: 18px 18px 24px 18px;
             }
         }
 
@@ -113,84 +113,93 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
+            max-width: 820px;
             width: 100%;
             margin: 0 auto;
         }
 
         .page-brand-sm {
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             font-weight: 600;
             letter-spacing: -0.02em;
             word-spacing: -0.15em;
             color: #ffffff;
         }
 
+        .tts-toggle-btn {
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            color: #ffffff;
+            font-size: 0.72rem;
+            letter-spacing: 0.04em;
+            padding: 5px 12px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: opacity 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+        }
+
+        .tts-toggle-btn.active {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: #ffffff;
+            opacity: 1;
+        }
+
+        .tts-toggle-btn:not(.active) {
+            opacity: 0.65;
+        }
+
         .page-body {
-            margin: 40px auto;
-            max-width: 720px;
+            margin: 14px auto;
+            max-width: 820px;
             width: 100%;
         }
 
+        .page-header-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 8px 16px;
+            margin-bottom: 12px;
+        }
+
         .page-body h2 {
-            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-size: clamp(1.5rem, 2.8vw, 2rem);
             font-weight: 400;
-            letter-spacing: -0.03em;
-            margin-bottom: 24px;
-            line-height: 1.1;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
             color: #ffffff;
         }
 
-        /* --- 下载按钮样式 --- */
-        .download-btn-wrapper {
-            margin-bottom: 28px;
+        .page-lead {
+            font-size: 0.84rem;
+            line-height: 1.45;
+            color: var(--text-muted);
         }
 
-        .apk-download-btn {
-            display: inline-flex;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: 500;
-            padding: 12px 28px;
-            border-radius: 30px;
-            backdrop-filter: blur(4px);
-            transition: all 0.3s ease;
-        }
-
-        .apk-download-btn:hover {
-            background: rgba(255, 255, 255, 0.28);
-            border-color: #ffffff;
-            transform: translateY(-2px);
-        }
-
-        /* --- 多语言折叠说明区域 (Accordion) --- */
-        .instructions-section {
-            margin-top: 24px;
+        /* --- 紧凑折叠下拉窗区域 --- */
+        .accordion-section {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 6px;
         }
 
-        .lang-details {
+        .info-details {
             background: rgba(0, 0, 0, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 10px;
             overflow: hidden;
-            transition: border-color 0.3s ease;
+            transition: border-color 0.25s ease, background-color 0.25s ease;
         }
 
-        .lang-details[open] {
-            border-color: rgba(255, 255, 255, 0.4);
-            background: rgba(0, 0, 0, 0.35);
+        .info-details[open] {
+            border-color: rgba(255, 255, 255, 0.42);
+            background: rgba(0, 0, 0, 0.36);
         }
 
-        .lang-summary {
-            padding: 14px 20px;
-            font-size: 0.95rem;
+        .info-summary {
+            padding: 9px 14px;
+            font-size: 0.88rem;
             font-weight: 500;
             cursor: pointer;
             list-style: none;
@@ -200,84 +209,71 @@
             user-select: none;
         }
 
-        /* 自定义折叠小箭头 */
-        .lang-summary::after {
+        .info-summary::after {
             content: "+";
-            font-size: 1.2rem;
+            font-size: 1.05rem;
             font-weight: 300;
-            transition: transform 0.3s ease;
+            line-height: 1;
+            transition: transform 0.25s ease;
+            margin-left: 12px;
         }
 
-        .lang-details[open] .lang-summary::after {
+        .info-details[open] .info-summary::after {
             transform: rotate(45deg);
         }
 
-        .lang-summary::-webkit-details-marker {
+        .info-summary::-webkit-details-marker {
             display: none;
         }
 
-        .lang-content {
-            padding: 0 20px 18px 20px;
-            font-size: 0.88rem;
-            line-height: 1.6;
-            opacity: 0.85;
+        .info-content {
+            padding: 9px 14px 12px 14px;
+            font-size: 0.83rem;
+            line-height: 1.55;
+            color: rgba(255, 255, 255, 0.9);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 12px;
+            cursor: pointer;
         }
 
-        .lang-content p {
-            margin-bottom: 8px;
+        .info-content p {
+            margin-bottom: 5px;
         }
 
-        .lang-content p:last-child {
+        .info-content p:last-child {
             margin-bottom: 0;
         }
 
-        /* --- 联系与版权区块 --- */
-        .status-meta-mobile {
-            font-size: 0.85rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            opacity: 0.7;
-            margin-top: 24px;
+        /* --- 紧凑底部信息 --- */
+        .page-footer {
+            max-width: 820px;
+            width: 100%;
+            margin: 6px auto 0 auto;
+            padding-top: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px 16px;
+            font-size: 0.74rem;
+            color: var(--text-muted);
         }
 
-        .contact-mobile {
-            margin-top: 28px;
-        }
-
-        .contact-mobile h4 {
-            font-size: 0.9rem;
-            font-weight: 500;
-            margin-bottom: 8px;
-            opacity: 0.8;
-        }
-
-        .contact-mobile a {
+        .footer-contact a {
             color: #ffffff;
             text-decoration: none;
-            font-size: 1.1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-            padding-bottom: 2px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+            padding-bottom: 1px;
         }
 
-        .contact-info-block {
-            margin-top: 24px;
-            font-size: 0.75rem;
-            opacity: 0.8;
-            line-height: 1.45;
+        .footer-meta {
+            text-align: right;
+            line-height: 1.4;
         }
 
-        .contact-info-block .info-line-2 {
-            display: block;
-            margin-top: 3px;
-        }
-
-        .page-footer {
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
-            padding-top: 20px;
+        @media (max-width: 768px) {
+            .footer-meta {
+                text-align: left;
+            }
         }
     </style>
 </head>
@@ -288,139 +284,157 @@
         <div class="parallax-bg"></div>
     </div>
 
-    <!-- 独立内容区块容器 -->
+    <!-- 单页容器 -->
     <div class="standalone-container">
         <div class="page-top">
             <div class="page-brand-sm">AIR²Aim</div>
+            <button type="button" class="tts-toggle-btn active" id="ttsToggle">TTS: ON</button>
         </div>
-        
+
         <div class="page-body">
-            <h2>APK download / 下载</h2>
-
-            <!-- 下载链接按钮 -->
-            <div class="download-btn-wrapper">
-                <!-- 请将 href="#" 替换为您的实际 APK 文件下载链接 -->
-                <a href="https://github.com/garrison9992/air2-website/releases/download/v1.0.61/061.apk" class="apk-download-btn" download>
-                    Download APK &nbsp;↓
-                </a>
+            <div class="page-header-row">
+                <h2>使用状态说明</h2>
+                <p class="page-lead">限制新建内容不会删除已有数据，也不会停止已设提醒。</p>
             </div>
 
-            <!-- 八语折叠说明区域 (Instructions Accordion) -->
-            <div class="instructions-section">
-
-                <!-- 1. English -->
-                <details class="lang-details">
-                    <summary class="lang-summary">Usage Instructions (English)</summary>
-                    <div class="lang-content">
-                        <p>After installation, please go to your phone's <strong>Settings</strong> and enable the following permissions to ensure proper alarm notifications:</p>
-                        <p>• <strong>Notifications</strong>: Allow notifications so alarms and reminders arrive on time.</p>
-                        <p>• <strong>Microphone</strong>: Allow microphone access for voice input and recording.</p>
-                        <p>• <strong>Battery Optimization</strong>: Disable battery optimization to prevent the app from background sleep.</p>
-                        <p>• <strong>Background Activity</strong>: Allow background activity to ensure real-time reminders.</p>
+            <div class="accordion-section">
+                <details class="info-details" data-speech="什么是使用状态。使用状态反映您当前账户在 Air 2 Aim 中的可用资格与功能权限。App 内展示的状态和额度以实际同步结果为准。">
+                    <summary class="info-summary">1. 什么是使用状态</summary>
+                    <div class="info-content">
+                        <p>使用状态反映您当前账户在 AIR²Aim 中的可用资格与功能权限。</p>
+                        <p>App 内展示的状态和额度以当前账户的实际同步结果为准，方便随时了解能否新建记录或提醒。</p>
                     </div>
                 </details>
 
-                <!-- 2. Russian -->
-                <details class="lang-details">
-                    <summary class="lang-summary">Инструкция по использованию (Русский)</summary>
-                    <div class="lang-content">
-                        <p>После установки перейдите в <strong>Настройки</strong> телефона и включите следующие разрешения для корректной работы напоминаний:</p>
-                        <p>• <strong>Уведомления</strong>: Разрешите уведомления, чтобы будильники и напоминания приходили вовремя.</p>
-                        <p>• <strong>Микрофон</strong>: Разрешите доступ к микрофону для голосового ввода.</p>
-                        <p>• <strong>Оптимизация батареи</strong>: Отключите оптимизацию батареи, чтобы приложение не выгружалось в фоне.</p>
-                        <p>• <strong>Фоновая активность</strong>: Разрешите работу в фоне для стабильной работы таймера.</p>
+                <details class="info-details" data-speech="账户使用状态。试用中处于免费体验阶段，可按规则体验核心功能。正常使用表示订阅已激活或处于正常可用资格内。试用结束或额度受限后，新建内容会受限，但已有数据与已设提醒不受影响。">
+                    <summary class="info-summary">2. 账户使用状态（Trial / Active / Limited）</summary>
+                    <div class="info-content">
+                        <p>• <strong>试用中（Trial）</strong>：处于免费体验阶段，可按规则体验核心记录与提醒功能。</p>
+                        <p>• <strong>正常使用（Active）</strong>：订阅已激活或处于正常可用资格内，可正常使用对应权益。</p>
+                        <p>• <strong>试用结束或额度受限（Limited）</strong>：体验期结束或达到当前额度上限后，新建内容会受限，但已有数据与已设提醒不受影响。</p>
                     </div>
                 </details>
 
-                <!-- 3. Chinese -->
-                <details class="lang-details">
-                    <summary class="lang-summary">使用说明 (中文)</summary>
-                    <div class="lang-content">
-                        <p>安装后，为了确保闹铃与提醒正常工作，请前往手机<strong>“设置”</strong>界面开启以下权限与配置：</p>
-                        <p>• <strong>通知权限</strong>：允许应用发送通知，确保闹铃准时送达。</p>
-                        <p>• <strong>麦克风权限</strong>：允许使用麦克风，以支持语音输入。</p>
-                        <p>• <strong>关闭电池优化</strong>：防止系统在后台强制休眠应用。</p>
-                        <p>• <strong>允许后台活动</strong>：保障定时提醒机制的实时性与稳定性。</p>
+                <details class="info-details" data-speech="免费体验规则。新用户可获得基础免费体验资格，用于了解语音记录、整理与提醒的核心流程。体验结束后若未激活订阅或超出免费使用范围，账户将转为受限状态，仅影响新的创建操作。">
+                    <summary class="info-summary">3. 免费体验规则</summary>
+                    <div class="info-content">
+                        <p>新用户可获得基础免费体验资格，用于了解语音记录、整理与提醒的核心流程。</p>
+                        <p>体验结束后若未激活订阅或超出免费使用范围，账户将转为受限状态，仅影响新的创建操作。</p>
                     </div>
                 </details>
 
-                <!-- 4. Japanese -->
-                <details class="lang-details">
-                    <summary class="lang-summary">ご利用案内 (日本語)</summary>
-                    <div class="lang-content">
-                        <p>インストール後、アラームやリマインダーを正常に動作させるために、スマートフォンの<strong>「設定」</strong>から以下の権限と設定を有効にしてください：</p>
-                        <p>• <strong>通知権限</strong>：通知を許可し、リマインダーを予定通りにお知らせします。</p>
-                        <p>• <strong>マイク権限</strong>：音声入力と録音のためのマイクアクセスを許可します。</p>
-                        <p>• <strong>バッテリー最適化の解除</strong>：バックグラウンドでのアプリ休止を防ぎます。</p>
-                        <p>• <strong>バックグラウンド活動の許可</strong>：正確なタイミングで通知を受信できるようにします。</p>
+                <details class="info-details" data-speech="每日使用额度。在适用每日额度规则的模式下，账户每天最多可创建 10 条内容。新增记录或新建提醒等创建操作会计入当日额度，达到上限后次日按规则恢复，具体以 App 内显示为准。">
+                    <summary class="info-summary">4. 每日使用额度（每日最多 10 条）</summary>
+                    <div class="info-content">
+                        <p>在适用每日额度规则的模式下，账户每天最多可创建 <strong>10 条</strong>内容。</p>
+                        <p>新增记录或新建提醒等创建类操作会计入当日额度；达到上限后次日按规则恢复，具体以 App 内显示为准。</p>
                     </div>
                 </details>
 
-                <!-- 5. Spanish -->
-                <details class="lang-details">
-                    <summary class="lang-summary">Instrucciones de uso (Español)</summary>
-                    <div class="lang-content">
-                        <p>Después de la instalación, ve a la <strong>Configuración</strong> de tu teléfono y habilita los siguientes permisos para garantizar que las alarmas y recordatorios funcionen correctamente:</p>
-                        <p>• <strong>Notificaciones</strong>: Permite notificaciones para que los recordatorios lleguen a tiempo.</p>
-                        <p>• <strong>Micrófono</strong>: Permite el acceso al micrófono para la entrada de voz y grabación.</p>
-                        <p>• <strong>Optimización de batería</strong>: Desactiva la optimización de batería para evitar que la aplicación se suspenda en segundo plano.</p>
-                        <p>• <strong>Actividad en segundo plano</strong>: Permite la actividad en segundo plano para garantizar recordatorios en tiempo real.</p>
+                <details class="info-details" data-speech="订阅与老用户权益。订阅激活期间处于正常使用状态。新规则上线前已注册的用户保留原有使用资格，新的体验规则与每日 10 条限制不追溯适用于老用户，已保存的记录和提醒也不会因此被删除。">
+                    <summary class="info-summary">5. 订阅与老用户权益</summary>
+                    <div class="info-content">
+                        <p>订阅激活期间，账户处于正常使用状态，按对应权益使用功能。</p>
+                        <p>新规则正式上线前已注册的用户保留原有使用资格；新的体验规则与每日 10 条限制不追溯适用于老用户，已保存的记录和提醒也不会因此被删除。</p>
                     </div>
                 </details>
 
-                <!-- 6. French -->
-                <details class="lang-details">
-                    <summary class="lang-summary">Instructions d'utilisation (Français)</summary>
-                    <div class="lang-content">
-                        <p>Après l'installation, veuillez accéder aux <strong>Paramètres</strong> de votre téléphone et activer les autorisations suivantes pour assurer le bon fonctionnement des rappels :</p>
-                        <p>• <strong>Notifications</strong> : Autorisez les notifications pour que les alarmes et rappels arrivent à l'heure.</p>
-                        <p>• <strong>Microphone</strong> : Autorisez l'accès au microphone pour la saisie vocale et l'enregistrement.</p>
-                        <p>• <strong>Optimisation de la batterie</strong> : Désactivez l'optimisation de la batterie pour empêcher la mise en veille de l'application en arrière-plan.</p>
-                        <p>• <strong>Activité en arrière-plan</strong> : Autorisez l'activité en arrière-plan pour garantir des rappels en temps réel.</p>
+                <details class="info-details" data-speech="达到限制后会怎样。已有记录与提醒仍可正常查看，不会被清空或删除。已创建的提醒会继续按计划执行。额度恢复、状态变更或订阅生效后，即可继续创建新的记录与提醒。">
+                    <summary class="info-summary">6. 达到限制后会怎样</summary>
+                    <div class="info-content">
+                        <p>• <strong>已有记录与提醒</strong>：仍可正常查看已保存的记录和提醒，不会被清空或删除。</p>
+                        <p>• <strong>已设提醒执行</strong>：此前已经创建并生效的提醒会继续按计划执行。</p>
+                        <p>• <strong>继续创建新内容</strong>：在额度恢复、状态变更或订阅生效后，即可继续创建新的记录与提醒。</p>
                     </div>
                 </details>
 
-                <!-- 7. Arabic -->
-                <details class="lang-details">
-                    <summary class="lang-summary">تعليمات الاستخدام (العربية)</summary>
-                    <div class="lang-content" style="direction: rtl; text-align: right;">
-                        <p>بعد التثبيت، يرجى الانتقال إلى <strong>إعدادات</strong> هاتفك وتمكين الأذونات التالية لضمان عمل التنبيهات والتذكيرات بشكل صحيح:</p>
-                        <p>• <strong>الإشعارات</strong>: السماح بالإشعارات لضمان وصول التنبيهات في الوقت المحدد.</p>
-                        <p>• <strong>الميكروفون</strong>: السماح بالوصول إلى الميكروفون لإدخال الصوت والتسجيل.</p>
-                        <p>• <strong>تحسين البطارية</strong>: إلغاء تحسين البطارية لمنع التطبيق من السكون في الخلفية.</p>
-                        <p>• <strong>النشاط في الخلفية</strong>: السماح بالنشاط في الخلفية لضمان التذكيرات في الوقت الفعلي.</p>
+                <details class="info-details" data-speech="常见问题。为什么我的使用状态发生变化？通常与体验期状态、订阅激活状态或账户资格同步有关。为什么我和其他用户的额度不同？不同账户的注册时间、体验状态或订阅权益可能不同。如何查看剩余额度？请在 Air 2 Aim App 内的使用状态或账户相关页面查看。使用限制是否影响已有提醒？不会，限制仅针对新建内容。">
+                    <summary class="info-summary">7. 常见问题（FAQ）</summary>
+                    <div class="info-content">
+                        <p><strong>为什么我的使用状态发生变化？</strong>通常与体验期状态、订阅激活状态或账户资格同步有关，可在 App 内刷新查看。</p>
+                        <p><strong>为什么我和其他用户的额度不同？</strong>不同账户的注册时间、体验状态或订阅权益可能不同，因此可用额度存在差异。</p>
+                        <p><strong>如何查看剩余额度？</strong>请在 AIR²Aim App 内的使用状态或账户相关页面查看当前实时额度。</p>
+                        <p><strong>使用限制是否影响已有提醒？</strong>不会。限制仅针对新建内容，已保存的记录和已设置的提醒仍会保留并继续提醒。</p>
                     </div>
                 </details>
-
-                <!-- 8. Turkish -->
-                <details class="lang-details">
-                    <summary class="lang-summary">Kullanım Talimatları (Türkçe)</summary>
-                    <div class="lang-content">
-                        <p>Kurulumdan sonra, alarm ve hatırlatıcıların düzgün çalışmasını sağlamak için lütfen telefonunuzun <strong>Ayarlar</strong> bölümüne gidin ve şu izinleri etkinleştirin:</p>
-                        <p>• <strong>Bildirimler</strong>: Bildirimlere izin vererek alarm ve hatırlatıcıların zamanında gelmesini sağlayın.</p>
-                        <p>• <strong>Mikrofon</strong>: Sesli giriş و kayıt için mikrofon erişimine izin verin.</p>
-                        <p>• <strong>Pil Optimizasyonu</strong>: Uygulamanın arka planda uyku moduna geçmesini önlemek için pil optimizasyonunu devre dışı bırakın.</p>
-                        <p>• <strong>Arka Plan Etkinliği</strong>: Gerçek zamanlı hatırlatıcılar için arka plan etkinliğine izin verin.</p>
-                    </div>
-                </details>
-
-            </div>
-
-            <div class="status-meta-mobile">Prototype · 2026</div>
-
-            <div class="contact-mobile">
-                <h4>Contact</h4>
-                <a href="mailto:support@air2aim.com">support@air2aim.com</a>
-                
-                <div class="contact-info-block">
-                    Anna Intelligence Recorder & Reminder
-                    <span class="info-line-2">Developed in Yerevan, Armenia · 2026</span>
-                </div>
             </div>
         </div>
 
-        <div class="page-footer"></div>
+        <footer class="page-footer">
+            <div class="footer-contact">
+                联系支持：<a href="mailto:support@air2aim.com">support@air2aim.com</a> · Usage Status · 2026
+            </div>
+            <div class="footer-meta">
+                Anna Intelligence Recorder & Reminder · Developed in Yerevan, Armenia · 2026
+            </div>
+        </footer>
     </div>
 
+    <script>
+        (function () {
+            const ttsToggle = document.getElementById('ttsToggle');
+            const detailsList = document.querySelectorAll('.info-details');
+            const supportsTTS = 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
+            let isTtsEnabled = supportsTTS;
+
+            function stopSpeaking() {
+                if (supportsTTS) {
+                    window.speechSynthesis.cancel();
+                }
+            }
+
+            function speakText(text) {
+                if (!supportsTTS || !isTtsEnabled || !text) return;
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'zh-CN';
+                utterance.rate = 0.95;
+                window.speechSynthesis.resume();
+                window.speechSynthesis.speak(utterance);
+            }
+
+            function updateToggleUI() {
+                if (!supportsTTS) {
+                    ttsToggle.textContent = 'TTS: N/A';
+                    ttsToggle.classList.remove('active');
+                    return;
+                }
+                ttsToggle.textContent = isTtsEnabled ? 'TTS: ON' : 'TTS: OFF';
+                ttsToggle.classList.toggle('active', isTtsEnabled);
+            }
+
+            ttsToggle.addEventListener('click', function () {
+                if (!supportsTTS) return;
+                isTtsEnabled = !isTtsEnabled;
+                updateToggleUI();
+                if (!isTtsEnabled) {
+                    stopSpeaking();
+                }
+            });
+
+            detailsList.forEach(function (detail) {
+                detail.addEventListener('toggle', function () {
+                    if (detail.open) {
+                        const text = detail.getAttribute('data-speech') || detail.querySelector('.info-content')?.innerText || '';
+                        speakText(text);
+                    } else {
+                        stopSpeaking();
+                    }
+                });
+
+                const contentEl = detail.querySelector('.info-content');
+                if (contentEl) {
+                    contentEl.addEventListener('click', function () {
+                        const text = detail.getAttribute('data-speech') || contentEl.innerText || '';
+                        speakText(text);
+                    });
+                }
+            });
+
+            window.addEventListener('pagehide', stopSpeaking);
+            window.addEventListener('beforeunload', stopSpeaking);
+            updateToggleUI();
+        })();
+    </script>
 </body>
 </html>
