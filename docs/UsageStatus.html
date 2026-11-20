@@ -210,12 +210,15 @@
         }
 
         .tts-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
             background: rgba(0, 0, 0, 0.35);
             border: 1px solid rgba(255, 255, 255, 0.35);
             color: #ffffff;
             font-size: 0.72rem;
             letter-spacing: 0.04em;
-            padding: 5px 12px;
+            padding: 5px 11px;
             border-radius: 999px;
             cursor: pointer;
             transition: opacity 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
@@ -229,6 +232,18 @@
 
         .tts-toggle-btn:not(.active) {
             opacity: 0.65;
+        }
+
+        .tts-toggle-btn .icon-mute {
+            display: none;
+        }
+
+        .tts-toggle-btn:not(.active) .icon-sound {
+            display: none;
+        }
+
+        .tts-toggle-btn:not(.active) .icon-mute {
+            display: inline-block;
         }
 
         .page-body {
@@ -391,7 +406,19 @@
                     </div>
                 </div>
 
-                <button type="button" class="tts-toggle-btn active" id="ttsToggle">TTS: ON</button>
+                <button type="button" class="tts-toggle-btn active" id="ttsToggle" aria-label="Toggle voice reading">
+                    <svg class="icon-sound" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                    </svg>
+                    <svg class="icon-mute" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <line x1="23" y1="9" x2="17" y2="15"></line>
+                        <line x1="17" y1="9" x2="23" y2="15"></line>
+                    </svg>
+                    <span id="ttsLabel">on</span>
+                </button>
             </div>
         </div>
 
@@ -789,6 +816,7 @@
             const langGlobeBtn = document.getElementById('langGlobeBtn');
             const langOptions = document.querySelectorAll('.lang-option');
             const ttsToggle = document.getElementById('ttsToggle');
+            const ttsLabel = document.getElementById('ttsLabel');
 
             const supportsTTS = 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
             let isTtsEnabled = supportsTTS;
@@ -833,11 +861,11 @@
 
             function updateToggleUI() {
                 if (!supportsTTS) {
-                    ttsToggle.textContent = 'TTS: N/A';
+                    ttsLabel.textContent = 'off';
                     ttsToggle.classList.remove('active');
                     return;
                 }
-                ttsToggle.textContent = isTtsEnabled ? 'TTS: ON' : 'TTS: OFF';
+                ttsLabel.textContent = isTtsEnabled ? 'on' : 'off';
                 ttsToggle.classList.toggle('active', isTtsEnabled);
             }
 
