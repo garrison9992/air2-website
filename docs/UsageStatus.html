@@ -91,4 +91,865 @@
             min-height: 100vh;
             min-height: 100dvh;
             display: flex;
-            flex-direction:
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 24px 48px;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            color: #ffffff;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            animation: contentFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+            opacity: 0;
+        }
+
+        @media (max-width: 768px) {
+            .standalone-container {
+                padding: 18px 18px 24px 18px;
+            }
+        }
+
+        .page-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 820px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .page-brand-sm {
+            font-size: 1.15rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            word-spacing: -0.15em;
+            color: #ffffff;
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .page-brand-sm:hover {
+            opacity: 0.85;
+        }
+
+        .top-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* --- 地球语言切换下拉 --- */
+        .lang-dropdown {
+            position: relative;
+        }
+
+        .lang-globe-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            color: #ffffff;
+            font-size: 0.72rem;
+            letter-spacing: 0.04em;
+            padding: 5px 11px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: border-color 0.25s ease, background-color 0.25s ease;
+        }
+
+        .lang-globe-btn:hover,
+        .lang-dropdown.open .lang-globe-btn {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: #ffffff;
+        }
+
+        .lang-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: calc(100% + 6px);
+            min-width: 128px;
+            background: rgba(20, 20, 22, 0.94);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 10px;
+            padding: 4px;
+            z-index: 30;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+        }
+
+        .lang-dropdown.open .lang-menu {
+            display: block;
+        }
+
+        .lang-option {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-size: 0.8rem;
+            text-align: left;
+            padding: 7px 10px;
+            border-radius: 7px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s ease;
+        }
+
+        .lang-option:hover {
+            background: rgba(255, 255, 255, 0.14);
+        }
+
+        .lang-option.active {
+            background: rgba(255, 255, 255, 0.2);
+            font-weight: 600;
+        }
+
+        .tts-toggle-btn {
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            color: #ffffff;
+            font-size: 0.72rem;
+            letter-spacing: 0.04em;
+            padding: 5px 12px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: opacity 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+        }
+
+        .tts-toggle-btn.active {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: #ffffff;
+            opacity: 1;
+        }
+
+        .tts-toggle-btn:not(.active) {
+            opacity: 0.65;
+        }
+
+        .page-body {
+            margin: 14px auto;
+            max-width: 820px;
+            width: 100%;
+        }
+
+        .page-header-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 8px 16px;
+            margin-bottom: 12px;
+        }
+
+        .page-body h2 {
+            font-size: clamp(1.5rem, 2.8vw, 2rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+            color: #ffffff;
+        }
+
+        .page-lead {
+            font-size: 0.84rem;
+            line-height: 1.45;
+            color: var(--text-muted);
+        }
+
+        /* --- 紧凑折叠下拉窗区域 --- */
+        .accordion-section {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .info-details {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: border-color 0.25s ease, background-color 0.25s ease;
+        }
+
+        .info-details[open] {
+            border-color: rgba(255, 255, 255, 0.42);
+            background: rgba(0, 0, 0, 0.36);
+        }
+
+        .info-summary {
+            padding: 9px 14px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .info-summary::after {
+            content: "+";
+            font-size: 1.05rem;
+            font-weight: 300;
+            line-height: 1;
+            transition: transform 0.25s ease;
+            margin-left: 12px;
+        }
+
+        .info-details[open] .info-summary::after {
+            transform: rotate(45deg);
+        }
+
+        .info-summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .info-content {
+            padding: 9px 14px 12px 14px;
+            font-size: 0.83rem;
+            line-height: 1.55;
+            color: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+
+        .info-content p {
+            margin-bottom: 5px;
+        }
+
+        .info-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* --- 紧凑底部信息 --- */
+        .page-footer {
+            max-width: 820px;
+            width: 100%;
+            margin: 6px auto 0 auto;
+            padding-top: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px 16px;
+            font-size: 0.74rem;
+            color: var(--text-muted);
+        }
+
+        .footer-contact a {
+            color: #ffffff;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+            padding-bottom: 1px;
+        }
+
+        .footer-meta {
+            text-align: right;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 768px) {
+            .footer-meta {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 背景图层 -->
+    <div class="bg-wrapper">
+        <div class="parallax-bg"></div>
+    </div>
+
+    <!-- 单页容器 -->
+    <div class="standalone-container">
+        <div class="page-top">
+            <a href="https://air2aim.com/" class="page-brand-sm" title="AIR²Aim">AIR²Aim</a>
+
+            <div class="top-controls">
+                <div class="lang-dropdown" id="langDropdown">
+                    <button type="button" class="lang-globe-btn" id="langGlobeBtn" aria-expanded="false" aria-label="Switch language">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M2 12h20"></path>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                        <span id="currentLangCode">EN</span>
+                    </button>
+                    <div class="lang-menu" id="langMenu" role="menu">
+                        <button type="button" class="lang-option" data-lang="zh"><span>中文</span><span>ZH</span></button>
+                        <button type="button" class="lang-option active" data-lang="en"><span>English</span><span>EN</span></button>
+                        <button type="button" class="lang-option" data-lang="ru"><span>Русский</span><span>RU</span></button>
+                        <button type="button" class="lang-option" data-lang="fr"><span>Français</span><span>FR</span></button>
+                        <button type="button" class="lang-option" data-lang="es"><span>Español</span><span>ES</span></button>
+                    </div>
+                </div>
+
+                <button type="button" class="tts-toggle-btn active" id="ttsToggle">TTS: ON</button>
+            </div>
+        </div>
+
+        <div class="page-body">
+            <div class="page-header-row">
+                <h2 id="pageTitle">Usage Status</h2>
+                <p class="page-lead" id="pageLead">Limits on creating new items never delete existing data or stop scheduled reminders.</p>
+            </div>
+
+            <div class="accordion-section" id="accordionSection"></div>
+        </div>
+
+        <footer class="page-footer">
+            <div class="footer-contact">
+                <span id="supportPrefix">Support: </span><a href="mailto:support@air2aim.com">support@air2aim.com</a> · <span id="footerBadge">Usage Status · 2026</span>
+            </div>
+            <div class="footer-meta">
+                Anna Intelligence Recorder & Reminder · Developed in Yerevan, Armenia · 2026
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        (function () {
+            const I18N = {
+                zh: {
+                    htmlLang: 'zh',
+                    ttsLang: 'zh-CN',
+                    label: '中文',
+                    docTitle: '使用状态说明 — AIR²Aim',
+                    heading: '使用状态说明',
+                    lead: '限制新建内容不会删除已有数据，也不会停止已设提醒。',
+                    supportPrefix: '联系支持：',
+                    footerBadge: 'Usage Status · 2026',
+                    items: [
+                        {
+                            summary: '1. 什么是使用状态',
+                            paragraphs: [
+                                '使用状态反映您当前账户在 AIR²Aim 中的可用资格与功能权限。',
+                                'App 内展示的状态和额度以当前账户的实际同步结果为准，方便随时了解能否新建记录或提醒。'
+                            ],
+                            speech: '什么是使用状态。使用状态反映您当前账户在 Air 2 Aim 中的可用资格与功能权限。App 内展示的状态和额度以实际同步结果为准。'
+                        },
+                        {
+                            summary: '2. 账户使用状态（Trial / Active / Limited）',
+                            paragraphs: [
+                                '• <strong>试用中（Trial）</strong>：处于免费体验阶段，可按规则体验核心记录与提醒功能。',
+                                '• <strong>正常使用（Active）</strong>：订阅已激活或处于正常可用资格内，可正常使用对应权益。',
+                                '• <strong>试用结束或额度受限（Limited）</strong>：体验期结束或达到当前额度上限后，新建内容会受限，但已有数据与已设提醒不受影响。'
+                            ],
+                            speech: '账户使用状态。试用中处于免费体验阶段，可按规则体验核心功能。正常使用表示订阅已激活或处于正常可用资格内。试用结束或额度受限后，新建内容会受限，但已有数据与已设提醒不受影响。'
+                        },
+                        {
+                            summary: '3. 免费体验规则',
+                            paragraphs: [
+                                '新用户可获得基础免费体验资格，用于了解语音记录、整理与提醒的核心流程。',
+                                '体验结束后若未激活订阅或超出免费使用范围，账户将转为受限状态，仅影响新的创建操作。'
+                            ],
+                            speech: '免费体验规则。新用户可获得基础免费体验资格，用于了解语音记录、整理与提醒的核心流程。体验结束后若未激活订阅或超出免费使用范围，账户将转为受限状态，仅影响新的创建操作。'
+                        },
+                        {
+                            summary: '4. 每日使用额度（每日最多 10 条）',
+                            paragraphs: [
+                                '在适用每日额度规则的模式下，账户每天最多可创建 <strong>10 条</strong>内容。',
+                                '新增记录或新建提醒等创建类操作会计入当日额度；达到上限后次日按规则恢复，具体以 App 内显示为准。'
+                            ],
+                            speech: '每日使用额度。在适用每日额度规则的模式下，账户每天最多可创建 10 条内容。新增记录或新建提醒等创建操作会计入当日额度，达到上限后次日按规则恢复，具体以 App 内显示为准。'
+                        },
+                        {
+                            summary: '5. 订阅与老用户权益',
+                            paragraphs: [
+                                '订阅激活期间，账户处于正常使用状态，按对应权益使用功能。',
+                                '新规则正式上线前已注册的用户保留原有使用资格；新的体验规则与每日 10 条限制不追溯适用于老用户，已保存的记录和提醒也不会因此被删除。'
+                            ],
+                            speech: '订阅与老用户权益。订阅激活期间处于正常使用状态。新规则上线前已注册的用户保留原有使用资格，新的体验规则与每日 10 条限制不追溯适用于老用户，已保存的记录和提醒也不会因此被删除。'
+                        },
+                        {
+                            summary: '6. 达到限制后会怎样',
+                            paragraphs: [
+                                '• <strong>已有记录与提醒</strong>：仍可正常查看已保存的记录和提醒，不会被清空或删除。',
+                                '• <strong>已设提醒执行</strong>：此前已经创建并生效的提醒会继续按计划执行。',
+                                '• <strong>继续创建新内容</strong>：在额度恢复、状态变更或订阅生效后，即可继续创建新的记录与提醒。'
+                            ],
+                            speech: '达到限制后会怎样。已有记录与提醒仍可正常查看，不会被清空或删除。已创建的提醒会继续按计划执行。额度恢复、状态变更或订阅生效后，即可继续创建新的记录与提醒。'
+                        },
+                        {
+                            summary: '7. 常见问题（FAQ）',
+                            paragraphs: [
+                                '<strong>为什么我的使用状态发生变化？</strong>通常与体验期状态、订阅激活状态或账户资格同步有关，可在 App 内刷新查看。',
+                                '<strong>为什么我和其他用户的额度不同？</strong>不同账户的注册时间、体验状态或订阅权益可能不同，因此可用额度存在差异。',
+                                '<strong>如何查看剩余额度？</strong>请在 AIR²Aim App 内的使用状态或账户相关页面查看当前实时额度。',
+                                '<strong>使用限制是否影响已有提醒？</strong>不会。限制仅针对新建内容，已保存的记录和已设置的提醒仍会保留并继续提醒。'
+                            ],
+                            speech: '常见问题。为什么我的使用状态发生变化？通常与体验期状态、订阅激活状态或账户资格同步有关。为什么我和其他用户的额度不同？不同账户的注册时间、体验状态或订阅权益可能不同。如何查看剩余额度？请在 Air 2 Aim App 内的使用状态或账户相关页面查看。使用限制是否影响已有提醒？不会，限制仅针对新建内容。'
+                        }
+                    ]
+                },
+                en: {
+                    htmlLang: 'en',
+                    ttsLang: 'en-US',
+                    label: 'EN',
+                    docTitle: 'Usage Status — AIR²Aim',
+                    heading: 'Usage Status',
+                    lead: 'Limits on creating new items never delete existing data or stop scheduled reminders.',
+                    supportPrefix: 'Support: ',
+                    footerBadge: 'Usage Status · 2026',
+                    items: [
+                        {
+                            summary: '1. What Is Usage Status',
+                            paragraphs: [
+                                'Usage Status reflects your account eligibility and feature access in AIR²Aim.',
+                                'Status and quota shown in the app follow your current account sync so you can check whether new items can be created.'
+                            ],
+                            speech: 'What is Usage Status. Usage Status reflects your account eligibility and feature access in Air 2 Aim. Status and quota shown in the app follow your current account sync.'
+                        },
+                        {
+                            summary: '2. Account Usage States (Trial / Active / Limited)',
+                            paragraphs: [
+                                '• <strong>Trial</strong>: In the free trial stage, allowing you to try core recording and reminder features under trial rules.',
+                                '• <strong>Active</strong>: Subscription is active or within standard eligible access.',
+                                '• <strong>Limited</strong>: Trial has ended or a current quota cap is reached; creating new items is limited while existing data and reminders stay intact.'
+                            ],
+                            speech: 'Account Usage States. Trial is in the free trial stage. Active means subscription is active or within standard eligible access. Limited means creating new items is limited while existing data and reminders stay intact.'
+                        },
+                        {
+                            summary: '3. Free Trial Rules',
+                            paragraphs: [
+                                'New users can receive basic free trial access to experience voice capture, structuring, and reminders.',
+                                'Once the trial ends without an active subscription or outside free trial scope, the account enters a limited state affecting only new creations.'
+                            ],
+                            speech: 'Free Trial Rules. New users can receive basic free trial access to experience voice capture, structuring, and reminders. Once the trial ends, only new creations are affected.'
+                        },
+                        {
+                            summary: '4. Daily Usage Quota (Up to 10 per day)',
+                            paragraphs: [
+                                'Under daily quota rules, an account can create up to <strong>10 items</strong> per day.',
+                                'Creating new notes or reminders counts toward the daily quota, which resets according to app rules.'
+                            ],
+                            speech: 'Daily Usage Quota. Under daily quota rules, an account can create up to 10 items per day. Creating new notes or reminders counts toward the daily quota.'
+                        },
+                        {
+                            summary: '5. Subscriptions & Existing Users',
+                            paragraphs: [
+                                'While a subscription is active, the account remains active according to its plan benefits.',
+                                'Users registered before new rules take effect keep their existing eligibility; new trial and 10-item daily limits are not applied retroactively, and saved items are not deleted.'
+                            ],
+                            speech: 'Subscriptions and Existing Users. Users registered before new rules take effect keep their existing eligibility, and saved items are not deleted.'
+                        },
+                        {
+                            summary: '6. What Happens When Limited',
+                            paragraphs: [
+                                '• <strong>Existing records & reminders</strong>: You can still view saved records and reminders without data loss.',
+                                '• <strong>Scheduled reminders</strong>: Reminders already created continue to fire as scheduled.',
+                                '• <strong>Creating new items</strong>: You can create new items again once quota resets, status updates, or a subscription is active.'
+                            ],
+                            speech: 'What happens when limited. Existing records and reminders can still be viewed, scheduled reminders continue to fire, and new items can be created once quota resets or a subscription is active.'
+                        },
+                        {
+                            summary: '7. FAQ',
+                            paragraphs: [
+                                '<strong>Why did my usage status change?</strong> It usually relates to trial status, subscription activation, or account sync; refresh inside the app to check.',
+                                '<strong>Why does my quota differ from other users?</strong> Accounts may differ by registration timing, trial status, or subscription eligibility.',
+                                '<strong>How do I check remaining quota?</strong> Check the usage status or account section inside the AIR²Aim app.',
+                                '<strong>Do limits affect existing reminders?</strong> No. Limits only apply to creating new items; existing records and reminders remain.'
+                            ],
+                            speech: 'FAQ. Why did my usage status change? Usually due to trial status, subscription activation, or account sync. Do limits affect existing reminders? No, limits only apply to creating new items.'
+                        }
+                    ]
+                },
+                ru: {
+                    htmlLang: 'ru',
+                    ttsLang: 'ru-RU',
+                    label: 'RU',
+                    docTitle: 'Статус использования — AIR²Aim',
+                    heading: 'Статус использования',
+                    lead: 'Ограничение на создание новых записей не удаляет данные и не отключает уже заданные напоминания.',
+                    supportPrefix: 'Поддержка: ',
+                    footerBadge: 'Usage Status · 2026',
+                    items: [
+                        {
+                            summary: '1. Что такое статус использования',
+                            paragraphs: [
+                                'Статус использования показывает текущие права доступа и лимиты вашего аккаунта в AIR²Aim.',
+                                'Статус и остаток лимита в приложении отражают актуальную синхронизацию аккаунта.'
+                            ],
+                            speech: 'Что такое статус использования. Статус использования показывает текущие права доступа и лимиты вашего аккаунта в Air 2 Aim.'
+                        },
+                        {
+                            summary: '2. Состояния аккаунта (Trial / Active / Limited)',
+                            paragraphs: [
+                                '• <strong>Trial</strong>: период бесплатного знакомства с записью и напоминаниями по правилам триала.',
+                                '• <strong>Active</strong>: подписка активна или действуют стандартные права доступа.',
+                                '• <strong>Limited</strong>: пробный период завершён или достигнут лимит; создание нового ограничено, данные и напоминания сохраняются.'
+                            ],
+                            speech: 'Состояния аккаунта. Trial — период бесплатного знакомства. Active — подписка активна. Limited — создание нового ограничено, но данные и напоминания сохраняются.'
+                        },
+                        {
+                            summary: '3. Правила бесплатного доступа',
+                            paragraphs: [
+                                'Новым пользователям доступен базовый бесплатный период для проверки голосовых записей и напоминаний.',
+                                'После его завершения без активной подписки или за пределами условий аккаунт переходит в ограниченный режим только для создания нового.'
+                            ],
+                            speech: 'Правила бесплатного доступа. Новым пользователям доступен базовый бесплатный период для проверки записей и напоминаний.'
+                        },
+                        {
+                            summary: '4. Дневной лимит (до 10 в день)',
+                            paragraphs: [
+                                'При действии дневного лимита можно создать до <strong>10 записей</strong> в день.',
+                                'Создание новых записей и напоминаний расходует дневной лимит и восстанавливается по правилам в приложении.'
+                            ],
+                            speech: 'Дневной лимит. При действии дневного лимита можно создать до 10 записей в день.'
+                        },
+                        {
+                            summary: '5. Подписка и ранее зарегистрированные пользователи',
+                            paragraphs: [
+                                'При активной подписке функции доступны согласно условиям тарифа.',
+                                'Пользователи, зарегистрированные до вступления новых правил в силу, сохраняют прежние права; новые лимиты не применяются задним числом и не удаляют сохранённые данные.'
+                            ],
+                            speech: 'Подписка и ранее зарегистрированные пользователи. Ранее зарегистрированные пользователи сохраняют прежние права, а сохранённые данные не удаляются.'
+                        },
+                        {
+                            summary: '6. Что происходит при достижении лимита',
+                            paragraphs: [
+                                '• <strong>Существующие записи и напоминания</strong>: остаются доступными для просмотра.',
+                                '• <strong>Назначенные напоминания</strong>: уже созданные напоминания продолжают срабатывать по расписанию.',
+                                '• <strong>Новые записи</strong>: создание возобновляется после обновления лимита, изменения статуса или активации подписки.'
+                            ],
+                            speech: 'Что происходит при достижении лимита. Существующие записи доступны, назначенные напоминания продолжают срабатывать.'
+                        },
+                        {
+                            summary: '7. Частые вопросы (FAQ)',
+                            paragraphs: [
+                                '<strong>Почему изменился статус?</strong> Обычно это связано со статусом пробного периода, подпиской или синхронизацией аккаунта.',
+                                '<strong>Почему лимиты отличаются у разных пользователей?</strong> Они могут зависеть от даты регистрации, статуса триала или подписки.',
+                                '<strong>Как посмотреть остаток?</strong> Откройте раздел статуса или аккаунта внутри приложения AIR²Aim.',
+                                '<strong>Влияют ли ограничения на старые напоминания?</strong> Нет, ограничения касаются только создания новых элементов.'
+                            ],
+                            speech: 'Частые вопросы. Ограничения касаются только создания новых элементов и не отключают существующие напоминания.'
+                        }
+                    ]
+                },
+                fr: {
+                    htmlLang: 'fr',
+                    ttsLang: 'fr-FR',
+                    label: 'FR',
+                    docTitle: 'État d’utilisation — AIR²Aim',
+                    heading: 'État d’utilisation',
+                    lead: 'Limiter la création de nouveaux éléments ne supprime pas vos données ni vos rappels existants.',
+                    supportPrefix: 'Support : ',
+                    footerBadge: 'Usage Status · 2026',
+                    items: [
+                        {
+                            summary: '1. Qu’est-ce que l’état d’utilisation',
+                            paragraphs: [
+                                'L’état d’utilisation indique les droits et quotas actuels de votre compte dans AIR²Aim.',
+                                'L’état et le quota affichés dans l’application reflètent la synchronisation de votre compte.'
+                            ],
+                            speech: 'Qu’est-ce que l’état d’utilisation. Il indique les droits et quotas actuels de votre compte dans Air 2 Aim.'
+                        },
+                        {
+                            summary: '2. États du compte (Trial / Active / Limited)',
+                            paragraphs: [
+                                '• <strong>Trial</strong> : phase d’essai gratuit selon les règles en vigueur.',
+                                '• <strong>Active</strong> : abonnement actif ou accès normal activé.',
+                                '• <strong>Limited</strong> : essai terminé ou quota atteint ; la création est limitée sans supprimer vos données ni stopper vos rappels.'
+                            ],
+                            speech: 'États du compte. Trial pour l’essai gratuit, Active pour un accès actif, Limited lorsque la création est limitée sans supprimer vos données.'
+                        },
+                        {
+                            summary: '3. Règles d’essai gratuit',
+                            paragraphs: [
+                                'Les nouveaux utilisateurs peuvent bénéficier d’un essai gratuit de base pour découvrir la capture vocale et les rappels.',
+                                'À la fin de l’essai sans abonnement actif, le compte passe en mode limité uniquement pour les nouvelles créations.'
+                            ],
+                            speech: 'Règles d’essai gratuit. Les nouveaux utilisateurs peuvent découvrir la capture vocale et les rappels pendant l’essai.'
+                        },
+                        {
+                            summary: '4. Quota quotidien (jusqu’à 10 par jour)',
+                            paragraphs: [
+                                'Lorsque le quota quotidien s’applique, vous pouvez créer jusqu’à <strong>10 éléments</strong> par jour.',
+                                'La création d’enregistrements ou de rappels consomme le quota du jour selon les règles affichées dans l’app.'
+                            ],
+                            speech: 'Quota quotidien. Lorsque le quota quotidien s’applique, vous pouvez créer jusqu’à 10 éléments par jour.'
+                        },
+                        {
+                            summary: '5. Abonnement et utilisateurs existants',
+                            paragraphs: [
+                                'Avec un abonnement actif, le compte bénéficie des droits prévus.',
+                                'Les utilisateurs inscrits avant l’entrée en vigueur des nouvelles règles conservent leurs droits existants, sans application rétroactive ni suppression des données enregistrées.'
+                            ],
+                            speech: 'Abonnement et utilisateurs existants. Les utilisateurs inscrits avant les nouvelles règles conservent leurs droits.'
+                        },
+                        {
+                            summary: '6. En cas de limite atteinte',
+                            paragraphs: [
+                                '• <strong>Éléments existants</strong> : vos notes et rappels enregistrés restent consultables.',
+                                '• <strong>Rappels planifiés</strong> : les rappels déjà créés continuent de se déclencher.',
+                                '• <strong>Nouvelles créations</strong> : possibles dès le renouvellement du quota, la mise à jour du statut ou l’activation d’un abonnement.'
+                            ],
+                            speech: 'En cas de limite atteinte. Vos éléments existants restent visibles et les rappels planifiés continuent de fonctionner.'
+                        },
+                        {
+                            summary: '7. FAQ',
+                            paragraphs: [
+                                '<strong>Pourquoi mon état a-t-il changé ?</strong> Cela dépend généralement de l’essai, de l’abonnement ou de la synchronisation du compte.',
+                                '<strong>Pourquoi mon quota diffère-t-il ?</strong> Il peut varier selon la date d’inscription, l’essai ou l’abonnement.',
+                                '<strong>Où voir le quota restant ?</strong> Consultez l’état d’utilisation ou votre compte dans l’application AIR²Aim.',
+                                '<strong>Les limites affectent-elles les rappels existants ?</strong> Non, elles concernent uniquement la création de nouveaux éléments.'
+                            ],
+                            speech: 'FAQ. Les limites concernent uniquement la création de nouveaux éléments et n’affectent pas les rappels existants.'
+                        }
+                    ]
+                },
+                es: {
+                    htmlLang: 'es',
+                    ttsLang: 'es-ES',
+                    label: 'ES',
+                    docTitle: 'Estado de uso — AIR²Aim',
+                    heading: 'Estado de uso',
+                    lead: 'Limitar la creación de elementos nuevos no borra datos existentes ni detiene recordatorios ya creados.',
+                    supportPrefix: 'Soporte: ',
+                    footerBadge: 'Usage Status · 2026',
+                    items: [
+                        {
+                            summary: '1. Qué es el estado de uso',
+                            paragraphs: [
+                                'El estado de uso muestra los permisos y cuotas vigentes de tu cuenta en AIR²Aim.',
+                                'El estado y el cupo en la app reflejan la sincronización actual de tu cuenta.'
+                            ],
+                            speech: 'Qué es el estado de uso. Muestra los permisos y cuotas vigentes de tu cuenta en Air 2 Aim.'
+                        },
+                        {
+                            summary: '2. Estados de la cuenta (Trial / Active / Limited)',
+                            paragraphs: [
+                                '• <strong>Trial</strong>: en etapa de prueba gratuita según las reglas vigentes.',
+                                '• <strong>Active</strong>: suscripción activa o dentro del acceso habilitado.',
+                                '• <strong>Limited</strong>: prueba finalizada o cupo alcanzado; crear elementos nuevos se limita sin borrar datos ni detener recordatorios.'
+                            ],
+                            speech: 'Estados de la cuenta. Trial es prueba gratuita, Active es acceso activo y Limited limita crear elementos nuevos sin borrar datos.'
+                        },
+                        {
+                            summary: '3. Reglas de prueba gratuita',
+                            paragraphs: [
+                                'Los usuarios nuevos pueden contar con una prueba gratuita básica para probar notas por voz y recordatorios.',
+                                'Al finalizar la prueba sin suscripción activa, la limitación aplica solo a la creación de contenido nuevo.'
+                            ],
+                            speech: 'Reglas de prueba gratuita. Los usuarios nuevos pueden probar notas por voz y recordatorios durante la prueba.'
+                        },
+                        {
+                            summary: '4. Cupo diario (hasta 10 al día)',
+                            paragraphs: [
+                                'Cuando aplica el cupo diario, puedes crear hasta <strong>10 elementos</strong> por día.',
+                                'Crear registros o recordatorios consume el cupo diario y se restablece según las reglas de la app.'
+                            ],
+                            speech: 'Cupo diario. Cuando aplica el cupo diario, puedes crear hasta 10 elementos al día.'
+                        },
+                        {
+                            summary: '5. Suscripción y usuarios anteriores',
+                            paragraphs: [
+                                'Con una suscripción activa, el estado se mantiene activo según corresponda.',
+                                'Quienes se registraron antes de las nuevas reglas conservan sus derechos previos; las nuevas reglas no se aplican de forma retroactiva ni eliminan datos guardados.'
+                            ],
+                            speech: 'Suscripción y usuarios anteriores. Quienes se registraron antes conservan sus derechos y sus datos guardados.'
+                        },
+                        {
+                            summary: '6. Qué pasa al alcanzar el límite',
+                            paragraphs: [
+                                '• <strong>Registros y recordatorios existentes</strong>: siguen disponibles para consultar.',
+                                '• <strong>Recordatorios programados</strong>: los ya creados continúan ejecutándose.',
+                                '• <strong>Crear elementos nuevos</strong>: vuelve a estar disponible al renovarse el cupo, cambiar el estado o activarse una suscripción.'
+                            ],
+                            speech: 'Qué pasa al alcanzar el límite. Los registros existentes siguen disponibles y los recordatorios programados continúan.'
+                        },
+                        {
+                            summary: '7. Preguntas frecuentes (FAQ)',
+                            paragraphs: [
+                                '<strong>¿Por qué cambió mi estado de uso?</strong> Suele deberse al estado de prueba, la suscripción o la sincronización de la cuenta.',
+                                '<strong>¿Por qué mi cupo es distinto al de otros usuarios?</strong> Puede variar según la fecha de registro, prueba o suscripción.',
+                                '<strong>¿Cómo ver el cupo restante?</strong> Revisa el estado de uso o tu cuenta dentro de la app AIR²Aim.',
+                                '<strong>¿Afecta el límite a recordatorios ya creados?</strong> No, solo limita la creación de elementos nuevos.'
+                            ],
+                            speech: 'Preguntas frecuentes. El límite solo afecta la creación de elementos nuevos y no detiene recordatorios existentes.'
+                        }
+                    ]
+                }
+            };
+
+            const accordionSection = document.getElementById('accordionSection');
+            const pageTitle = document.getElementById('pageTitle');
+            const pageLead = document.getElementById('pageLead');
+            const supportPrefix = document.getElementById('supportPrefix');
+            const footerBadge = document.getElementById('footerBadge');
+            const currentLangCode = document.getElementById('currentLangCode');
+            const langDropdown = document.getElementById('langDropdown');
+            const langGlobeBtn = document.getElementById('langGlobeBtn');
+            const langOptions = document.querySelectorAll('.lang-option');
+            const ttsToggle = document.getElementById('ttsToggle');
+
+            const supportsTTS = 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
+            let isTtsEnabled = supportsTTS;
+            let activeLang = 'en';
+
+            function detectInitialLanguage() {
+                const params = new URLSearchParams(window.location.search);
+                const queryLang = (params.get('lang') || '').toLowerCase().split('-')[0];
+                if (queryLang && Object.prototype.hasOwnProperty.call(I18N, queryLang)) {
+                    return queryLang;
+                }
+
+                const systemLangs = Array.isArray(navigator.languages) && navigator.languages.length > 0
+                    ? navigator.languages
+                    : [navigator.language || navigator.userLanguage || 'en'];
+
+                for (let i = 0; i < systemLangs.length; i++) {
+                    const code = String(systemLangs[i] || '').toLowerCase().trim();
+                    const base = code.split('-')[0];
+                    if (Object.prototype.hasOwnProperty.call(I18N, base)) {
+                        return base;
+                    }
+                }
+                return 'en';
+            }
+
+            function stopSpeaking() {
+                if (supportsTTS) {
+                    window.speechSynthesis.cancel();
+                }
+            }
+
+            function speakText(text) {
+                if (!supportsTTS || !isTtsEnabled || !text) return;
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = I18N[activeLang]?.ttsLang || 'en-US';
+                utterance.rate = 0.95;
+                window.speechSynthesis.resume();
+                window.speechSynthesis.speak(utterance);
+            }
+
+            function updateToggleUI() {
+                if (!supportsTTS) {
+                    ttsToggle.textContent = 'TTS: N/A';
+                    ttsToggle.classList.remove('active');
+                    return;
+                }
+                ttsToggle.textContent = isTtsEnabled ? 'TTS: ON' : 'TTS: OFF';
+                ttsToggle.classList.toggle('active', isTtsEnabled);
+            }
+
+            function renderLanguage(langKey) {
+                const pack = I18N[langKey] || I18N.en;
+                activeLang = Object.prototype.hasOwnProperty.call(I18N, langKey) ? langKey : 'en';
+                stopSpeaking();
+
+                document.documentElement.lang = pack.htmlLang;
+                document.title = pack.docTitle;
+                pageTitle.textContent = pack.heading;
+                pageLead.textContent = pack.lead;
+                supportPrefix.textContent = pack.supportPrefix;
+                footerBadge.textContent = pack.footerBadge;
+                currentLangCode.textContent = pack.label;
+
+                langOptions.forEach(function (opt) {
+                    opt.classList.toggle('active', opt.getAttribute('data-lang') === activeLang);
+                });
+
+                accordionSection.innerHTML = '';
+
+                pack.items.forEach(function (item) {
+                    const detail = document.createElement('details');
+                    detail.className = 'info-details';
+                    detail.setAttribute('data-speech', item.speech);
+
+                    const summary = document.createElement('summary');
+                    summary.className = 'info-summary';
+                    summary.textContent = item.summary;
+
+                    const content = document.createElement('div');
+                    content.className = 'info-content';
+                    item.paragraphs.forEach(function (htmlStr) {
+                        const p = document.createElement('p');
+                        p.innerHTML = htmlStr;
+                        content.appendChild(p);
+                    });
+
+                    detail.addEventListener('toggle', function () {
+                        if (detail.open) {
+                            const allDetails = accordionSection.querySelectorAll('.info-details');
+                            allDetails.forEach(function (other) {
+                                if (other !== detail && other.open) {
+                                    other.open = false;
+                                }
+                            });
+                            speakText(detail.getAttribute('data-speech') || content.innerText || '');
+                        } else {
+                            const anyOpen = Array.from(accordionSection.querySelectorAll('.info-details')).some(function (el) {
+                                return el.open;
+                            });
+                            if (!anyOpen) {
+                                stopSpeaking();
+                            }
+                        }
+                    });
+
+                    content.addEventListener('click', function () {
+                        speakText(detail.getAttribute('data-speech') || content.innerText || '');
+                    });
+
+                    detail.appendChild(summary);
+                    detail.appendChild(content);
+                    accordionSection.appendChild(detail);
+                });
+            }
+
+            langGlobeBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const willOpen = !langDropdown.classList.contains('open');
+                langDropdown.classList.toggle('open', willOpen);
+                langGlobeBtn.setAttribute('aria-expanded', String(willOpen));
+            });
+
+            langOptions.forEach(function (opt) {
+                opt.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    const chosen = opt.getAttribute('data-lang');
+                    langDropdown.classList.remove('open');
+                    langGlobeBtn.setAttribute('aria-expanded', 'false');
+                    renderLanguage(chosen);
+                });
+            });
+
+            document.addEventListener('click', function (e) {
+                if (!langDropdown.contains(e.target)) {
+                    langDropdown.classList.remove('open');
+                    langGlobeBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            ttsToggle.addEventListener('click', function () {
+                if (!supportsTTS) return;
+                isTtsEnabled = !isTtsEnabled;
+                updateToggleUI();
+                if (!isTtsEnabled) {
+                    stopSpeaking();
+                } else {
+                    const openDetail = accordionSection.querySelector('.info-details[open]');
+                    if (openDetail) {
+                        speakText(openDetail.getAttribute('data-speech') || '');
+                    }
+                }
+            });
+
+            window.addEventListener('pagehide', stopSpeaking);
+            window.addEventListener('beforeunload', stopSpeaking);
+
+            updateToggleUI();
+            renderLanguage(detectInitialLanguage());
+        })();
+    </script>
+</body>
+</html>
