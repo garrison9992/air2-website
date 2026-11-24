@@ -276,7 +276,7 @@
             color: var(--text-muted);
         }
 
-        /* --- 紧凑折叠下拉窗区域 --- */
+        /* --- 紧凑和缓折叠下拉窗区域 --- */
         .accordion-section {
             display: flex;
             flex-direction: column;
@@ -288,10 +288,10 @@
             border: 1px solid rgba(255, 255, 255, 0.18);
             border-radius: 10px;
             overflow: hidden;
-            transition: border-color 0.25s ease, background-color 0.25s ease;
+            transition: border-color 0.28s ease, background-color 0.28s ease;
         }
 
-        .info-details[open] {
+        .info-details.is-open {
             border-color: rgba(255, 255, 255, 0.42);
             background: rgba(0, 0, 0, 0.36);
         }
@@ -306,6 +306,7 @@
             justify-content: space-between;
             align-items: center;
             user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .info-summary::after {
@@ -313,16 +314,32 @@
             font-size: 1.05rem;
             font-weight: 300;
             line-height: 1;
-            transition: transform 0.25s ease;
+            transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
             margin-left: 12px;
         }
 
-        .info-details[open] .info-summary::after {
+        .info-details.is-open .info-summary::after {
             transform: rotate(45deg);
         }
 
         .info-summary::-webkit-details-marker {
             display: none;
+        }
+
+        .info-collapse {
+            display: grid;
+            grid-template-rows: 0fr;
+            opacity: 0;
+            transition: grid-template-rows 0.36s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.28s ease;
+        }
+
+        .info-details.is-open .info-collapse {
+            grid-template-rows: 1fr;
+            opacity: 1;
+        }
+
+        .info-collapse-inner {
+            overflow: hidden;
         }
 
         .info-content {
@@ -425,8 +442,8 @@
 
         <div class="page-body">
             <div class="page-header-row">
-                <h2 id="pageTitle"></h2>
-                <p class="page-lead" id="pageLead"></p>
+                <h2 id="pageTitle">AIR²Aim User Guide</h2>
+                <p class="page-lead" id="pageLead">Welcome to AIR²Aim. With a few simple steps, you can bring your ideas to life.</p>
             </div>
 
             <div class="accordion-section" id="accordionSection"></div>
@@ -450,55 +467,225 @@
                                 "ttsLang": "zh-CN",
                                 "label": "中文",
                                 "docTitle": "使用指南 — AIR²Aim",
-                                "heading": "使用指南",
-                                "lead": "",
+                                "heading": "AIR²Aim 使用指南",
+                                "lead": "欢迎使用 AIR²Aim，通过简单步骤，就可让您的想法落地生根。",
                                 "supportPrefix": "联系支持：",
                                 "footerBadge": "User Guide · 2026",
-                                "items": []
+                                "items": [
+                                                {
+                                                                "summary": "1. 创建“记录”（Record）",
+                                                                "paragraphs": [
+                                                                                "点击首页的“铅笔”按钮，进入创建“记录”功能。在这里您可以通过语音或者文字方式，轻松地将有意义的事件记录，且便于日后查询。"
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "2. 创建“提醒”（Reminder）",
+                                                                "paragraphs": [
+                                                                                "点击首页的“闹钟”按钮，进入创建“提醒”功能。在这里您可以通过语音或者文字方式，设置重要事件的提醒。请尽可能清晰地说出待提醒事件的“提醒时间点”和“提醒的具体内容”。"
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "3. 语音录音操作与时长规则",
+                                                                "paragraphs": [
+                                                                                "在创建“记录”或者“提醒”页面，当您按下麦克风按钮，听到“滴”提示音后，说出您的具体内容，松开麦克风即停止录音。请注意，每段录音的最长时间为 30 秒。",
+                                                                                "请勿连续快速按下/松开麦克风。按下麦克风说话时长如果少于 2 秒，将被视为语音输入无效，需要您重新按下麦克风再次录音。"
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "4. 提醒响铃与完成归档",
+                                                                "paragraphs": [
+                                                                                "当“提醒”型事件到时间闹钟响铃后，该事件文字会变成红色，等待您确认。在您点击“标记为已完成”按钮后，该事件文字恢复常规颜色，并自动归档为“记录”型事件。"
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "5. 首页分区、检索与权限设置",
+                                                                "paragraphs": [
+                                                                                "首页上半部分为“记录”区域，您可以查询过往的记录事件；下半部分为“提醒”区域，您可以查询设置的提醒事件。",
+                                                                                "点击首页顶部的放大镜，您可以对全部事件，通过“关键词”和限定日期范围，进行检索。",
+                                                                                "本软件需要设置允许手机相关权限，才能正常工作，具体操作请参考《权限设置》。"
+                                                                ]
+                                                }
+                                ]
                 },
                 "en": {
                                 "htmlLang": "en",
                                 "ttsLang": "en-US",
                                 "label": "EN",
                                 "docTitle": "User Guide — AIR²Aim",
-                                "heading": "User Guide",
-                                "lead": "",
+                                "heading": "AIR²Aim User Guide",
+                                "lead": "Welcome to AIR²Aim. With a few simple steps, you can bring your ideas to life.",
                                 "supportPrefix": "Support: ",
                                 "footerBadge": "User Guide · 2026",
-                                "items": []
+                                "items": [
+                                                {
+                                                                "summary": "1. Create a “Record”",
+                                                                "paragraphs": [
+                                                                                "Tap the “Pencil” button on the home screen to create a “Record”. Here you can easily record meaningful events via voice or text for future retrieval."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "2. Create a “Reminder”",
+                                                                "paragraphs": [
+                                                                                "Tap the “Alarm” button on the home screen to create a “Reminder”. Set reminders for important events using voice or text. Please clearly state the reminder time and specific details."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "3. Voice Recording & Duration Rules",
+                                                                "paragraphs": [
+                                                                                "On the Record or Reminder creation page, press and hold the microphone button. After hearing the beep, speak your content, and release the microphone to stop recording. Note: Max recording time is 30 seconds.",
+                                                                                "Do not rapidly tap/release the microphone continuously. Speech shorter than 2 seconds will be considered invalid and will require re-recording."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "4. Reminder Alert & Completion Archive",
+                                                                "paragraphs": [
+                                                                                "When a reminder alarms, the text turns red awaiting confirmation. Tapping “Mark as Completed” restores the text color and automatically archives it as a “Record”."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "5. Home Layout, Search & Permissions",
+                                                                "paragraphs": [
+                                                                                "The upper half of the home screen is the “Record” area for past entries; the lower half is the “Reminder” area for your active reminders.",
+                                                                                "Tap the magnifying glass at the top of the home screen to search all events by keywords and date range.",
+                                                                                "The app requires necessary device permissions to function properly. Please refer to “Permissions” for details."
+                                                                ]
+                                                }
+                                ]
                 },
                 "ru": {
                                 "htmlLang": "ru",
                                 "ttsLang": "ru-RU",
                                 "label": "RU",
                                 "docTitle": "Руководство пользователя — AIR²Aim",
-                                "heading": "Руководство пользователя",
-                                "lead": "",
+                                "heading": "Руководство пользователя AIR²Aim",
+                                "lead": "Добро пожаловать в AIR²Aim. Всего за несколько простых шагов ваши идеи воплотятся в жизнь.",
                                 "supportPrefix": "Поддержка: ",
                                 "footerBadge": "User Guide · 2026",
-                                "items": []
+                                "items": [
+                                                {
+                                                                "summary": "1. Создание «Записи»",
+                                                                "paragraphs": [
+                                                                                "Нажмите кнопку «Карандаш» на главном экране, чтобы создать «Запись». Здесь вы можете легко фиксировать события голосом или текстом для дальнейшего поиска."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "2. Создание «Напоминания»",
+                                                                "paragraphs": [
+                                                                                "Нажмите кнопку «Будильник» на главном экране, чтобы создать «Напоминание». Устанавливайте напоминания голосом или текстом, четко указывая время и суть задачи."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "3. Голосовая запись и правила длительности",
+                                                                "paragraphs": [
+                                                                                "На странице создания записи или напоминания нажмите и удерживайте кнопку микрофона. После звукового сигнала произнесите текст, а затем отпустите кнопку, чтобы остановить запись. Максимальная длительность — 30 секунд.",
+                                                                                "Не нажимайте и не отпускайте микрофон слишком быстро. Если речь длится менее 2 секунд, запись будет засчитана как недействительная."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "4. Срабатывание напоминания и архивация",
+                                                                "paragraphs": [
+                                                                                "Когда наступит время напоминания, текст станет красным. После нажатия кнопки «Отметить как выполненное» текст вернется к обычному цвету, а запись автоматически перенесется в архив."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "5. Главный экран, поиск и разрешения",
+                                                                "paragraphs": [
+                                                                                "Верхняя половина главного экрана — зона «Записи», нижняя — зона «Напоминания».",
+                                                                                "Нажмите на значок лупы вверху экрана, чтобы выполнить поиск по ключевым словам и диапазону дат.",
+                                                                                "Для корректной работы приложения требуются соответствующие разрешения. Подробнее см. в разделе «Настройки разрешений»."
+                                                                ]
+                                                }
+                                ]
                 },
                 "fr": {
                                 "htmlLang": "fr",
                                 "ttsLang": "fr-FR",
                                 "label": "FR",
                                 "docTitle": "Guide d’utilisation — AIR²Aim",
-                                "heading": "Guide d’utilisation",
-                                "lead": "",
+                                "heading": "Guide d’utilisation AIR²Aim",
+                                "lead": "Bienvenue sur AIR²Aim. En quelques étapes simples, donnez vie à vos idées.",
                                 "supportPrefix": "Support : ",
                                 "footerBadge": "User Guide · 2026",
-                                "items": []
+                                "items": [
+                                                {
+                                                                "summary": "1. Créer un « Enregistrement »",
+                                                                "paragraphs": [
+                                                                                "Appuyez sur le bouton « Crayon » sur l’écran d’accueil pour créer un « Enregistrement ». Vous pouvez y consigner facilement des événements importants par la voix ou par texte pour les retrouver plus tard."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "2. Créer un « Rappel »",
+                                                                "paragraphs": [
+                                                                                "Appuyez sur le bouton « Réveil » sur l’écran d’accueil pour créer un « Rappel ». Programmez des rappels par la voix ou par texte en précisant clairement l’heure et les détails de la tâche."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "3. Enregistrement vocal et règles de durée",
+                                                                "paragraphs": [
+                                                                                "Sur la page de création d’un enregistrement ou d’un rappel, maintenez le bouton du microphone enfoncé. Après le bip sonore, énoncez votre contenu, puis relâchez le bouton pour arrêter l’enregistrement. Durée maximale : 30 secondes.",
+                                                                                "N’appuyez pas et ne relâchez pas le microphone trop rapidement. Une prise de parole de moins de 2 secondes sera considérée comme invalide et devra être réenregistrée."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "4. Alarme de rappel et archivage",
+                                                                "paragraphs": [
+                                                                                "Lorsque l’heure d’un rappel arrive, le texte devient rouge en attente de confirmation. En appuyant sur « Marquer comme terminé », le texte retrouve sa couleur normale et est automatiquement archivé dans les « Enregistrements »."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "5. Écran d’accueil, recherche et autorisations",
+                                                                "paragraphs": [
+                                                                                "La moitié supérieure de l’écran d’accueil correspond à la zone « Enregistrements » pour vos entrées passées ; la moitié inférieure correspond à la zone « Rappels » pour vos rappels actifs.",
+                                                                                "Appuyez sur la loupe en haut de l’écran d’accueil pour rechercher des événements par mots-clés et plage de dates.",
+                                                                                "L’application nécessite les autorisations système appropriées pour fonctionner correctement. Veuillez consulter la section « Autorisations » pour plus de détails."
+                                                                ]
+                                                }
+                                ]
                 },
                 "es": {
                                 "htmlLang": "es",
                                 "ttsLang": "es-ES",
                                 "label": "ES",
                                 "docTitle": "Guía de usuario — AIR²Aim",
-                                "heading": "Guía de usuario",
-                                "lead": "",
+                                "heading": "Guía de usuario de AIR²Aim",
+                                "lead": "Te damos la bienvenida a AIR²Aim. Con unos sencillos pasos, haz realidad tus ideas.",
                                 "supportPrefix": "Soporte: ",
                                 "footerBadge": "User Guide · 2026",
-                                "items": []
+                                "items": [
+                                                {
+                                                                "summary": "1. Crear un «Registro»",
+                                                                "paragraphs": [
+                                                                                "Pulsa el botón «Lápiz» en la pantalla principal para crear un «Registro». Aquí puedes guardar fácilmente eventos importantes por voz o texto para consultarlos más adelante."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "2. Crear un «Recordatorio»",
+                                                                "paragraphs": [
+                                                                                "Pulsa el botón «Alarma» en la pantalla principal para crear un «Recordatorio». Configura recordatorios por voz o texto indicando con claridad la hora y los detalles específicos."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "3. Grabación de voz y reglas de duración",
+                                                                "paragraphs": [
+                                                                                "En la página de creación de registro o recordatorio, mantén pulsado el botón del micrófono. Tras oír el pitido, di tu contenido y suelta el micrófono para detener la grabación. Nota: la duración máxima es de 30 segundos.",
+                                                                                "No pulses ni sueltes el micrófono de forma rápida y repetida. Si hablas menos de 2 segundos, la grabación se considerará no válida y tendrás que volver a grabar."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "4. Alarma de recordatorio y archivo",
+                                                                "paragraphs": [
+                                                                                "Cuando suena la alarma de un recordatorio, el texto se vuelve rojo a la espera de confirmación. Al pulsar «Marcar como completado», el texto recupera su color habitual y se archiva automáticamente como un «Registro»."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "5. Pantalla principal, búsqueda y permisos",
+                                                                "paragraphs": [
+                                                                                "La mitad superior de la pantalla principal es el área de «Registros» para entradas anteriores; la mitad inferior es el área de «Recordatorios» para tus recordatorios activos.",
+                                                                                "Pulsa la lupa en la parte superior de la pantalla principal para buscar eventos por palabras clave y rango de fechas.",
+                                                                                "La aplicación requiere los permisos necesarios del dispositivo para funcionar correctamente. Consulta la sección «Permisos» para más detalles."
+                                                                ]
+                                                }
+                                ]
                 }
 };
 
@@ -517,6 +704,8 @@
             const supportsTTS = 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
             let isTtsEnabled = supportsTTS;
             let activeLang = 'en';
+            let speechSessionId = 0;
+            const activeUtterances = [];
 
             function detectInitialLanguage() {
                 const params = new URLSearchParams(window.location.search);
@@ -540,19 +729,64 @@
             }
 
             function stopSpeaking() {
+                speechSessionId += 1;
+                activeUtterances.length = 0;
                 if (supportsTTS) {
                     window.speechSynthesis.cancel();
                 }
             }
 
+            function normalizeSpeechText(rawText) {
+                return String(rawText || '')
+                    .replace(/AIR²Aim/gi, 'Air 2 Aim')
+                    .replace(/•/g, '，')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+            }
+
+            function getCardSpeechText(cardEl) {
+                const summaryEl = cardEl.querySelector('.info-summary');
+                const contentEl = cardEl.querySelector('.info-content');
+                const summaryText = summaryEl ? summaryEl.textContent : '';
+                const paragraphTexts = contentEl
+                    ? Array.from(contentEl.querySelectorAll('p')).map(function (p) {
+                        return p.textContent || '';
+                    })
+                    : [];
+                return normalizeSpeechText([summaryText].concat(paragraphTexts).join('。'));
+            }
+
+            function splitIntoChunks(text) {
+                const cleaned = normalizeSpeechText(text);
+                if (!cleaned) return [];
+                const parts = cleaned.match(/[^。！？；.!?;]+(?:[。！？；.!?;]+|$)/g);
+                return parts ? parts.map(function (s) { return s.trim(); }).filter(Boolean) : [cleaned];
+            }
+
             function speakText(text) {
                 if (!supportsTTS || !isTtsEnabled || !text) return;
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = I18N[activeLang]?.ttsLang || 'en-US';
-                utterance.rate = 0.95;
-                window.speechSynthesis.resume();
-                window.speechSynthesis.speak(utterance);
+
+                stopSpeaking();
+                const sessionId = speechSessionId;
+                const chunks = splitIntoChunks(text);
+                if (!chunks.length) return;
+
+                if (window.speechSynthesis.paused) {
+                    window.speechSynthesis.resume();
+                }
+
+                chunks.forEach(function (chunk) {
+                    const utterance = new SpeechSynthesisUtterance(chunk);
+                    utterance.lang = I18N[activeLang]?.ttsLang || 'en-US';
+                    utterance.rate = 0.95;
+                    utterance.onstart = function () {
+                        if (sessionId !== speechSessionId) {
+                            window.speechSynthesis.cancel();
+                        }
+                    };
+                    activeUtterances.push(utterance);
+                    window.speechSynthesis.speak(utterance);
+                });
             }
 
             function updateToggleUI() {
@@ -563,6 +797,17 @@
                 }
                 ttsLabel.textContent = isTtsEnabled ? 'on' : 'off';
                 ttsToggle.classList.toggle('active', isTtsEnabled);
+            }
+
+            function setCardOpen(cardEl, shouldOpen) {
+                const detailEl = cardEl.querySelector('details');
+                if (shouldOpen) {
+                    detailEl.open = true;
+                    cardEl.classList.add('is-open');
+                } else {
+                    cardEl.classList.remove('is-open');
+                    detailEl.open = false;
+                }
             }
 
             function renderLanguage(langKey) {
@@ -585,13 +830,20 @@
                 accordionSection.innerHTML = '';
 
                 pack.items.forEach(function (item) {
+                    const card = document.createElement('div');
+                    card.className = 'info-details';
+
                     const detail = document.createElement('details');
-                    detail.className = 'info-details';
-                    detail.setAttribute('data-speech', item.speech);
 
                     const summary = document.createElement('summary');
                     summary.className = 'info-summary';
                     summary.textContent = item.summary;
+
+                    const collapse = document.createElement('div');
+                    collapse.className = 'info-collapse';
+
+                    const collapseInner = document.createElement('div');
+                    collapseInner.className = 'info-collapse-inner';
 
                     const content = document.createElement('div');
                     content.className = 'info-content';
@@ -601,32 +853,35 @@
                         content.appendChild(p);
                     });
 
-                    detail.addEventListener('toggle', function () {
-                        if (detail.open) {
-                            const allDetails = accordionSection.querySelectorAll('.info-details');
-                            allDetails.forEach(function (other) {
-                                if (other !== detail && other.open) {
-                                    other.open = false;
-                                }
-                            });
-                            speakText(detail.getAttribute('data-speech') || content.innerText || '');
-                        } else {
-                            const anyOpen = Array.from(accordionSection.querySelectorAll('.info-details')).some(function (el) {
-                                return el.open;
-                            });
-                            if (!anyOpen) {
-                                stopSpeaking();
+                    summary.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const currentlyOpen = card.classList.contains('is-open');
+                        const allCards = accordionSection.querySelectorAll('.info-details');
+                        allCards.forEach(function (other) {
+                            if (other !== card && other.classList.contains('is-open')) {
+                                setCardOpen(other, false);
                             }
+                        });
+
+                        if (!currentlyOpen) {
+                            setCardOpen(card, true);
+                            speakText(getCardSpeechText(card));
+                        } else {
+                            setCardOpen(card, false);
+                            stopSpeaking();
                         }
                     });
 
                     content.addEventListener('click', function () {
-                        speakText(detail.getAttribute('data-speech') || content.innerText || '');
+                        speakText(getCardSpeechText(card));
                     });
 
+                    collapseInner.appendChild(content);
+                    collapse.appendChild(collapseInner);
                     detail.appendChild(summary);
-                    detail.appendChild(content);
-                    accordionSection.appendChild(detail);
+                    detail.appendChild(collapse);
+                    card.appendChild(detail);
+                    accordionSection.appendChild(card);
                 });
             }
 
@@ -661,15 +916,20 @@
                 if (!isTtsEnabled) {
                     stopSpeaking();
                 } else {
-                    const openDetail = accordionSection.querySelector('.info-details[open]');
-                    if (openDetail) {
-                        speakText(openDetail.getAttribute('data-speech') || '');
+                    const openCard = accordionSection.querySelector('.info-details.is-open');
+                    if (openCard) {
+                        speakText(getCardSpeechText(openCard));
                     }
                 }
             });
 
             window.addEventListener('pagehide', stopSpeaking);
             window.addEventListener('beforeunload', stopSpeaking);
+            document.addEventListener('visibilitychange', function () {
+                if (document.hidden) {
+                    stopSpeaking();
+                }
+            });
 
             updateToggleUI();
             renderLanguage(detectInitialLanguage());

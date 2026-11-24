@@ -276,7 +276,7 @@
             color: var(--text-muted);
         }
 
-        /* --- 紧凑折叠下拉窗区域 --- */
+        /* --- 紧凑和缓折叠下拉窗区域 --- */
         .accordion-section {
             display: flex;
             flex-direction: column;
@@ -288,10 +288,10 @@
             border: 1px solid rgba(255, 255, 255, 0.18);
             border-radius: 10px;
             overflow: hidden;
-            transition: border-color 0.25s ease, background-color 0.25s ease;
+            transition: border-color 0.28s ease, background-color 0.28s ease;
         }
 
-        .info-details[open] {
+        .info-details.is-open {
             border-color: rgba(255, 255, 255, 0.42);
             background: rgba(0, 0, 0, 0.36);
         }
@@ -306,6 +306,7 @@
             justify-content: space-between;
             align-items: center;
             user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .info-summary::after {
@@ -313,16 +314,32 @@
             font-size: 1.05rem;
             font-weight: 300;
             line-height: 1;
-            transition: transform 0.25s ease;
+            transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
             margin-left: 12px;
         }
 
-        .info-details[open] .info-summary::after {
+        .info-details.is-open .info-summary::after {
             transform: rotate(45deg);
         }
 
         .info-summary::-webkit-details-marker {
             display: none;
+        }
+
+        .info-collapse {
+            display: grid;
+            grid-template-rows: 0fr;
+            opacity: 0;
+            transition: grid-template-rows 0.36s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.28s ease;
+        }
+
+        .info-details.is-open .info-collapse {
+            grid-template-rows: 1fr;
+            opacity: 1;
+        }
+
+        .info-collapse-inner {
+            overflow: hidden;
         }
 
         .info-content {
@@ -425,8 +442,8 @@
 
         <div class="page-body">
             <div class="page-header-row">
-                <h2 id="pageTitle"></h2>
-                <p class="page-lead" id="pageLead"></p>
+                <h2 id="pageTitle">AIR²Aim Privacy Policy</h2>
+                <p class="page-lead" id="pageLead">Effective date: September 22, 2026 · How information may be processed, used, and managed in AIR²Aim.</p>
             </div>
 
             <div class="accordion-section" id="accordionSection"></div>
@@ -450,55 +467,285 @@
                                 "ttsLang": "zh-CN",
                                 "label": "中文",
                                 "docTitle": "隐私政策 — AIR²Aim",
-                                "heading": "隐私政策",
-                                "lead": "",
+                                "heading": "AIR²Aim 隐私政策",
+                                "lead": "生效日期：2026 年 9 月 22 日 · 本政策说明 AIR²Aim 如何处理、使用与保护你的信息。",
                                 "supportPrefix": "联系支持：",
                                 "footerBadge": "Privacy Policy · 2026",
-                                "items": []
+                                "items": [
+                                                {
+                                                                "summary": "1. 我们可能处理的信息",
+                                                                "paragraphs": [
+                                                                                "• <strong>账号信息</strong>：登录或使用账号相关功能时，可能处理电子邮箱、账号标识及身份验证所需信息。",
+                                                                                "• <strong>记录与提醒信息</strong>：创建记录或提醒时，可能包括文字内容、提醒事项、日期和时间、重复规则、完成状态及其他由你输入的内容。",
+                                                                                "• <strong>语音输入信息</strong>：使用语音输入时，应用采集你主动提交的语音；为提供语音识别与内容理解，语音数据及识别结果可能发送给相关第三方服务处理。识别与 AI 处理可能出现错误，保存前请核对。",
+                                                                                "• <strong>设备与运行信息</strong>：可能处理支持语音输入、提醒触发、账号验证、数据同步及故障排查所需的设备、网络、通知权限和运行状态信息。"
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "2. 我们如何使用这些信息",
+                                                                "paragraphs": [
+                                                                                "用于创建、显示、编辑、管理和删除记录及提醒；将语音输入转换为文字或结构化提醒信息；在设备支持且权限已开启时触发提醒通知；提供账号验证与云端存储或同步；维护应用运行、排查故障、改善服务及响应用户咨询与合理的数据管理请求。",
+                                                                                "我们不会因为你使用某项功能，就推定你同意与该功能无关的数据处理。"
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "3. 数据存储与第三方服务",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim 可能使用设备本地缓存及云端服务支持应用运行与同步。实际存储位置与方式取决于所用功能和服务配置；不能假定所有信息只存储在本地或都会自动同步至云端。",
+                                                                                "为提供功能，AIR²Aim 可能使用云服务提供商（账号认证与云端存储）、语音识别服务（语音转文字）及 AI 处理服务（理解输入与协助生成结构化提醒）。向第三方传输的信息以提供相应功能所需为限，并受其各自条款与隐私政策约束。"
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "4. 权限、信息共享与数据安全",
+                                                                "paragraphs": [
+                                                                                "• <strong>权限</strong>：可能请求麦克风权限、通知或提醒相关权限以及网络访问权限，你可在设备系统设置中管理。",
+                                                                                "• <strong>信息共享</strong>：AIR²Aim 不会仅因你使用应用而公开个人信息；仅在提供服务所需范围或法律要求、合法请求及保护用户与服务安全时涉及处理或披露。",
+                                                                                "• <strong>安全与保存</strong>：我们根据实际服务配置采取合理安全措施，但任何系统均无法承诺绝对安全。保存时间取决于服务需要、账号状态、适用法律与服务配置。"
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "5. 用户的选择与权利",
+                                                                "paragraphs": [
+                                                                                "你可在应用内管理记录和提醒，并在设备设置中调整权限。如需查询、更正或删除相关信息，可通过下方邮箱联系我们，我们将依据实际情况、身份核验要求和适用法律处理。",
+                                                                                "删除设备中的信息不一定会同时删除云端副本；退出登录也不应被理解为所有云端数据已自动删除。"
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "6. 儿童隐私、政策更新与联系我们",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim 并非专门面向儿童设计的服务；若适用法律要求监护人同意或儿童数据保护措施，我们将依据相关要求处理。",
+                                                                                "我们可能根据产品功能、服务配置或适用法律更新本政策并注明新的生效日期。如有疑问，请联系：support@air2aim.com。© 2026 AIR²Aim。"
+                                                                ]
+                                                }
+                                ]
                 },
                 "en": {
                                 "htmlLang": "en",
                                 "ttsLang": "en-US",
                                 "label": "EN",
                                 "docTitle": "Privacy Policy — AIR²Aim",
-                                "heading": "Privacy Policy",
-                                "lead": "",
+                                "heading": "AIR²Aim Privacy Policy",
+                                "lead": "Effective date: September 22, 2026 · How information may be processed, used, and managed in AIR²Aim.",
                                 "supportPrefix": "Support: ",
                                 "footerBadge": "Privacy Policy · 2026",
-                                "items": []
+                                "items": [
+                                                {
+                                                                "summary": "1. Information We May Process",
+                                                                "paragraphs": [
+                                                                                "• <strong>Account information</strong>: When you sign in or use account features, we may process your email address, account identifier, and authentication details.",
+                                                                                "• <strong>Record and reminder information</strong>: Text, reminder details, dates and times, repeat rules, completion status, and other content you provide.",
+                                                                                "• <strong>Voice input information</strong>: Audio you actively submit may be transmitted with recognition results to third-party services for speech recognition and content understanding. Please review recognized details before saving.",
+                                                                                "• <strong>Device and operational information</strong>: Device, network, notification-permission, and operational-status data needed for voice input, reminders, authentication, synchronization, and troubleshooting."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "2. How We Use Information",
+                                                                "paragraphs": [
+                                                                                "To create, display, edit, manage, and delete records and reminders; convert voice input into text or structured reminders; trigger notifications where supported and permitted; provide authentication, cloud storage, or synchronization; maintain and improve the service; and respond to user inquiries and reasonable data requests.",
+                                                                                "Using a feature does not, by itself, mean you have agreed to data processing unrelated to that feature."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "3. Data Storage & Third-Party Services",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim may use local device caching and cloud services depending on the features used and service configuration. You should not assume all information is stored only locally or automatically synchronized to the cloud.",
+                                                                                "AIR²Aim may use third-party cloud providers, speech recognition services, and AI processing services. Information transmitted is limited to what is needed for the relevant functionality and is subject to those providers’ own terms and privacy policies."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "4. Permissions, Sharing & Data Security",
+                                                                "paragraphs": [
+                                                                                "• <strong>Permissions</strong>: Microphone, notification/reminder, and network access permissions can be managed in your device settings.",
+                                                                                "• <strong>Information sharing</strong>: AIR²Aim does not make personal information public simply because you use the app. Processing or disclosure occurs only as needed to deliver the service, comply with law, or protect users and service security.",
+                                                                                "• <strong>Security and retention</strong>: We take reasonable protective measures based on actual service configuration, though no system is completely secure. Retention periods depend on service needs, account status, and applicable law."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "5. Your Choices and Rights",
+                                                                "paragraphs": [
+                                                                                "You can manage records and reminders in the app and adjust permissions in device settings. To request access, correction, or deletion of your information, contact us below; requests are handled according to identity-verification requirements and applicable law.",
+                                                                                "Deleting information from your device may not delete cloud copies, and signing out does not automatically delete all cloud data."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "6. Children’s Privacy, Policy Updates & Contact Us",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim is not specifically designed for children; where applicable law requires parental consent or safeguards, we comply with relevant requirements.",
+                                                                                "We may update this policy with a revised effective date on the relevant page. For privacy questions, contact support@air2aim.com. © 2026 AIR²Aim."
+                                                                ]
+                                                }
+                                ]
                 },
                 "ru": {
                                 "htmlLang": "ru",
                                 "ttsLang": "ru-RU",
                                 "label": "RU",
                                 "docTitle": "Политика конфиденциальности — AIR²Aim",
-                                "heading": "Политика конфиденциальности",
-                                "lead": "",
+                                "heading": "Политика конфиденциальности AIR²Aim",
+                                "lead": "Дата вступления в силу: 22 сентября 2026 г. · Как AIR²Aim обрабатывает, использует и защищает вашу информацию.",
                                 "supportPrefix": "Поддержка: ",
                                 "footerBadge": "Privacy Policy · 2026",
-                                "items": []
+                                "items": [
+                                                {
+                                                                "summary": "1. Информация, которую мы можем обрабатывать",
+                                                                "paragraphs": [
+                                                                                "• <strong>Информация об учетной записи</strong>: адрес электронной почты, идентификатор учетной записи и данные для аутентификации.",
+                                                                                "• <strong>Информация о записях и напоминаниях</strong>: текст, сведения о напоминании, даты, время, правила повторения, статус выполнения и другой предоставленный контент.",
+                                                                                "• <strong>Информация голосового ввода</strong>: аудио, которое вы отправляете самостоятельно, и результаты распознавания могут передаваться сторонним сервисам для распознавания речи и понимания контента. Проверяйте данные перед сохранением.",
+                                                                                "• <strong>Информация об устройстве и работе приложения</strong>: сведения об устройстве, сети, разрешениях уведомлений и рабочем статусе для работы функций и устранения неполадок."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "2. Как мы используем информацию",
+                                                                "paragraphs": [
+                                                                                "Для создания, отображения, редактирования и удаления записей и напоминаний; преобразования голоса в текст и структурированные напоминания; отправки уведомлений; аутентификации, облачного хранения или синхронизации; обслуживания приложения и обработки запросов пользователей.",
+                                                                                "Использование функции не означает согласия на обработку данных, не связанную с этой функцией."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "3. Хранение данных и сторонние сервисы",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim может использовать локальное кэширование на устройстве и облачные сервисы в зависимости от функций и конфигурации. Не следует предполагать, что все данные хранятся только локально или всегда автоматически синхронизируются с облаком.",
+                                                                                "Могут использоваться облачные провайдеры, сервисы распознавания речи и обработки ИИ. Передаваемые данные ограничиваются необходимым объемом и регулируются политиками этих поставщиков."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "4. Разрешения, передача и безопасность данных",
+                                                                "paragraphs": [
+                                                                                "• <strong>Разрешения</strong>: доступ к микрофону, уведомлениям/напоминаниям и сети настраивается в параметрах устройства.",
+                                                                                "• <strong>Передача информации</strong>: AIR²Aim не делает данные общедоступными; обработка или раскрытие возможны только для оказания сервиса, по требованию закона или для защиты безопасности.",
+                                                                                "• <strong>Безопасность и хранение</strong>: мы принимаем разумные меры защиты, однако ни одна система не является абсолютно защищенной. Сроки хранения зависят от требований сервиса, статуса аккаунта и закона."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "5. Ваши выборы и права",
+                                                                "paragraphs": [
+                                                                                "Вы можете управлять записями и напоминаниями в приложении и разрешениями в настройках устройства. Для запросов на доступ, исправление или удаление данных свяжитесь с нами по адресу ниже.",
+                                                                                "Удаление данных с устройства может не удалить облачные копии, а выход из учетной записи не означает автоматического удаления всех облачных данных."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "6. Конфиденциальность детей, изменения и контакты",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim не предназначен специально для детей; при необходимости применяются требования законодательства о защите данных детей.",
+                                                                                "Мы можем обновлять настоящую Политику с указанием новой даты вступления в силу. Контакт: support@air2aim.com. © 2026 AIR²Aim."
+                                                                ]
+                                                }
+                                ]
                 },
                 "fr": {
                                 "htmlLang": "fr",
                                 "ttsLang": "fr-FR",
                                 "label": "FR",
                                 "docTitle": "Politique de confidentialité — AIR²Aim",
-                                "heading": "Politique de confidentialité",
-                                "lead": "",
+                                "heading": "Politique de confidentialité AIR²Aim",
+                                "lead": "Date d’entrée en vigueur : 22 septembre 2026 · Comment vos informations sont traitées, utilisées et gérées.",
                                 "supportPrefix": "Support : ",
                                 "footerBadge": "Privacy Policy · 2026",
-                                "items": []
+                                "items": [
+                                                {
+                                                                "summary": "1. Informations susceptibles d’être traitées",
+                                                                "paragraphs": [
+                                                                                "• <strong>Informations de compte</strong> : adresse e-mail, identifiant de compte et informations nécessaires à l’authentification.",
+                                                                                "• <strong>Enregistrements et rappels</strong> : texte, détails de rappel, dates, heures, règles de répétition, état d’achèvement et autres contenus saisis.",
+                                                                                "• <strong>Saisie vocale</strong> : l’audio que vous soumettez volontairement et les résultats de reconnaissance peuvent être transmis à des services tiers pour la transcription et la compréhension. Vérifiez les détails avant d’enregistrer.",
+                                                                                "• <strong>Informations sur l’appareil</strong> : données d’appareil, de réseau, d’autorisation de notification et d’état opérationnel nécessaires au fonctionnement et au dépannage."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "2. Utilisation des informations",
+                                                                "paragraphs": [
+                                                                                "Pour créer, afficher, modifier et supprimer des enregistrements et rappels ; convertir la voix en texte ou rappels structurés ; déclencher des notifications ; fournir l’authentification, le stockage cloud ou la synchronisation ; maintenir le service et répondre aux demandes des utilisateurs.",
+                                                                                "L’utilisation d’une fonctionnalité n’implique pas votre consentement à un traitement sans rapport avec celle-ci."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "3. Stockage des données et services tiers",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim peut utiliser le cache local de l’appareil et des services cloud selon les fonctionnalités utilisées. Toutes les données ne sont pas nécessairement stockées uniquement en local ni synchronisées automatiquement vers le cloud.",
+                                                                                "AIR²Aim peut recourir à des fournisseurs cloud, des services de reconnaissance vocale et des services d’IA, limités aux données nécessaires et soumis à leurs propres politiques de confidentialité."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "4. Autorisations, partage et sécurité",
+                                                                "paragraphs": [
+                                                                                "• <strong>Autorisations</strong> : microphone, notifications/rappels et accès réseau gérables dans les réglages de l’appareil.",
+                                                                                "• <strong>Partage</strong> : AIR²Aim ne rend pas vos données publiques ; tout traitement ou divulgation est limité à la fourniture du service, aux obligations légales ou à la sécurité.",
+                                                                                "• <strong>Sécurité et conservation</strong> : nous appliquons des mesures raisonnables selon la configuration du service, sans pouvoir garantir une sécurité absolue."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "5. Vos choix et vos droits",
+                                                                "paragraphs": [
+                                                                                "Vous pouvez gérer vos enregistrements et rappels dans l’application et ajuster les autorisations sur votre appareil. Pour toute demande d’accès, de rectification ou de suppression, contactez-nous ci-dessous.",
+                                                                                "La suppression sur votre appareil ne supprime pas automatiquement les copies cloud, et la déconnexion n’entraîne pas la suppression automatique des données cloud."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "6. Confidentialité des enfants, mises à jour et contact",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim n’est pas spécifiquement conçu pour les enfants et respecte les exigences légales applicables le cas échéant.",
+                                                                                "Cette politique peut être mise à jour avec une nouvelle date d’entrée en vigueur. Contact : support@air2aim.com. © 2026 AIR²Aim."
+                                                                ]
+                                                }
+                                ]
                 },
                 "es": {
                                 "htmlLang": "es",
                                 "ttsLang": "es-ES",
                                 "label": "ES",
                                 "docTitle": "Política de privacidad — AIR²Aim",
-                                "heading": "Política de privacidad",
-                                "lead": "",
+                                "heading": "Política de privacidad de AIR²Aim",
+                                "lead": "Fecha de entrada en vigor: 22 de septiembre de 2026 · Cómo se tratan, usan y gestionan tus datos en AIR²Aim.",
                                 "supportPrefix": "Soporte: ",
                                 "footerBadge": "Privacy Policy · 2026",
-                                "items": []
+                                "items": [
+                                                {
+                                                                "summary": "1. Información que podemos tratar",
+                                                                "paragraphs": [
+                                                                                "• <strong>Información de la cuenta</strong>: correo electrónico, identificador de cuenta y datos necesarios para la autenticación.",
+                                                                                "• <strong>Registros y recordatorios</strong>: texto, detalles del recordatorio, fechas, horas, reglas de repetición, estado de finalización y otros contenidos proporcionados.",
+                                                                                "• <strong>Entrada de voz</strong>: el audio que envías activamente y los resultados de reconocimiento pueden transmitirse a servicios de terceros para reconocimiento de voz y comprensión. Revisa los datos antes de guardar.",
+                                                                                "• <strong>Información del dispositivo</strong>: datos del dispositivo, red, permisos de notificación y estado operativo necesarios para el servicio y la resolución de problemas."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "2. Cómo usamos la información",
+                                                                "paragraphs": [
+                                                                                "Para crear, mostrar, editar y eliminar registros y recordatorios; convertir la voz en texto o recordatorios estructurados; enviar notificaciones; ofrecer autenticación, almacenamiento en la nube o sincronización; mantener el servicio y atender consultas.",
+                                                                                "El uso de una función no implica tu consentimiento para un tratamiento no relacionado con ella."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "3. Almacenamiento de datos y servicios de terceros",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim puede usar caché local en el dispositivo y servicios en la nube según las funciones utilizadas. No debe asumirse que toda la información se guarda solo en el dispositivo ni que se sincroniza automáticamente con la nube.",
+                                                                                "AIR²Aim puede emplear proveedores de nube, reconocimiento de voz y procesamiento con IA, limitando los datos transmitidos a lo estrictamente necesario."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "4. Permisos, compartición y seguridad",
+                                                                "paragraphs": [
+                                                                                "• <strong>Permisos</strong>: micrófono, notificaciones/recordatorios y acceso a red gestionables en los ajustes del dispositivo.",
+                                                                                "• <strong>Compartición</strong>: AIR²Aim no hace pública tu información personal; el tratamiento o divulgación se limita a prestar el servicio, cumplir la ley o proteger la seguridad.",
+                                                                                "• <strong>Seguridad y conservación</strong>: aplicamos medidas razonables según la configuración del servicio, aunque ningún sistema es completamente invulnerable."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "5. Tus opciones y derechos",
+                                                                "paragraphs": [
+                                                                                "Puedes gestionar tus registros y recordatorios en la app y ajustar permisos en tu dispositivo. Para solicitar acceso, corrección o eliminación de tus datos, contáctanos abajo.",
+                                                                                "Eliminar información del dispositivo no elimina automáticamente las copias en la nube, ni cerrar sesión implica la eliminación automática de los datos en la nube."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "6. Privacidad de menores, cambios y contacto",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim no está diseñado específicamente para menores y cumple con las normas aplicables sobre consentimiento parental cuando corresponda.",
+                                                                                "Podemos actualizar esta política publicando una nueva fecha de entrada en vigor. Contacto: support@air2aim.com. © 2026 AIR²Aim."
+                                                                ]
+                                                }
+                                ]
                 }
 };
 
@@ -517,6 +764,8 @@
             const supportsTTS = 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
             let isTtsEnabled = supportsTTS;
             let activeLang = 'en';
+            let speechSessionId = 0;
+            const activeUtterances = [];
 
             function detectInitialLanguage() {
                 const params = new URLSearchParams(window.location.search);
@@ -540,19 +789,64 @@
             }
 
             function stopSpeaking() {
+                speechSessionId += 1;
+                activeUtterances.length = 0;
                 if (supportsTTS) {
                     window.speechSynthesis.cancel();
                 }
             }
 
+            function normalizeSpeechText(rawText) {
+                return String(rawText || '')
+                    .replace(/AIR²Aim/gi, 'Air 2 Aim')
+                    .replace(/•/g, '，')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+            }
+
+            function getCardSpeechText(cardEl) {
+                const summaryEl = cardEl.querySelector('.info-summary');
+                const contentEl = cardEl.querySelector('.info-content');
+                const summaryText = summaryEl ? summaryEl.textContent : '';
+                const paragraphTexts = contentEl
+                    ? Array.from(contentEl.querySelectorAll('p')).map(function (p) {
+                        return p.textContent || '';
+                    })
+                    : [];
+                return normalizeSpeechText([summaryText].concat(paragraphTexts).join('。'));
+            }
+
+            function splitIntoChunks(text) {
+                const cleaned = normalizeSpeechText(text);
+                if (!cleaned) return [];
+                const parts = cleaned.match(/[^。！？；.!?;]+(?:[。！？；.!?;]+|$)/g);
+                return parts ? parts.map(function (s) { return s.trim(); }).filter(Boolean) : [cleaned];
+            }
+
             function speakText(text) {
                 if (!supportsTTS || !isTtsEnabled || !text) return;
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = I18N[activeLang]?.ttsLang || 'en-US';
-                utterance.rate = 0.95;
-                window.speechSynthesis.resume();
-                window.speechSynthesis.speak(utterance);
+
+                stopSpeaking();
+                const sessionId = speechSessionId;
+                const chunks = splitIntoChunks(text);
+                if (!chunks.length) return;
+
+                if (window.speechSynthesis.paused) {
+                    window.speechSynthesis.resume();
+                }
+
+                chunks.forEach(function (chunk) {
+                    const utterance = new SpeechSynthesisUtterance(chunk);
+                    utterance.lang = I18N[activeLang]?.ttsLang || 'en-US';
+                    utterance.rate = 0.95;
+                    utterance.onstart = function () {
+                        if (sessionId !== speechSessionId) {
+                            window.speechSynthesis.cancel();
+                        }
+                    };
+                    activeUtterances.push(utterance);
+                    window.speechSynthesis.speak(utterance);
+                });
             }
 
             function updateToggleUI() {
@@ -563,6 +857,17 @@
                 }
                 ttsLabel.textContent = isTtsEnabled ? 'on' : 'off';
                 ttsToggle.classList.toggle('active', isTtsEnabled);
+            }
+
+            function setCardOpen(cardEl, shouldOpen) {
+                const detailEl = cardEl.querySelector('details');
+                if (shouldOpen) {
+                    detailEl.open = true;
+                    cardEl.classList.add('is-open');
+                } else {
+                    cardEl.classList.remove('is-open');
+                    detailEl.open = false;
+                }
             }
 
             function renderLanguage(langKey) {
@@ -585,13 +890,20 @@
                 accordionSection.innerHTML = '';
 
                 pack.items.forEach(function (item) {
+                    const card = document.createElement('div');
+                    card.className = 'info-details';
+
                     const detail = document.createElement('details');
-                    detail.className = 'info-details';
-                    detail.setAttribute('data-speech', item.speech);
 
                     const summary = document.createElement('summary');
                     summary.className = 'info-summary';
                     summary.textContent = item.summary;
+
+                    const collapse = document.createElement('div');
+                    collapse.className = 'info-collapse';
+
+                    const collapseInner = document.createElement('div');
+                    collapseInner.className = 'info-collapse-inner';
 
                     const content = document.createElement('div');
                     content.className = 'info-content';
@@ -601,32 +913,35 @@
                         content.appendChild(p);
                     });
 
-                    detail.addEventListener('toggle', function () {
-                        if (detail.open) {
-                            const allDetails = accordionSection.querySelectorAll('.info-details');
-                            allDetails.forEach(function (other) {
-                                if (other !== detail && other.open) {
-                                    other.open = false;
-                                }
-                            });
-                            speakText(detail.getAttribute('data-speech') || content.innerText || '');
-                        } else {
-                            const anyOpen = Array.from(accordionSection.querySelectorAll('.info-details')).some(function (el) {
-                                return el.open;
-                            });
-                            if (!anyOpen) {
-                                stopSpeaking();
+                    summary.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const currentlyOpen = card.classList.contains('is-open');
+                        const allCards = accordionSection.querySelectorAll('.info-details');
+                        allCards.forEach(function (other) {
+                            if (other !== card && other.classList.contains('is-open')) {
+                                setCardOpen(other, false);
                             }
+                        });
+
+                        if (!currentlyOpen) {
+                            setCardOpen(card, true);
+                            speakText(getCardSpeechText(card));
+                        } else {
+                            setCardOpen(card, false);
+                            stopSpeaking();
                         }
                     });
 
                     content.addEventListener('click', function () {
-                        speakText(detail.getAttribute('data-speech') || content.innerText || '');
+                        speakText(getCardSpeechText(card));
                     });
 
+                    collapseInner.appendChild(content);
+                    collapse.appendChild(collapseInner);
                     detail.appendChild(summary);
-                    detail.appendChild(content);
-                    accordionSection.appendChild(detail);
+                    detail.appendChild(collapse);
+                    card.appendChild(detail);
+                    accordionSection.appendChild(card);
                 });
             }
 
@@ -661,15 +976,20 @@
                 if (!isTtsEnabled) {
                     stopSpeaking();
                 } else {
-                    const openDetail = accordionSection.querySelector('.info-details[open]');
-                    if (openDetail) {
-                        speakText(openDetail.getAttribute('data-speech') || '');
+                    const openCard = accordionSection.querySelector('.info-details.is-open');
+                    if (openCard) {
+                        speakText(getCardSpeechText(openCard));
                     }
                 }
             });
 
             window.addEventListener('pagehide', stopSpeaking);
             window.addEventListener('beforeunload', stopSpeaking);
+            document.addEventListener('visibilitychange', function () {
+                if (document.hidden) {
+                    stopSpeaking();
+                }
+            });
 
             updateToggleUI();
             renderLanguage(detectInitialLanguage());

@@ -276,7 +276,7 @@
             color: var(--text-muted);
         }
 
-        /* --- 紧凑折叠下拉窗区域 --- */
+        /* --- 紧凑和缓折叠下拉窗区域 --- */
         .accordion-section {
             display: flex;
             flex-direction: column;
@@ -288,10 +288,10 @@
             border: 1px solid rgba(255, 255, 255, 0.18);
             border-radius: 10px;
             overflow: hidden;
-            transition: border-color 0.25s ease, background-color 0.25s ease;
+            transition: border-color 0.28s ease, background-color 0.28s ease;
         }
 
-        .info-details[open] {
+        .info-details.is-open {
             border-color: rgba(255, 255, 255, 0.42);
             background: rgba(0, 0, 0, 0.36);
         }
@@ -306,6 +306,7 @@
             justify-content: space-between;
             align-items: center;
             user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .info-summary::after {
@@ -313,16 +314,32 @@
             font-size: 1.05rem;
             font-weight: 300;
             line-height: 1;
-            transition: transform 0.25s ease;
+            transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
             margin-left: 12px;
         }
 
-        .info-details[open] .info-summary::after {
+        .info-details.is-open .info-summary::after {
             transform: rotate(45deg);
         }
 
         .info-summary::-webkit-details-marker {
             display: none;
+        }
+
+        .info-collapse {
+            display: grid;
+            grid-template-rows: 0fr;
+            opacity: 0;
+            transition: grid-template-rows 0.36s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.28s ease;
+        }
+
+        .info-details.is-open .info-collapse {
+            grid-template-rows: 1fr;
+            opacity: 1;
+        }
+
+        .info-collapse-inner {
+            overflow: hidden;
         }
 
         .info-content {
@@ -425,8 +442,8 @@
 
         <div class="page-body">
             <div class="page-header-row">
-                <h2 id="pageTitle"></h2>
-                <p class="page-lead" id="pageLead"></p>
+                <h2 id="pageTitle">AIR²Aim Terms of Service</h2>
+                <p class="page-lead" id="pageLead">Effective date: September 22, 2026 · Please read these Terms before using the service; they do not replace your statutory rights.</p>
             </div>
 
             <div class="accordion-section" id="accordionSection"></div>
@@ -450,55 +467,377 @@
                                 "ttsLang": "zh-CN",
                                 "label": "中文",
                                 "docTitle": "服务条款 — AIR²Aim",
-                                "heading": "服务条款",
-                                "lead": "",
+                                "heading": "AIR²Aim 服务条款",
+                                "lead": "生效日期：2026 年 9 月 22 日 · 使用前请仔细阅读本条款；本条款不取代适用法律赋予你的法定权利。",
                                 "supportPrefix": "联系支持：",
                                 "footerBadge": "Service Terms · 2026",
-                                "items": []
+                                "items": [
+                                                {
+                                                                "summary": "1. 服务内容",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim 是一款以语音输入、记录和提醒为核心的应用，旨在帮助用户记录日常信息、创建提醒并在适当时间查看相关内容。",
+                                                                                "根据具体版本和可用功能，服务可能包括：创建和管理记录；创建、编辑、完成和删除提醒；使用语音输入及 AI 辅助理解；设置提醒时间及重复规则；使用账号、云端存储或数据同步功能。具体功能可能随应用版本、设备能力和服务配置而变化。"
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "2. 账号与安全",
+                                                                "paragraphs": [
+                                                                                "部分功能可能需要登录账号。你应尽合理努力保护账号凭据，并对通过自己账号进行的活动负责。",
+                                                                                "如果你发现账号存在未经授权的使用或其他安全问题，请尽快通过本条款所列联系方式告知我们。账号登录、数据同步及相关功能可能依赖第三方服务，其可用性也可能受到第三方服务状态的影响。"
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "3. 用户内容与数据",
+                                                                "paragraphs": [
+                                                                                "你对自己输入、录制、创建或提交的内容负责，包括记录文字、提醒内容、日期、时间、重复规则及语音识别结果。",
+                                                                                "为提供你主动使用的功能，你授权 AIR²Aim 在必要范围内处理相关内容，包括存储、显示、编辑、同步，以及通过相应服务进行语音识别或 AI 理解。相关个人信息的处理方式详见《AIR²Aim 隐私政策》。请勿提交你无权提供的内容，或利用本服务侵犯他人权利。"
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "4. 提醒与通知的限制",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim 会根据应用功能、设备能力及相关权限尽力提供提醒服务，但不能保证每一条提醒都在绝对准确的时间送达。提醒可能受到设备通知或精确提醒权限未开启、系统省电策略或后台限制、设备关闭、网络或云端服务故障、时区或系统时间变化以及操作系统与第三方服务限制的影响。",
+                                                                                "你有责任确认提醒内容、日期、时间和重复规则是否正确。对于医疗、财务、法律、人身安全或其他重要事项，请使用适当的备用提醒或核验方式。AIR²Aim 不应被视为紧急报警系统，也不应作为此类重要事项的唯一保障。"
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "5. 语音输入与 AI 功能",
+                                                                "paragraphs": [
+                                                                                "语音识别和 AI 功能旨在帮助你更方便地输入和整理信息，但可能出现识别错误、理解偏差、遗漏或服务不可用等情况。",
+                                                                                "在保存或依赖 AI 生成的提醒前，请自行核对关键内容，尤其是日期、时间、事项和重复规则。AI 输出不构成医疗、法律、财务或其他专业建议。"
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "6. 第三方服务与设备权限",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim 可能依赖第三方提供账号认证、云端存储、语音识别、AI 处理、网络基础设施及设备通知等服务，这些服务受其各自条款、隐私政策与可用性限制约束。",
+                                                                                "部分功能需要麦克风、网络连接、通知或定时提醒相关权限。你可以通过设备系统设置管理这些权限；关闭相关权限、限制后台运行或使用不兼容设备可能导致部分功能无法正常工作。你负责确保设备与系统满足基本要求。"
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "7. 合理使用、服务变更与费用",
+                                                                "paragraphs": [
+                                                                                "你不得利用 AIR²Aim 从事违法活动、侵犯他人权利、欺诈、骚扰、破坏服务运行、规避安全措施或未经授权访问系统，也不得提交或传播法律禁止的内容。",
+                                                                                "我们可能因维护、产品更新、安全、合规或运营需要调整、暂停或停止部分服务，努力维持可用性但不保证始终不中断或无错误；你可以随时停止使用应用。",
+                                                                                "具体版本及功能是否收费以应用内或相关服务页面说明为准；如未来引入付费功能、订阅或高级服务，将展示价格、功能范围与支付条件并遵守适用消费者保护与支付规则。"
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "8. 知识产权、免责声明与责任限制",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim 的品牌、设计、界面、文字、图标、软件及相关材料受知识产权法律保护；除法律允许或权利人许可外不得复制、修改或分发。本条款不意味着用户创作内容自动转让给 AIR²Aim。",
+                                                                                "在适用法律允许范围内，服务按实际提供状态和可用性提供，不保证适用于所有特定目的或 AI 输出始终准确。对于因设备、网络、第三方服务、权限设置或 AI 处理错误导致的服务中断、信息错误、提醒延迟或未送达所产生的损失，在法律允许最大范围内 AIR²Aim 不承担责任；本条款不排除依法不得排除或限制的责任。"
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "9. 条款更新与联系我们",
+                                                                "paragraphs": [
+                                                                                "我们可能因产品功能、服务方式或适用法律变化更新本条款，并在相关页面发布更新版本及新的生效日期；依法需要另行通知或取得同意的将按要求处理。",
+                                                                                "如对本服务条款有疑问，请通过 support@air2aim.com 联系我们。© 2026 AIR²Aim。"
+                                                                ]
+                                                }
+                                ]
                 },
                 "en": {
                                 "htmlLang": "en",
                                 "ttsLang": "en-US",
                                 "label": "EN",
                                 "docTitle": "Service Terms — AIR²Aim",
-                                "heading": "Service Terms",
-                                "lead": "",
+                                "heading": "AIR²Aim Terms of Service",
+                                "lead": "Effective date: September 22, 2026 · Please read these Terms before using the service; they do not replace your statutory rights.",
                                 "supportPrefix": "Support: ",
                                 "footerBadge": "Service Terms · 2026",
-                                "items": []
+                                "items": [
+                                                {
+                                                                "summary": "1. The Service",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim is an app centered on voice input, recording, and reminders, designed to help users capture everyday information, create reminders, and review relevant content at appropriate times.",
+                                                                                "Depending on the version and available features, the service may include creating and managing records; creating, editing, completing, and deleting reminders; voice input and AI-assisted understanding; setting reminder times and repeat rules; and account, cloud storage, or data synchronization features. Available features may vary by app version, device capabilities, and service configuration."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "2. Accounts and Security",
+                                                                "paragraphs": [
+                                                                                "Certain features may require an account. You should take reasonable steps to protect your account credentials and are responsible for activity carried out through your account.",
+                                                                                "If you become aware of unauthorized account use or another security issue, please notify us promptly using the contact details in these Terms. Sign-in, data synchronization, and related features may depend on third-party services and may be affected by their availability."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "3. User Content and Data",
+                                                                "paragraphs": [
+                                                                                "You are responsible for the content you enter, record, create, or submit, including record text, reminder details, dates, times, repeat rules, and speech recognition results.",
+                                                                                "To provide features you choose to use, you authorize AIR²Aim to process relevant content as necessary, including storing, displaying, editing, synchronizing, and processing it through appropriate speech recognition or AI services. Please read the AIR²Aim Privacy Policy for details on personal information processing. Do not submit unauthorized content or infringe others’ rights."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "4. Reminder and Notification Limitations",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim makes reasonable efforts to provide reminders according to its features, device capabilities, and relevant permissions, but cannot guarantee that every reminder will be delivered at an absolutely exact time. Reminders may be affected by disabled notification or exact-alarm permissions, system battery optimization, background restrictions, device shutdown, network or cloud service failures, time zone or clock changes, and OS or third-party limitations.",
+                                                                                "You are responsible for verifying reminder details, dates, times, and repeat rules. For medical, financial, legal, personal safety, or other important matters, maintain an appropriate backup reminder or verification method. AIR²Aim is not an emergency alert system."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "5. Voice Input and AI Features",
+                                                                "paragraphs": [
+                                                                                "Speech recognition and AI features are intended to make information entry and organization easier, and may produce recognition errors, misunderstandings, omissions, or become unavailable.",
+                                                                                "Before saving or relying on an AI-generated reminder, please verify key details, especially the date, time, task, and repeat rules. AI output does not constitute medical, legal, financial, or other professional advice."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "6. Third-Party Services & Device Permissions",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim may rely on third parties for authentication, cloud storage, speech recognition, AI processing, network infrastructure, and device notifications, subject to their own terms, privacy policies, availability, and technical limitations.",
+                                                                                "Certain features require microphone access, network connectivity, notification permissions, or scheduled-reminder permissions managed in your device settings. Disabling permissions, restricting background activity, or using an incompatible device may prevent some features from working properly."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "7. Acceptable Use, Service Changes & Fees",
+                                                                "paragraphs": [
+                                                                                "You must not use AIR²Aim for unlawful activities, rights infringement, fraud, harassment, service disruption, bypassing security measures, unauthorized system access, or distributing prohibited content.",
+                                                                                "We may modify, suspend, or discontinue parts of the service for maintenance, updates, security, compliance, or operational reasons, and do not guarantee uninterrupted or error-free operation. You may stop using the app at any time.",
+                                                                                "Whether a version or feature is free or paid is described in the app or relevant service page. If paid features or subscriptions are introduced in the future, applicable prices, feature scope, and payment terms will be displayed in compliance with consumer protection laws."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "8. Intellectual Property, Disclaimer & Limitation of Liability",
+                                                                "paragraphs": [
+                                                                                "The AIR²Aim brand, app design, interface, text, icons, software, and related materials are protected by intellectual property laws and may not be copied, modified, or distributed without permission. These Terms do not transfer ownership of user-created content to AIR²Aim.",
+                                                                                "To the extent permitted by applicable law, the service is provided as available without warranties of fitness for a particular purpose, continuous availability, or constant AI accuracy. To the maximum extent permitted by law, AIR²Aim is not liable for losses arising from service interruptions, inaccurate information, or delayed or undelivered reminders caused by device, network, third-party, or AI factors, without excluding liability that cannot lawfully be excluded."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "9. Changes & Contact Us",
+                                                                "paragraphs": [
+                                                                                "We may update these Terms as product features, service arrangements, or applicable laws evolve, publishing updated versions with a revised effective date and following legal notice or consent requirements where applicable.",
+                                                                                "For questions about these Terms of Service, contact support@air2aim.com. © 2026 AIR²Aim."
+                                                                ]
+                                                }
+                                ]
                 },
                 "ru": {
                                 "htmlLang": "ru",
                                 "ttsLang": "ru-RU",
                                 "label": "RU",
-                                "docTitle": "Условия обслуживания — AIR²Aim",
-                                "heading": "Условия обслуживания",
-                                "lead": "",
+                                "docTitle": "Условия использования — AIR²Aim",
+                                "heading": "Условия использования AIR²Aim",
+                                "lead": "Дата вступления в силу: 22 сентября 2026 г. · Внимательно прочитайте Условия перед использованием сервиса.",
                                 "supportPrefix": "Поддержка: ",
                                 "footerBadge": "Service Terms · 2026",
-                                "items": []
+                                "items": [
+                                                {
+                                                                "summary": "1. Сервис",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim — это приложение, ориентированное на голосовой ввод, ведение записей и напоминания, разработанное для фиксации повседневной информации и своевременного просмотра напоминаний.",
+                                                                                "В зависимости от версии и доступных функций сервис может включать создание и управление записями и напоминаниями, голосовой ввод и обработку ИИ, настройку времени и повторения, а также функции учетной записи, облачного хранения или синхронизации."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "2. Учетные записи и безопасность",
+                                                                "paragraphs": [
+                                                                                "Для определенных функций может потребоваться учетная запись. Вы должны защищать учетные данные и несете ответственность за действия в вашей учетной записи.",
+                                                                                "При несанкционированном использовании или проблеме безопасности незамедлительно уведомите нас. Вход и синхронизация могут зависеть от доступности сторонних сервисов."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "3. Пользовательский контент и данные",
+                                                                "paragraphs": [
+                                                                                "Вы несете ответственность за вводимый, записываемый и отправляемый контент, включая текст записей, детали напоминаний, даты, время, правила повторения и результаты распознавания речи.",
+                                                                                "Вы уполномочиваете AIR²Aim обрабатывать контент по мере необходимости (хранение, отображение, синхронизация, распознавание речи и обработка ИИ). Подробнее об обработке персональных данных см. в Политике конфиденциальности AIR²Aim."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "4. Ограничения напоминаний и уведомлений",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim прилагает разумные усилия для своевременной отправки напоминаний, но не гарантирует доставку в абсолютно точное время из-за отключенных уведомлений или точных будильников, оптимизации батареи, фоновых ограничений, выключения устройства, сбоев сети или облака, смены часовых поясов и ограничений ОС.",
+                                                                                "Проверяйте правильность деталей напоминаний. Для медицинских, финансовых, юридических и вопросов безопасности используйте резервный способ напоминания. AIR²Aim не является системой экстренного оповещения."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "5. Голосовой ввод и функции ИИ",
+                                                                "paragraphs": [
+                                                                                "Распознавание речи и ИИ могут допускать ошибки, недопонимания, пропуски или становиться недоступными.",
+                                                                                "Перед сохранением созданного ИИ напоминания проверьте дату, время, задачу и правила повторения. Результаты работы ИИ не являются профессиональной консультацией."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "6. Сторонние сервисы и разрешения устройства",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim может использовать сторонние сервисы для аутентификации, облачного хранения, распознавания речи, ИИ, сетевой инфраструктуры и уведомлений, на которые распространяются их собственные условия и политики.",
+                                                                                "Для работы функций требуются разрешения на микрофон, сеть, уведомления и запланированные напоминания в настройках устройства."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "7. Допустимое использование, изменения и оплата",
+                                                                "paragraphs": [
+                                                                                "Запрещается использовать AIR²Aim для противоправной деятельности, нарушения прав других лиц, мошенничества, домогательств, нарушения работы сервиса или обхода мер безопасности.",
+                                                                                "Мы можем изменять, приостанавливать или прекращать работу частей сервиса и не гарантируем бесперебойную работу на всех устройствах. Информация о бесплатных или платных функциях указывается в приложении или на странице сервиса."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "8. Интеллектуальная собственность и ограничение ответственности",
+                                                                "paragraphs": [
+                                                                                "Бренд, дизайн, интерфейс, текст, значки и ПО AIR²Aim защищены законами об интеллектуальной собственности. Настоящие Условия не передают права на пользовательский контент компании AIR²Aim.",
+                                                                                "Сервис предоставляется «как есть». В максимальной степени, разрешенной законом, AIR²Aim не несет ответственности за убытки от сбоев сервиса, неточной информации или задержки/недоставки напоминаний по указанным техническим причинам, не исключая ответственность, которую нельзя исключить по закону."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "9. Изменения Условий и контакты",
+                                                                "paragraphs": [
+                                                                                "Мы можем обновлять настоящие Условия с публикацией новой даты вступления в силу на соответствующей странице.",
+                                                                                "По вопросам обращайтесь: support@air2aim.com. © 2026 AIR²Aim."
+                                                                ]
+                                                }
+                                ]
                 },
                 "fr": {
                                 "htmlLang": "fr",
                                 "ttsLang": "fr-FR",
                                 "label": "FR",
                                 "docTitle": "Conditions d’utilisation — AIR²Aim",
-                                "heading": "Conditions d’utilisation",
-                                "lead": "",
+                                "heading": "Conditions d’utilisation d’AIR²Aim",
+                                "lead": "Date d’entrée en vigueur : 22 septembre 2026 · Veuillez lire ces Conditions avant d’utiliser le service.",
                                 "supportPrefix": "Support : ",
                                 "footerBadge": "Service Terms · 2026",
-                                "items": []
+                                "items": [
+                                                {
+                                                                "summary": "1. Le Service",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim est une application centrée sur la saisie vocale, l’enregistrement et les rappels, conçue pour aider les utilisateurs à consigner des informations quotidiennes, créer des rappels et consulter leurs contenus au moment opportun.",
+                                                                                "Selon la version et les fonctionnalités disponibles, le service peut inclure la création et la gestion d’enregistrements et de rappels, la saisie vocale et la compréhension assistée par IA, les règles de répétition, ainsi que des fonctions de compte, de stockage cloud ou de synchronisation."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "2. Comptes et sécurité",
+                                                                "paragraphs": [
+                                                                                "Certaines fonctionnalités peuvent nécessiter un compte. Vous devez protéger vos identifiants et êtes responsable des activités effectuées via votre compte.",
+                                                                                "En cas d’utilisation non autorisée ou de problème de sécurité, veuillez nous en informer rapidement. La connexion et la synchronisation peuvent dépendre de services tiers."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "3. Contenu utilisateur et données",
+                                                                "paragraphs": [
+                                                                                "Vous êtes responsable du contenu que vous saisissez, enregistrez, créez ou soumettez, y compris les textes, détails de rappels, dates, heures, règles de répétition et résultats de reconnaissance vocale.",
+                                                                                "Vous autorisez AIR²Aim à traiter ces contenus selon les besoins (stockage, affichage, édition, synchronisation, reconnaissance vocale ou traitement par IA). Consultez la Politique de confidentialité AIR²Aim pour plus d’informations."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "4. Limites des rappels et notifications",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim déploie des efforts raisonnables pour délivrer les rappels, mais ne peut garantir une ponctualité absolue en raison des autorisations de notification ou d’alarme exacte désactivées, de l’optimisation de la batterie, des restrictions d’arrière-plan, de l’extinction de l’appareil, des pannes réseau ou cloud, des changements de fuseau horaire ou des limites du système.",
+                                                                                "Il vous appartient de vérifier l’exactitude des rappels. Pour les questions médicales, financières, juridiques ou de sécurité personnelle, prévoyez un moyen de rappel de secours. AIR²Aim n’est pas un système d’alerte d’urgence."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "5. Saisie vocale et fonctions d’IA",
+                                                                "paragraphs": [
+                                                                                "La reconnaissance vocale et l’IA peuvent comporter des erreurs, des omissions ou être temporairement indisponibles.",
+                                                                                "Avant d’enregistrer ou de vous fier à un rappel généré par l’IA, vérifiez la date, l’heure, la tâche et les règles de répétition. Les résultats de l’IA ne constituent pas un conseil professionnel."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "6. Services tiers et autorisations de l’appareil",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim peut s’appuyer sur des tiers pour l’authentification, le stockage cloud, la reconnaissance vocale, le traitement par IA, l’infrastructure réseau et les notifications, soumis à leurs propres conditions et politiques.",
+                                                                                "Certaines fonctions requièrent l’accès au microphone, au réseau, aux notifications et aux rappels planifiés dans les réglages de votre appareil."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "7. Utilisation acceptable, interruptions et frais",
+                                                                "paragraphs": [
+                                                                                "Vous ne devez pas utiliser AIR²Aim à des fins illégales, frauduleuses, nuisibles, pour porter atteinte aux droits d’autrui ou contourner les mesures de sécurité.",
+                                                                                "Nous pouvons modifier, suspendre ou interrompre certaines parties du service pour maintenance, mise à jour ou sécurité, sans garantie de disponibilité continue. Le caractère gratuit ou payant d’une version ou fonction est indiqué dans l’application ou sur la page du service."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "8. Propriété intellectuelle et limitation de responsabilité",
+                                                                "paragraphs": [
+                                                                                "La marque, le design, l’interface, les textes, icônes et logiciels AIR²Aim sont protégés par les lois sur la propriété intellectuelle. Ces Conditions ne transfèrent pas à AIR²Aim la propriété des contenus créés par l’utilisateur.",
+                                                                                "Dans la limite autorisée par la loi applicable, le service est fourni en l’état et AIR²Aim ne saurait être tenu responsable des pertes résultant d’interruptions de service, d’informations inexactes ou de rappels retardés ou non délivrés, sans exclure toute responsabilité qui ne peut être légalement exclue."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "9. Modifications et contact",
+                                                                "paragraphs": [
+                                                                                "Nous pouvons mettre à jour ces Conditions en publiant une version révisée avec une nouvelle date d’entrée en vigueur.",
+                                                                                "Pour toute question concernant ces Conditions : support@air2aim.com. © 2026 AIR²Aim."
+                                                                ]
+                                                }
+                                ]
                 },
                 "es": {
                                 "htmlLang": "es",
                                 "ttsLang": "es-ES",
                                 "label": "ES",
                                 "docTitle": "Términos del servicio — AIR²Aim",
-                                "heading": "Términos del servicio",
-                                "lead": "",
+                                "heading": "Términos del servicio de AIR²Aim",
+                                "lead": "Fecha de entrada en vigor: 22 de septiembre de 2026 · Lee estos Términos antes de usar el servicio.",
                                 "supportPrefix": "Soporte: ",
                                 "footerBadge": "Service Terms · 2026",
-                                "items": []
+                                "items": [
+                                                {
+                                                                "summary": "1. El Servicio",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim es una aplicación centrada en la entrada de voz, el registro y los recordatorios, diseñada para ayudar a los usuarios a capturar información cotidiana, crear recordatorios y revisar contenidos en el momento adecuado.",
+                                                                                "Según la versión y funciones disponibles, el servicio puede incluir creación y gestión de registros y recordatorios, entrada de voz y comprensión asistida por IA, configuración de horarios y repetición, y funciones de cuenta, almacenamiento en la nube o sincronización."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "2. Cuentas y seguridad",
+                                                                "paragraphs": [
+                                                                                "Algunas funciones pueden requerir una cuenta. Debes proteger tus credenciales y eres responsable de la actividad realizada a través de tu cuenta.",
+                                                                                "Si detectas un uso no autorizado o un problema de seguridad, notifícanoslo de inmediato. El inicio de sesión y la sincronización pueden depender de servicios de terceros."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "3. Contenido del usuario y datos",
+                                                                "paragraphs": [
+                                                                                "Eres responsable del contenido que introduces, grabas, creas o envías, incluidos textos, detalles de recordatorios, fechas, horas, reglas de repetición y resultados de reconocimiento de voz.",
+                                                                                "Autorizas a AIR²Aim a procesar dicho contenido según sea necesario (almacenamiento, visualización, edición, sincronización, reconocimiento de voz o procesamiento con IA). Consulta la Política de privacidad de AIR²Aim para más detalles."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "4. Limitaciones de recordatorios y notificaciones",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim realiza esfuerzos razonables para enviar recordatorios, pero no garantiza una entrega en el instante exacto debido a permisos de notificación o alarmas exactas desactivados, optimización de batería, restricciones en segundo plano, apagado del dispositivo, fallos de red o nube, cambios de zona horaria o limitaciones del sistema.",
+                                                                                "Eres responsable de verificar fechas, horas y reglas de repetición. Para asuntos médicos, financieros, legales o de seguridad personal, mantén un método alternativo de verificación. AIR²Aim no es un sistema de alerta de emergencia."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "5. Entrada de voz y funciones de IA",
+                                                                "paragraphs": [
+                                                                                "El reconocimiento de voz y la IA pueden producir errores, omisiones o no estar disponibles.",
+                                                                                "Antes de guardar o confiar en un recordatorio generado por IA, verifica la fecha, la hora, la tarea y las reglas de repetición. Los resultados de la IA no constituyen asesoramiento profesional."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "6. Servicios de terceros y permisos del dispositivo",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim puede depender de terceros para autenticación, almacenamiento en la nube, reconocimiento de voz, procesamiento de IA, infraestructura de red y notificaciones, sujetos a sus propios términos y políticas.",
+                                                                                "Algunas funciones requieren permisos de micrófono, red, notificaciones y recordatorios programados en los ajustes de tu dispositivo."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "7. Uso aceptable, cambios y tarifas",
+                                                                "paragraphs": [
+                                                                                "No debes usar AIR²Aim para actividades ilegales, infracción de derechos, fraude, acoso, interrupción del servicio o elusión de medidas de seguridad.",
+                                                                                "Podemos modificar, suspender o discontinuar partes del servicio por mantenimiento, actualizaciones o seguridad, sin garantizar disponibilidad ininterrumpida. La gratuidad o el coste de cada versión o función se indicará en la aplicación o página del servicio."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "8. Propiedad intelectual y limitación de responsabilidad",
+                                                                "paragraphs": [
+                                                                                "La marca, el diseño, la interfaz, los textos, iconos y software de AIR²Aim están protegidos por leyes de propiedad intelectual. Estos Términos no transfieren a AIR²Aim la propiedad del contenido creado por el usuario.",
+                                                                                "En la medida permitida por la ley aplicable, el servicio se ofrece tal cual y AIR²Aim no será responsable de pérdidas derivadas de interrupciones del servicio, información inexacta o recordatorios retrasados o no entregados, sin excluir responsabilidades que la ley prohíba excluir."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "9. Cambios y contacto",
+                                                                "paragraphs": [
+                                                                                "Podemos actualizar estos Términos publicando versiones revisadas con una nueva fecha de entrada en vigor.",
+                                                                                "Si tienes preguntas sobre estos Términos del servicio, escribe a support@air2aim.com. © 2026 AIR²Aim."
+                                                                ]
+                                                }
+                                ]
                 }
 };
 
@@ -517,6 +856,8 @@
             const supportsTTS = 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
             let isTtsEnabled = supportsTTS;
             let activeLang = 'en';
+            let speechSessionId = 0;
+            const activeUtterances = [];
 
             function detectInitialLanguage() {
                 const params = new URLSearchParams(window.location.search);
@@ -540,19 +881,64 @@
             }
 
             function stopSpeaking() {
+                speechSessionId += 1;
+                activeUtterances.length = 0;
                 if (supportsTTS) {
                     window.speechSynthesis.cancel();
                 }
             }
 
+            function normalizeSpeechText(rawText) {
+                return String(rawText || '')
+                    .replace(/AIR²Aim/gi, 'Air 2 Aim')
+                    .replace(/•/g, '，')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+            }
+
+            function getCardSpeechText(cardEl) {
+                const summaryEl = cardEl.querySelector('.info-summary');
+                const contentEl = cardEl.querySelector('.info-content');
+                const summaryText = summaryEl ? summaryEl.textContent : '';
+                const paragraphTexts = contentEl
+                    ? Array.from(contentEl.querySelectorAll('p')).map(function (p) {
+                        return p.textContent || '';
+                    })
+                    : [];
+                return normalizeSpeechText([summaryText].concat(paragraphTexts).join('。'));
+            }
+
+            function splitIntoChunks(text) {
+                const cleaned = normalizeSpeechText(text);
+                if (!cleaned) return [];
+                const parts = cleaned.match(/[^。！？；.!?;]+(?:[。！？；.!?;]+|$)/g);
+                return parts ? parts.map(function (s) { return s.trim(); }).filter(Boolean) : [cleaned];
+            }
+
             function speakText(text) {
                 if (!supportsTTS || !isTtsEnabled || !text) return;
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = I18N[activeLang]?.ttsLang || 'en-US';
-                utterance.rate = 0.95;
-                window.speechSynthesis.resume();
-                window.speechSynthesis.speak(utterance);
+
+                stopSpeaking();
+                const sessionId = speechSessionId;
+                const chunks = splitIntoChunks(text);
+                if (!chunks.length) return;
+
+                if (window.speechSynthesis.paused) {
+                    window.speechSynthesis.resume();
+                }
+
+                chunks.forEach(function (chunk) {
+                    const utterance = new SpeechSynthesisUtterance(chunk);
+                    utterance.lang = I18N[activeLang]?.ttsLang || 'en-US';
+                    utterance.rate = 0.95;
+                    utterance.onstart = function () {
+                        if (sessionId !== speechSessionId) {
+                            window.speechSynthesis.cancel();
+                        }
+                    };
+                    activeUtterances.push(utterance);
+                    window.speechSynthesis.speak(utterance);
+                });
             }
 
             function updateToggleUI() {
@@ -563,6 +949,17 @@
                 }
                 ttsLabel.textContent = isTtsEnabled ? 'on' : 'off';
                 ttsToggle.classList.toggle('active', isTtsEnabled);
+            }
+
+            function setCardOpen(cardEl, shouldOpen) {
+                const detailEl = cardEl.querySelector('details');
+                if (shouldOpen) {
+                    detailEl.open = true;
+                    cardEl.classList.add('is-open');
+                } else {
+                    cardEl.classList.remove('is-open');
+                    detailEl.open = false;
+                }
             }
 
             function renderLanguage(langKey) {
@@ -585,13 +982,20 @@
                 accordionSection.innerHTML = '';
 
                 pack.items.forEach(function (item) {
+                    const card = document.createElement('div');
+                    card.className = 'info-details';
+
                     const detail = document.createElement('details');
-                    detail.className = 'info-details';
-                    detail.setAttribute('data-speech', item.speech);
 
                     const summary = document.createElement('summary');
                     summary.className = 'info-summary';
                     summary.textContent = item.summary;
+
+                    const collapse = document.createElement('div');
+                    collapse.className = 'info-collapse';
+
+                    const collapseInner = document.createElement('div');
+                    collapseInner.className = 'info-collapse-inner';
 
                     const content = document.createElement('div');
                     content.className = 'info-content';
@@ -601,32 +1005,35 @@
                         content.appendChild(p);
                     });
 
-                    detail.addEventListener('toggle', function () {
-                        if (detail.open) {
-                            const allDetails = accordionSection.querySelectorAll('.info-details');
-                            allDetails.forEach(function (other) {
-                                if (other !== detail && other.open) {
-                                    other.open = false;
-                                }
-                            });
-                            speakText(detail.getAttribute('data-speech') || content.innerText || '');
-                        } else {
-                            const anyOpen = Array.from(accordionSection.querySelectorAll('.info-details')).some(function (el) {
-                                return el.open;
-                            });
-                            if (!anyOpen) {
-                                stopSpeaking();
+                    summary.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const currentlyOpen = card.classList.contains('is-open');
+                        const allCards = accordionSection.querySelectorAll('.info-details');
+                        allCards.forEach(function (other) {
+                            if (other !== card && other.classList.contains('is-open')) {
+                                setCardOpen(other, false);
                             }
+                        });
+
+                        if (!currentlyOpen) {
+                            setCardOpen(card, true);
+                            speakText(getCardSpeechText(card));
+                        } else {
+                            setCardOpen(card, false);
+                            stopSpeaking();
                         }
                     });
 
                     content.addEventListener('click', function () {
-                        speakText(detail.getAttribute('data-speech') || content.innerText || '');
+                        speakText(getCardSpeechText(card));
                     });
 
+                    collapseInner.appendChild(content);
+                    collapse.appendChild(collapseInner);
                     detail.appendChild(summary);
-                    detail.appendChild(content);
-                    accordionSection.appendChild(detail);
+                    detail.appendChild(collapse);
+                    card.appendChild(detail);
+                    accordionSection.appendChild(card);
                 });
             }
 
@@ -661,15 +1068,20 @@
                 if (!isTtsEnabled) {
                     stopSpeaking();
                 } else {
-                    const openDetail = accordionSection.querySelector('.info-details[open]');
-                    if (openDetail) {
-                        speakText(openDetail.getAttribute('data-speech') || '');
+                    const openCard = accordionSection.querySelector('.info-details.is-open');
+                    if (openCard) {
+                        speakText(getCardSpeechText(openCard));
                     }
                 }
             });
 
             window.addEventListener('pagehide', stopSpeaking);
             window.addEventListener('beforeunload', stopSpeaking);
+            document.addEventListener('visibilitychange', function () {
+                if (document.hidden) {
+                    stopSpeaking();
+                }
+            });
 
             updateToggleUI();
             renderLanguage(detectInitialLanguage());

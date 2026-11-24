@@ -276,7 +276,7 @@
             color: var(--text-muted);
         }
 
-        /* --- 紧凑折叠下拉窗区域 --- */
+        /* --- 紧凑和缓折叠下拉窗区域 --- */
         .accordion-section {
             display: flex;
             flex-direction: column;
@@ -288,10 +288,10 @@
             border: 1px solid rgba(255, 255, 255, 0.18);
             border-radius: 10px;
             overflow: hidden;
-            transition: border-color 0.25s ease, background-color 0.25s ease;
+            transition: border-color 0.28s ease, background-color 0.28s ease;
         }
 
-        .info-details[open] {
+        .info-details.is-open {
             border-color: rgba(255, 255, 255, 0.42);
             background: rgba(0, 0, 0, 0.36);
         }
@@ -306,6 +306,7 @@
             justify-content: space-between;
             align-items: center;
             user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .info-summary::after {
@@ -313,16 +314,32 @@
             font-size: 1.05rem;
             font-weight: 300;
             line-height: 1;
-            transition: transform 0.25s ease;
+            transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
             margin-left: 12px;
         }
 
-        .info-details[open] .info-summary::after {
+        .info-details.is-open .info-summary::after {
             transform: rotate(45deg);
         }
 
         .info-summary::-webkit-details-marker {
             display: none;
+        }
+
+        .info-collapse {
+            display: grid;
+            grid-template-rows: 0fr;
+            opacity: 0;
+            transition: grid-template-rows 0.36s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.28s ease;
+        }
+
+        .info-details.is-open .info-collapse {
+            grid-template-rows: 1fr;
+            opacity: 1;
+        }
+
+        .info-collapse-inner {
+            overflow: hidden;
         }
 
         .info-content {
@@ -425,8 +442,8 @@
 
         <div class="page-body">
             <div class="page-header-row">
-                <h2 id="pageTitle"></h2>
-                <p class="page-lead" id="pageLead"></p>
+                <h2 id="pageTitle">About AIR²Aim</h2>
+                <p class="page-lead" id="pageLead">Current version: 1.0.73 · Say Naturally. Move Smoothly.</p>
             </div>
 
             <div class="accordion-section" id="accordionSection"></div>
@@ -451,10 +468,30 @@
                                 "label": "中文",
                                 "docTitle": "关于 — AIR²Aim",
                                 "heading": "关于 AIR²Aim",
-                                "lead": "",
+                                "lead": "当前版本：1.0.73 · Say Naturally. Move Smoothly.",
                                 "supportPrefix": "联系支持：",
                                 "footerBadge": "About · 2026",
-                                "items": []
+                                "items": [
+                                                {
+                                                                "summary": "1. 什么是 AIR²Aim",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim（Anna Intelligence Recorder & Reminder）是一款以语音交互为优先的智能记录与提醒应用。",
+                                                                                "我们希望让日常事务的记录与安排变得更加自然、简单。你可以用日常语言表达想记录的事情或需要记住的安排，AIR²Aim 帮助你将表达整理成记录或提醒，并由你确认和保存。"
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "2. 它能帮你做什么",
+                                                                "paragraphs": [
+                                                                                "无论是记录生活中的重要信息，还是记住接下来需要完成的事情，AIR²Aim 都希望帮助你减少遗忘，让日常生活更有条理。"
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "3. 我们的理念",
+                                                                "paragraphs": [
+                                                                                "让人与 AI 的交流更自然，让日常事务的处理更顺畅。"
+                                                                ]
+                                                }
+                                ]
                 },
                 "en": {
                                 "htmlLang": "en",
@@ -462,21 +499,61 @@
                                 "label": "EN",
                                 "docTitle": "About — AIR²Aim",
                                 "heading": "About AIR²Aim",
-                                "lead": "",
+                                "lead": "Current version: 1.0.73 · Say Naturally. Move Smoothly.",
                                 "supportPrefix": "Support: ",
                                 "footerBadge": "About · 2026",
-                                "items": []
+                                "items": [
+                                                {
+                                                                "summary": "1. What Is AIR²Aim",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim (Anna Intelligence Recorder & Reminder) is a voice-first intelligent recording and reminder app.",
+                                                                                "We want to make recording and organizing everyday tasks more natural and simple. You can express what you want to record or remember in your own words. AIR²Aim helps turn your words into a record or reminder, which you can review, confirm, and save."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "2. How It Helps",
+                                                                "paragraphs": [
+                                                                                "Whether you want to keep important information from daily life or remember something you need to do, AIR²Aim aims to help you forget less and keep your everyday life more organized."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "3. Our Philosophy",
+                                                                "paragraphs": [
+                                                                                "Making communication between people and AI more natural, and everyday tasks easier to manage."
+                                                                ]
+                                                }
+                                ]
                 },
                 "ru": {
                                 "htmlLang": "ru",
                                 "ttsLang": "ru-RU",
                                 "label": "RU",
-                                "docTitle": "О проекте — AIR²Aim",
-                                "heading": "О проекте AIR²Aim",
-                                "lead": "",
+                                "docTitle": "О приложении — AIR²Aim",
+                                "heading": "О приложении AIR²Aim",
+                                "lead": "Текущая версия: 1.0.73 · Говорите естественно. Действуйте легко.",
                                 "supportPrefix": "Поддержка: ",
                                 "footerBadge": "About · 2026",
-                                "items": []
+                                "items": [
+                                                {
+                                                                "summary": "1. Что такое AIR²Aim",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim (Anna Intelligence Recorder & Reminder) — это интеллектуальное приложение для голосовой записи и напоминаний, в котором на первом месте стоит голос.",
+                                                                                "Мы стремимся сделать запись повседневных задач и управление ими более естественными и простыми. Вы можете выразить то, что хотите записать или запомнить, своими словами. AIR²Aim поможет превратить ваши слова в запись или напоминание, которые вы сможете просмотреть, подтвердить и сохранить."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "2. Чем помогает приложение",
+                                                                "paragraphs": [
+                                                                                "Независимо от того, хотите ли вы сохранить важную информацию из повседневной жизни или запомнить то, что вам нужно сделать, AIR²Aim поможет вам ничего не забывать и держать свою повседневную жизнь под контролем."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "3. Наша философия",
+                                                                "paragraphs": [
+                                                                                "Сделать общение между людьми и искусственным интеллектом более естественным, а повседневные задачи — более простыми в управлении."
+                                                                ]
+                                                }
+                                ]
                 },
                 "fr": {
                                 "htmlLang": "fr",
@@ -484,10 +561,30 @@
                                 "label": "FR",
                                 "docTitle": "À propos — AIR²Aim",
                                 "heading": "À propos d’AIR²Aim",
-                                "lead": "",
+                                "lead": "Version actuelle : 1.0.73 · Parlez naturellement. Agissez en toute simplicité.",
                                 "supportPrefix": "Support : ",
                                 "footerBadge": "About · 2026",
-                                "items": []
+                                "items": [
+                                                {
+                                                                "summary": "1. Qu’est-ce qu’AIR²Aim",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim (Anna Intelligence Recorder & Reminder) est une application intelligente d’enregistrement et de rappels donnant la priorité à la voix.",
+                                                                                "Nous souhaitons rendre l’enregistrement et l’organisation des tâches quotidiennes plus naturels et plus simples. Vous pouvez exprimer avec vos propres mots ce que vous voulez noter ou retenir. AIR²Aim aide à transformer vos paroles en un enregistrement ou un rappel que vous pouvez relire, confirmer et enregistrer."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "2. Ce qu’AIR²Aim vous apporte",
+                                                                "paragraphs": [
+                                                                                "Que vous souhaitiez conserver des informations importantes du quotidien ou vous souvenir d’une tâche à accomplir, AIR²Aim vise à vous aider à moins oublier et à garder votre vie quotidienne mieux organisée."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "3. Notre philosophie",
+                                                                "paragraphs": [
+                                                                                "Rendre la communication entre les humains et l’intelligence artificielle plus naturelle, et la gestion des tâches quotidiennes plus fluide."
+                                                                ]
+                                                }
+                                ]
                 },
                 "es": {
                                 "htmlLang": "es",
@@ -495,10 +592,30 @@
                                 "label": "ES",
                                 "docTitle": "Acerca de — AIR²Aim",
                                 "heading": "Acerca de AIR²Aim",
-                                "lead": "",
+                                "lead": "Versión actual: 1.0.73 · Habla con naturalidad. Avanza sin esfuerzo.",
                                 "supportPrefix": "Soporte: ",
                                 "footerBadge": "About · 2026",
-                                "items": []
+                                "items": [
+                                                {
+                                                                "summary": "1. Qué es AIR²Aim",
+                                                                "paragraphs": [
+                                                                                "AIR²Aim (Anna Intelligence Recorder & Reminder) es una aplicación inteligente de grabación y recordatorios centrada en la voz.",
+                                                                                "Queremos que registrar y organizar las tareas diarias sea más natural y sencillo. Puedes expresar con tus propias palabras lo que deseas anotar o recordar. AIR²Aim ayuda a convertir tus palabras en un registro o recordatorio que puedes revisar, confirmar y guardar."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "2. Cómo te ayuda",
+                                                                "paragraphs": [
+                                                                                "Tanto si deseas conservar información importante de la vida diaria como recordar algo que tienes que hacer, AIR²Aim busca ayudarte a olvidar menos y mantener tu día a día más organizado."
+                                                                ]
+                                                },
+                                                {
+                                                                "summary": "3. Nuestra filosofía",
+                                                                "paragraphs": [
+                                                                                "Hacer que la comunicación entre las personas y la inteligencia artificial sea más natural, y que las tareas cotidianas sean más fáciles de gestionar."
+                                                                ]
+                                                }
+                                ]
                 }
 };
 
@@ -517,6 +634,8 @@
             const supportsTTS = 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
             let isTtsEnabled = supportsTTS;
             let activeLang = 'en';
+            let speechSessionId = 0;
+            const activeUtterances = [];
 
             function detectInitialLanguage() {
                 const params = new URLSearchParams(window.location.search);
@@ -540,19 +659,64 @@
             }
 
             function stopSpeaking() {
+                speechSessionId += 1;
+                activeUtterances.length = 0;
                 if (supportsTTS) {
                     window.speechSynthesis.cancel();
                 }
             }
 
+            function normalizeSpeechText(rawText) {
+                return String(rawText || '')
+                    .replace(/AIR²Aim/gi, 'Air 2 Aim')
+                    .replace(/•/g, '，')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+            }
+
+            function getCardSpeechText(cardEl) {
+                const summaryEl = cardEl.querySelector('.info-summary');
+                const contentEl = cardEl.querySelector('.info-content');
+                const summaryText = summaryEl ? summaryEl.textContent : '';
+                const paragraphTexts = contentEl
+                    ? Array.from(contentEl.querySelectorAll('p')).map(function (p) {
+                        return p.textContent || '';
+                    })
+                    : [];
+                return normalizeSpeechText([summaryText].concat(paragraphTexts).join('。'));
+            }
+
+            function splitIntoChunks(text) {
+                const cleaned = normalizeSpeechText(text);
+                if (!cleaned) return [];
+                const parts = cleaned.match(/[^。！？；.!?;]+(?:[。！？；.!?;]+|$)/g);
+                return parts ? parts.map(function (s) { return s.trim(); }).filter(Boolean) : [cleaned];
+            }
+
             function speakText(text) {
                 if (!supportsTTS || !isTtsEnabled || !text) return;
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = I18N[activeLang]?.ttsLang || 'en-US';
-                utterance.rate = 0.95;
-                window.speechSynthesis.resume();
-                window.speechSynthesis.speak(utterance);
+
+                stopSpeaking();
+                const sessionId = speechSessionId;
+                const chunks = splitIntoChunks(text);
+                if (!chunks.length) return;
+
+                if (window.speechSynthesis.paused) {
+                    window.speechSynthesis.resume();
+                }
+
+                chunks.forEach(function (chunk) {
+                    const utterance = new SpeechSynthesisUtterance(chunk);
+                    utterance.lang = I18N[activeLang]?.ttsLang || 'en-US';
+                    utterance.rate = 0.95;
+                    utterance.onstart = function () {
+                        if (sessionId !== speechSessionId) {
+                            window.speechSynthesis.cancel();
+                        }
+                    };
+                    activeUtterances.push(utterance);
+                    window.speechSynthesis.speak(utterance);
+                });
             }
 
             function updateToggleUI() {
@@ -563,6 +727,17 @@
                 }
                 ttsLabel.textContent = isTtsEnabled ? 'on' : 'off';
                 ttsToggle.classList.toggle('active', isTtsEnabled);
+            }
+
+            function setCardOpen(cardEl, shouldOpen) {
+                const detailEl = cardEl.querySelector('details');
+                if (shouldOpen) {
+                    detailEl.open = true;
+                    cardEl.classList.add('is-open');
+                } else {
+                    cardEl.classList.remove('is-open');
+                    detailEl.open = false;
+                }
             }
 
             function renderLanguage(langKey) {
@@ -585,13 +760,20 @@
                 accordionSection.innerHTML = '';
 
                 pack.items.forEach(function (item) {
+                    const card = document.createElement('div');
+                    card.className = 'info-details';
+
                     const detail = document.createElement('details');
-                    detail.className = 'info-details';
-                    detail.setAttribute('data-speech', item.speech);
 
                     const summary = document.createElement('summary');
                     summary.className = 'info-summary';
                     summary.textContent = item.summary;
+
+                    const collapse = document.createElement('div');
+                    collapse.className = 'info-collapse';
+
+                    const collapseInner = document.createElement('div');
+                    collapseInner.className = 'info-collapse-inner';
 
                     const content = document.createElement('div');
                     content.className = 'info-content';
@@ -601,32 +783,35 @@
                         content.appendChild(p);
                     });
 
-                    detail.addEventListener('toggle', function () {
-                        if (detail.open) {
-                            const allDetails = accordionSection.querySelectorAll('.info-details');
-                            allDetails.forEach(function (other) {
-                                if (other !== detail && other.open) {
-                                    other.open = false;
-                                }
-                            });
-                            speakText(detail.getAttribute('data-speech') || content.innerText || '');
-                        } else {
-                            const anyOpen = Array.from(accordionSection.querySelectorAll('.info-details')).some(function (el) {
-                                return el.open;
-                            });
-                            if (!anyOpen) {
-                                stopSpeaking();
+                    summary.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const currentlyOpen = card.classList.contains('is-open');
+                        const allCards = accordionSection.querySelectorAll('.info-details');
+                        allCards.forEach(function (other) {
+                            if (other !== card && other.classList.contains('is-open')) {
+                                setCardOpen(other, false);
                             }
+                        });
+
+                        if (!currentlyOpen) {
+                            setCardOpen(card, true);
+                            speakText(getCardSpeechText(card));
+                        } else {
+                            setCardOpen(card, false);
+                            stopSpeaking();
                         }
                     });
 
                     content.addEventListener('click', function () {
-                        speakText(detail.getAttribute('data-speech') || content.innerText || '');
+                        speakText(getCardSpeechText(card));
                     });
 
+                    collapseInner.appendChild(content);
+                    collapse.appendChild(collapseInner);
                     detail.appendChild(summary);
-                    detail.appendChild(content);
-                    accordionSection.appendChild(detail);
+                    detail.appendChild(collapse);
+                    card.appendChild(detail);
+                    accordionSection.appendChild(card);
                 });
             }
 
@@ -661,15 +846,20 @@
                 if (!isTtsEnabled) {
                     stopSpeaking();
                 } else {
-                    const openDetail = accordionSection.querySelector('.info-details[open]');
-                    if (openDetail) {
-                        speakText(openDetail.getAttribute('data-speech') || '');
+                    const openCard = accordionSection.querySelector('.info-details.is-open');
+                    if (openCard) {
+                        speakText(getCardSpeechText(openCard));
                     }
                 }
             });
 
             window.addEventListener('pagehide', stopSpeaking);
             window.addEventListener('beforeunload', stopSpeaking);
+            document.addEventListener('visibilitychange', function () {
+                if (document.hidden) {
+                    stopSpeaking();
+                }
+            });
 
             updateToggleUI();
             renderLanguage(detectInitialLanguage());
