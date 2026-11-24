@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>APK download — AIR²Aim</title>
+    <title>AIR²Aim — Install & First-Use Guide</title>
     <style>
         :root {
             --text-primary: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(255, 255, 255, 0.74);
+            --border-subtle: rgba(255, 255, 255, 0.2);
+            --border-active: rgba(255, 255, 255, 0.45);
         }
 
         * {
@@ -18,7 +20,7 @@
 
         html, body {
             width: 100%;
-            height: 100%;
+            min-height: 100%;
             overflow-x: hidden;
             overflow-y: auto;
             color: var(--text-primary);
@@ -78,7 +80,7 @@
         @keyframes contentFadeIn {
             0% {
                 opacity: 0;
-                transform: translateY(12px);
+                transform: translateY(10px);
             }
             100% {
                 opacity: 1;
@@ -86,26 +88,26 @@
             }
         }
 
-        /* --- 独立完整页面容器 --- */
+        /* --- 页面容器 --- */
         .standalone-container {
             min-height: 100vh;
             min-height: 100dvh;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 50px 80px;
+            padding: 28px 48px;
             background: rgba(0, 0, 0, 0.45);
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
             color: #ffffff;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-            animation: contentFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+            animation: contentFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
             opacity: 0;
         }
 
         @media (max-width: 768px) {
             .standalone-container {
-                padding: 36px 24px 44px 24px;
+                padding: 20px 18px 28px 18px;
             }
         }
 
@@ -113,84 +115,224 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
+            max-width: 820px;
             width: 100%;
             margin: 0 auto;
         }
 
         .page-brand-sm {
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             font-weight: 600;
             letter-spacing: -0.02em;
             word-spacing: -0.15em;
             color: #ffffff;
+            text-decoration: none;
+            transition: opacity 0.2s ease;
         }
 
+        .page-brand-sm:hover {
+            opacity: 0.85;
+        }
+
+        .top-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* --- 地球语言切换下拉 --- */
+        .lang-dropdown {
+            position: relative;
+        }
+
+        .lang-globe-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            color: #ffffff;
+            font-size: 0.72rem;
+            letter-spacing: 0.04em;
+            padding: 5px 11px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: border-color 0.25s ease, background-color 0.25s ease;
+        }
+
+        .lang-globe-btn:hover,
+        .lang-dropdown.open .lang-globe-btn {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: #ffffff;
+        }
+
+        .lang-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: calc(100% + 6px);
+            min-width: 132px;
+            background: rgba(20, 20, 22, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 10px;
+            padding: 4px;
+            z-index: 30;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+        }
+
+        .lang-dropdown.open .lang-menu {
+            display: block;
+        }
+
+        .lang-option {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-size: 0.8rem;
+            text-align: left;
+            padding: 7px 10px;
+            border-radius: 7px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s ease;
+        }
+
+        .lang-option:hover {
+            background: rgba(255, 255, 255, 0.14);
+        }
+
+        .lang-option.active {
+            background: rgba(255, 255, 255, 0.2);
+            font-weight: 600;
+        }
+
+        /* --- 喇叭 TTS 开关 --- */
+        .tts-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            color: #ffffff;
+            font-size: 0.72rem;
+            letter-spacing: 0.04em;
+            padding: 5px 11px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: opacity 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+        }
+
+        .tts-toggle-btn.active {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: #ffffff;
+            opacity: 1;
+        }
+
+        .tts-toggle-btn:not(.active) {
+            opacity: 0.65;
+        }
+
+        .tts-toggle-btn .icon-mute {
+            display: none;
+        }
+
+        .tts-toggle-btn:not(.active) .icon-sound {
+            display: none;
+        }
+
+        .tts-toggle-btn:not(.active) .icon-mute {
+            display: inline-block;
+        }
+
+        /* --- 主体内容 --- */
         .page-body {
-            margin: 40px auto;
-            max-width: 720px;
+            margin: 16px auto;
+            max-width: 820px;
             width: 100%;
         }
 
-        .page-body h2 {
-            font-size: clamp(2rem, 4vw, 3.2rem);
+        .page-header-block {
+            margin-bottom: 14px;
+        }
+
+        .page-body h1 {
+            font-size: clamp(1.65rem, 3.2vw, 2.35rem);
             font-weight: 400;
-            letter-spacing: -0.03em;
-            margin-bottom: 24px;
-            line-height: 1.1;
+            letter-spacing: -0.025em;
+            line-height: 1.15;
+            margin-bottom: 8px;
             color: #ffffff;
         }
 
-        /* --- 下载按钮样式 --- */
-        .download-btn-wrapper {
-            margin-bottom: 28px;
+        .page-lead {
+            font-size: 0.9rem;
+            line-height: 1.55;
+            color: var(--text-muted);
+        }
+
+        .download-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
         }
 
         .apk-download-btn {
             display: inline-flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.16);
+            border: 1px solid rgba(255, 255, 255, 0.42);
             color: #ffffff;
             text-decoration: none;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 500;
-            padding: 12px 28px;
-            border-radius: 30px;
-            backdrop-filter: blur(4px);
-            transition: all 0.3s ease;
+            padding: 10px 22px;
+            border-radius: 999px;
+            transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
         }
 
         .apk-download-btn:hover {
-            background: rgba(255, 255, 255, 0.28);
+            background: rgba(255, 255, 255, 0.26);
             border-color: #ffffff;
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
 
-        /* --- 多语言折叠说明区域 (Accordion) --- */
-        .instructions-section {
-            margin-top: 24px;
+        .version-tag {
+            font-size: 0.78rem;
+            letter-spacing: 0.04em;
+            color: var(--text-muted);
+        }
+
+        /* --- 五部分和缓折叠面板 --- */
+        .accordion-section {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 8px;
         }
 
-        .lang-details {
+        .guide-details {
             background: rgba(0, 0, 0, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
             overflow: hidden;
-            transition: border-color 0.3s ease;
+            transition: border-color 0.28s ease, background-color 0.28s ease;
         }
 
-        .lang-details[open] {
-            border-color: rgba(255, 255, 255, 0.4);
-            background: rgba(0, 0, 0, 0.35);
+        .guide-details.is-open {
+            border-color: var(--border-active);
+            background: rgba(0, 0, 0, 0.36);
         }
 
-        .lang-summary {
-            padding: 14px 20px;
-            font-size: 0.95rem;
+        .guide-summary {
+            padding: 11px 16px;
+            font-size: 0.92rem;
             font-weight: 500;
             cursor: pointer;
             list-style: none;
@@ -198,86 +340,102 @@
             justify-content: space-between;
             align-items: center;
             user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* 自定义折叠小箭头 */
-        .lang-summary::after {
+        .guide-summary::after {
             content: "+";
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 300;
-            transition: transform 0.3s ease;
+            line-height: 1;
+            transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+            margin-left: 12px;
         }
 
-        .lang-details[open] .lang-summary::after {
+        .guide-details.is-open .guide-summary::after {
             transform: rotate(45deg);
         }
 
-        .lang-summary::-webkit-details-marker {
+        .guide-summary::-webkit-details-marker {
             display: none;
         }
 
-        .lang-content {
-            padding: 0 20px 18px 20px;
-            font-size: 0.88rem;
+        .guide-collapse {
+            display: grid;
+            grid-template-rows: 0fr;
+            opacity: 0;
+            transition: grid-template-rows 0.36s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.28s ease;
+        }
+
+        .guide-details.is-open .guide-collapse {
+            grid-template-rows: 1fr;
+            opacity: 1;
+        }
+
+        .guide-collapse-inner {
+            overflow: hidden;
+        }
+
+        .guide-content {
+            padding: 11px 16px 14px 16px;
+            font-size: 0.85rem;
             line-height: 1.6;
-            opacity: 0.85;
+            color: rgba(255, 255, 255, 0.92);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 12px;
+            cursor: pointer;
         }
 
-        .lang-content p {
-            margin-bottom: 8px;
+        .guide-content p {
+            margin-bottom: 7px;
         }
 
-        .lang-content p:last-child {
+        .guide-content p:last-child {
             margin-bottom: 0;
         }
 
-        /* --- 联系与版权区块 --- */
-        .status-meta-mobile {
-            font-size: 0.85rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            opacity: 0.7;
-            margin-top: 24px;
+        /* --- 底部链接与说明 --- */
+        .page-footer {
+            max-width: 820px;
+            width: 100%;
+            margin: 12px auto 0 auto;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px 16px;
+            font-size: 0.76rem;
+            color: var(--text-muted);
         }
 
-        .contact-mobile {
-            margin-top: 28px;
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 14px;
         }
 
-        .contact-mobile h4 {
-            font-size: 0.9rem;
-            font-weight: 500;
-            margin-bottom: 8px;
-            opacity: 0.8;
-        }
-
-        .contact-mobile a {
+        .footer-links a {
             color: #ffffff;
             text-decoration: none;
-            font-size: 1.1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-            padding-bottom: 2px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+            padding-bottom: 1px;
         }
 
-        .contact-info-block {
-            margin-top: 24px;
-            font-size: 0.75rem;
-            opacity: 0.8;
-            line-height: 1.45;
+        .footer-links a:hover {
+            border-bottom-color: #ffffff;
         }
 
-        .contact-info-block .info-line-2 {
-            display: block;
-            margin-top: 3px;
+        .footer-meta {
+            text-align: right;
+            line-height: 1.4;
         }
 
-        .page-footer {
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
-            padding-top: 20px;
+        @media (max-width: 768px) {
+            .footer-meta {
+                text-align: left;
+            }
         }
     </style>
 </head>
@@ -288,139 +446,601 @@
         <div class="parallax-bg"></div>
     </div>
 
-    <!-- 独立内容区块容器 -->
+    <!-- 单页容器 -->
     <div class="standalone-container">
         <div class="page-top">
-            <div class="page-brand-sm">AIR²Aim</div>
-        </div>
-        
-        <div class="page-body">
-            <h2>APK download / 下载</h2>
+            <a href="https://air2aim.com/" class="page-brand-sm" title="AIR²Aim">AIR²Aim</a>
 
-            <!-- 下载链接按钮 -->
-            <div class="download-btn-wrapper">
-                <!-- 请将 href="#" 替换为您的实际 APK 文件下载链接 -->
-                <a href="https://github.com/garrison9992/air2-website/releases/download/v1.0.61/061.apk" class="apk-download-btn" download>
-                    Download APK &nbsp;↓
-                </a>
-            </div>
-
-            <!-- 八语折叠说明区域 (Instructions Accordion) -->
-            <div class="instructions-section">
-
-                <!-- 1. English -->
-                <details class="lang-details">
-                    <summary class="lang-summary">Usage Instructions (English)</summary>
-                    <div class="lang-content">
-                        <p>After installation, please go to your phone's <strong>Settings</strong> and enable the following permissions to ensure proper alarm notifications:</p>
-                        <p>• <strong>Notifications</strong>: Allow notifications so alarms and reminders arrive on time.</p>
-                        <p>• <strong>Microphone</strong>: Allow microphone access for voice input and recording.</p>
-                        <p>• <strong>Battery Optimization</strong>: Disable battery optimization to prevent the app from background sleep.</p>
-                        <p>• <strong>Background Activity</strong>: Allow background activity to ensure real-time reminders.</p>
+            <div class="top-controls">
+                <div class="lang-dropdown" id="langDropdown">
+                    <button type="button" class="lang-globe-btn" id="langGlobeBtn" aria-expanded="false" aria-label="Switch language">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M2 12h20"></path>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                        <span id="currentLangCode">EN</span>
+                    </button>
+                    <div class="lang-menu" id="langMenu" role="menu">
+                        <button type="button" class="lang-option" data-lang="zh"><span>中文</span><span>ZH</span></button>
+                        <button type="button" class="lang-option active" data-lang="en"><span>English</span><span>EN</span></button>
+                        <button type="button" class="lang-option" data-lang="ru"><span>Русский</span><span>RU</span></button>
+                        <button type="button" class="lang-option" data-lang="fr"><span>Français</span><span>FR</span></button>
+                        <button type="button" class="lang-option" data-lang="es"><span>Español</span><span>ES</span></button>
                     </div>
-                </details>
-
-                <!-- 2. Russian -->
-                <details class="lang-details">
-                    <summary class="lang-summary">Инструкция по использованию (Русский)</summary>
-                    <div class="lang-content">
-                        <p>После установки перейдите в <strong>Настройки</strong> телефона и включите следующие разрешения для корректной работы напоминаний:</p>
-                        <p>• <strong>Уведомления</strong>: Разрешите уведомления, чтобы будильники и напоминания приходили вовремя.</p>
-                        <p>• <strong>Микрофон</strong>: Разрешите доступ к микрофону для голосового ввода.</p>
-                        <p>• <strong>Оптимизация батареи</strong>: Отключите оптимизацию батареи, чтобы приложение не выгружалось в фоне.</p>
-                        <p>• <strong>Фоновая активность</strong>: Разрешите работу в фоне для стабильной работы таймера.</p>
-                    </div>
-                </details>
-
-                <!-- 3. Chinese -->
-                <details class="lang-details">
-                    <summary class="lang-summary">使用说明 (中文)</summary>
-                    <div class="lang-content">
-                        <p>安装后，为了确保闹铃与提醒正常工作，请前往手机<strong>“设置”</strong>界面开启以下权限与配置：</p>
-                        <p>• <strong>通知权限</strong>：允许应用发送通知，确保闹铃准时送达。</p>
-                        <p>• <strong>麦克风权限</strong>：允许使用麦克风，以支持语音输入。</p>
-                        <p>• <strong>关闭电池优化</strong>：防止系统在后台强制休眠应用。</p>
-                        <p>• <strong>允许后台活动</strong>：保障定时提醒机制的实时性与稳定性。</p>
-                    </div>
-                </details>
-
-                <!-- 4. Japanese -->
-                <details class="lang-details">
-                    <summary class="lang-summary">ご利用案内 (日本語)</summary>
-                    <div class="lang-content">
-                        <p>インストール後、アラームやリマインダーを正常に動作させるために、スマートフォンの<strong>「設定」</strong>から以下の権限と設定を有効にしてください：</p>
-                        <p>• <strong>通知権限</strong>：通知を許可し、リマインダーを予定通りにお知らせします。</p>
-                        <p>• <strong>マイク権限</strong>：音声入力と録音のためのマイクアクセスを許可します。</p>
-                        <p>• <strong>バッテリー最適化の解除</strong>：バックグラウンドでのアプリ休止を防ぎます。</p>
-                        <p>• <strong>バックグラウンド活動の許可</strong>：正確なタイミングで通知を受信できるようにします。</p>
-                    </div>
-                </details>
-
-                <!-- 5. Spanish -->
-                <details class="lang-details">
-                    <summary class="lang-summary">Instrucciones de uso (Español)</summary>
-                    <div class="lang-content">
-                        <p>Después de la instalación, ve a la <strong>Configuración</strong> de tu teléfono y habilita los siguientes permisos para garantizar que las alarmas y recordatorios funcionen correctamente:</p>
-                        <p>• <strong>Notificaciones</strong>: Permite notificaciones para que los recordatorios lleguen a tiempo.</p>
-                        <p>• <strong>Micrófono</strong>: Permite el acceso al micrófono para la entrada de voz y grabación.</p>
-                        <p>• <strong>Optimización de batería</strong>: Desactiva la optimización de batería para evitar que la aplicación se suspenda en segundo plano.</p>
-                        <p>• <strong>Actividad en segundo plano</strong>: Permite la actividad en segundo plano para garantizar recordatorios en tiempo real.</p>
-                    </div>
-                </details>
-
-                <!-- 6. French -->
-                <details class="lang-details">
-                    <summary class="lang-summary">Instructions d'utilisation (Français)</summary>
-                    <div class="lang-content">
-                        <p>Après l'installation, veuillez accéder aux <strong>Paramètres</strong> de votre téléphone et activer les autorisations suivantes pour assurer le bon fonctionnement des rappels :</p>
-                        <p>• <strong>Notifications</strong> : Autorisez les notifications pour que les alarmes et rappels arrivent à l'heure.</p>
-                        <p>• <strong>Microphone</strong> : Autorisez l'accès au microphone pour la saisie vocale et l'enregistrement.</p>
-                        <p>• <strong>Optimisation de la batterie</strong> : Désactivez l'optimisation de la batterie pour empêcher la mise en veille de l'application en arrière-plan.</p>
-                        <p>• <strong>Activité en arrière-plan</strong> : Autorisez l'activité en arrière-plan pour garantir des rappels en temps réel.</p>
-                    </div>
-                </details>
-
-                <!-- 7. Arabic -->
-                <details class="lang-details">
-                    <summary class="lang-summary">تعليمات الاستخدام (العربية)</summary>
-                    <div class="lang-content" style="direction: rtl; text-align: right;">
-                        <p>بعد التثبيت، يرجى الانتقال إلى <strong>إعدادات</strong> هاتفك وتمكين الأذونات التالية لضمان عمل التنبيهات والتذكيرات بشكل صحيح:</p>
-                        <p>• <strong>الإشعارات</strong>: السماح بالإشعارات لضمان وصول التنبيهات في الوقت المحدد.</p>
-                        <p>• <strong>الميكروفون</strong>: السماح بالوصول إلى الميكروفون لإدخال الصوت والتسجيل.</p>
-                        <p>• <strong>تحسين البطارية</strong>: إلغاء تحسين البطارية لمنع التطبيق من السكون في الخلفية.</p>
-                        <p>• <strong>النشاط في الخلفية</strong>: السماح بالنشاط في الخلفية لضمان التذكيرات في الوقت الفعلي.</p>
-                    </div>
-                </details>
-
-                <!-- 8. Turkish -->
-                <details class="lang-details">
-                    <summary class="lang-summary">Kullanım Talimatları (Türkçe)</summary>
-                    <div class="lang-content">
-                        <p>Kurulumdan sonra, alarm ve hatırlatıcıların düzgün çalışmasını sağlamak için lütfen telefonunuzun <strong>Ayarlar</strong> bölümüne gidin ve şu izinleri etkinleştirin:</p>
-                        <p>• <strong>Bildirimler</strong>: Bildirimlere izin vererek alarm ve hatırlatıcıların zamanında gelmesini sağlayın.</p>
-                        <p>• <strong>Mikrofon</strong>: Sesli giriş و kayıt için mikrofon erişimine izin verin.</p>
-                        <p>• <strong>Pil Optimizasyonu</strong>: Uygulamanın arka planda uyku moduna geçmesini önlemek için pil optimizasyonunu devre dışı bırakın.</p>
-                        <p>• <strong>Arka Plan Etkinliği</strong>: Gerçek zamanlı hatırlatıcılar için arka plan etkinliğine izin verin.</p>
-                    </div>
-                </details>
-
-            </div>
-
-            <div class="status-meta-mobile">Prototype · 2026</div>
-
-            <div class="contact-mobile">
-                <h4>Contact</h4>
-                <a href="mailto:support@air2aim.com">support@air2aim.com</a>
-                
-                <div class="contact-info-block">
-                    Anna Intelligence Recorder & Reminder
-                    <span class="info-line-2">Developed in Yerevan, Armenia · 2026</span>
                 </div>
+
+                <button type="button" class="tts-toggle-btn active" id="ttsToggle" aria-label="Toggle voice reading">
+                    <svg class="icon-sound" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                    </svg>
+                    <svg class="icon-mute" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <line x1="23" y1="9" x2="17" y2="15"></line>
+                        <line x1="17" y1="9" x2="23" y2="15"></line>
+                    </svg>
+                    <span id="ttsLabel">on</span>
+                </button>
             </div>
         </div>
 
-        <div class="page-footer"></div>
+        <div class="page-body">
+            <div class="page-header-block">
+                <h1 id="pageHeading">Install & First-Use Guide</h1>
+                <p class="page-lead" id="pageLead">Practical notes for installation, permissions, reminder behavior, and current limits before your first test.</p>
+            </div>
+
+            <div class="download-row">
+                <a href="https://github.com/garrison9992/air2-website/releases/download/v1.0.73/AIR2Aim_073_release_signed_20261124.apk" class="apk-download-btn" id="downloadBtn" download>
+                    <span id="downloadBtnText">Download APK</span>
+                    <span aria-hidden="true">↓</span>
+                </a>
+                <span class="version-tag" id="versionTag">Prototype · 2026</span>
+            </div>
+
+            <div class="accordion-section" id="accordionSection"></div>
+        </div>
+
+        <footer class="page-footer">
+            <div class="footer-links">
+                <a href="https://air2aim.com/docs/UsageStatus.html" id="usageStatusLink">Usage Status</a>
+                <a href="mailto:support@air2aim.com">support@air2aim.com</a>
+            </div>
+            <div class="footer-meta">
+                Anna Intelligence Recorder & Reminder · Developed in Yerevan, Armenia · 2026
+            </div>
+        </footer>
     </div>
 
+    <script>
+        (function () {
+            const I18N = {
+                zh: {
+                    htmlLang: 'zh',
+                    ttsLang: 'zh-CN',
+                    label: '中文',
+                    docTitle: 'AIR²Aim — 安装与首次使用指南',
+                    heading: '安装与首次使用指南',
+                    lead: '聚焦安装权限、首次记录与提醒、响铃响应及当前版本边界，帮助顺利完成初次测试。',
+                    downloadText: '下载 APK',
+                    versionTag: 'Prototype · 2026',
+                    usageStatusLabel: 'Usage Status（使用状态说明）',
+                    sections: [
+                        {
+                            summary: '1. 下载安装',
+                            paragraphs: [
+                                '获取 AIR²Aim 安装包并完成安装后，首次打开应用。不同 Android 品牌与系统版本在安装提示和菜单名称上可能略有差异。',
+                                '<strong>重要提醒请先进行一次实际测试。</strong>特别是在首次安装、更换手机或修改系统省电设置之后。'
+                            ]
+                        },
+                        {
+                            summary: '2. 必要权限',
+                            paragraphs: [
+                                '• <strong>通知权限</strong>：允许发送通知，以便提醒与闹铃弹出。',
+                                '• <strong>麦克风权限</strong>：允许使用麦克风，用于语音输入与记录。',
+                                '• <strong>关闭电池优化</strong>：减少系统在后台休眠应用的情况。',
+                                '• <strong>允许后台活动</strong>：便于应用在后台维持提醒相关任务。',
+                                '不同 Android 厂商的后台管理差异较大，开启权限有助于改善表现，但不能承诺在所有机型与系统状态下都绝对准时触发。'
+                            ]
+                        },
+                        {
+                            summary: '3. 三分钟学会使用',
+                            paragraphs: [
+                                '• <strong>记录与提醒的区别</strong>：Record（记录）用于保存信息；Reminder（提醒）用于在指定时间提醒。',
+                                '• <strong>创建第一条内容</strong>：自然说出要记录或提醒的内容，由系统整理后，请确认内容与时间无误再保存。',
+                                '• <strong>确认完成</strong>：提醒触发后，请按实际执行情况确认是否完成。'
+                            ]
+                        },
+                        {
+                            summary: '4. 重要使用须知',
+                            paragraphs: [
+                                '• <strong>关闭闹铃不等于完成任务。</strong>用户应根据实际执行情况确认任务是否完成。',
+                                '• <strong>重复提醒按每次发生分别管理。</strong>完成今天的提醒，不会自动完成明天的提醒。',
+                                '• <strong>离线与数据同步</strong>：本地查看可在无网或弱网下进行，但语音识别、整理或同步等依赖网络的功能需要联网；请留意登录账户与数据保存状态，更换手机前请提前确认。',
+                                '• <strong>已知限制</strong>：当前版本对离线提醒、手机重启后恢复、锁屏直接操作及跨设备同步等能力以实际界面与当前版本支持为准，尚未全部保证。'
+                            ]
+                        },
+                        {
+                            summary: '5. 常见问题与技术支持',
+                            paragraphs: [
+                                '• <strong>麦克风无法使用</strong>：检查系统麦克风权限是否已开启，以及是否被其他应用占用。',
+                                '• <strong>闹铃不响或时间不对</strong>：检查通知权限、电池优化、后台限制与时间设置，并在调整后先做一次实际测试。',
+                                '• <strong>支持与说明</strong>：可通过底部 support@air2aim.com 联系支持，或点击 Usage Status 查看账户状态与每日额度说明。'
+                            ]
+                        }
+                    ]
+                },
+                en: {
+                    htmlLang: 'en',
+                    ttsLang: 'en-US',
+                    label: 'EN',
+                    docTitle: 'AIR²Aim — Install & First-Use Guide',
+                    heading: 'Install & First-Use Guide',
+                    lead: 'Practical notes for installation, permissions, reminder behavior, and current limits before your first test.',
+                    downloadText: 'Download APK',
+                    versionTag: 'Prototype · 2026',
+                    usageStatusLabel: 'Usage Status',
+                    sections: [
+                        {
+                            summary: '1. Download & Install',
+                            paragraphs: [
+                                'Download and install the AIR²Aim APK, then open the app. Menu names and prompts can vary across Android brands and OS versions.',
+                                '<strong>Test an important reminder in practice first.</strong> Especially after first installation, switching phones, or changing battery settings.'
+                            ]
+                        },
+                        {
+                            summary: '2. Required Permissions',
+                            paragraphs: [
+                                '• <strong>Notifications</strong>: Allow notifications so reminders and alarms can alert you.',
+                                '• <strong>Microphone</strong>: Allow microphone access for voice capture.',
+                                '• <strong>Disable battery optimization</strong>: Reduce background sleep by the system.',
+                                '• <strong>Allow background activity</strong>: Help background reminder tasks stay responsive.',
+                                'Android OEM background policies vary widely; these settings help, but on-time delivery cannot be guaranteed across all devices and OS states.'
+                            ]
+                        },
+                        {
+                            summary: '3. Get Started in Three Minutes',
+                            paragraphs: [
+                                '• <strong>Record vs. Reminder</strong>: Records store information; Reminders alert you at a specified time.',
+                                '• <strong>First item & confirmation</strong>: Speak naturally, review the structured result, and confirm before saving.',
+                                '• <strong>Confirm completion</strong>: Confirm completion based on what you actually finished.'
+                            ]
+                        },
+                        {
+                            summary: '4. Important Usage Notes',
+                            paragraphs: [
+                                '• <strong>Dismissing an alarm is not completing a task.</strong> Confirm task completion based on actual execution.',
+                                '• <strong>Recurring reminders are managed per occurrence.</strong> Completing today’s reminder does not complete tomorrow’s.',
+                                '• <strong>Offline & sync</strong>: Viewing local items works offline, while network features like speech processing or account sync require connectivity; verify account and data status before switching phones.',
+                                '• <strong>Known limits</strong>: Capabilities such as offline reminders, post-reboot recovery, lock-screen actions, and cross-device sync depend on current build support and are not all guaranteed.'
+                            ]
+                        },
+                        {
+                            summary: '5. FAQ & Support',
+                            paragraphs: [
+                                '• <strong>Microphone not working</strong>: Check system microphone permission and ensure no other app is holding the mic.',
+                                '• <strong>Alarm silent or wrong time</strong>: Check notifications, battery optimization, background limits, and clock/time zone settings, then run a live test.',
+                                '• <strong>Support & status</strong>: Reach out via support@air2aim.com or open Usage Status below for account state and daily quota details.'
+                            ]
+                        }
+                    ]
+                },
+                ru: {
+                    htmlLang: 'ru',
+                    ttsLang: 'ru-RU',
+                    label: 'RU',
+                    docTitle: 'AIR²Aim — Установка и первый запуск',
+                    heading: 'Установка и первый запуск',
+                    lead: 'Короткие заметки об установке, разрешениях, поведении напоминаний и ограничениях текущей сборки.',
+                    downloadText: 'Скачать APK',
+                    versionTag: 'Prototype · 2026',
+                    usageStatusLabel: 'Usage Status',
+                    sections: [
+                        {
+                            summary: '1. Установка',
+                            paragraphs: [
+                                'Скачайте и установите APK AIR²Aim, затем откройте приложение. Названия пунктов в настройках могут отличаться в зависимости от марки Android.',
+                                '<strong>Сначала проверьте важный напоминающий сигнал на практике.</strong> Особенно после первой установки, смены телефона или изменения настроек энергосбережения.'
+                            ]
+                        },
+                        {
+                            summary: '2. Нужные разрешения',
+                            paragraphs: [
+                                '• <strong>Уведомления</strong>: разрешите уведомления для отображения напоминаний и сигналов.',
+                                '• <strong>Микрофон</strong>: разрешите доступ к микрофону для голосового ввода.',
+                                '• <strong>Отключить оптимизацию батареи</strong>: снижает риск усыпления приложения системой.',
+                                '• <strong>Фоновая активность</strong>: помогает поддерживать работу напоминаний в фоне.',
+                                'У разных производителей Android фоновые ограничения различаются, поэтому точное срабатывание нельзя гарантировать на всех устройствах.'
+                            ]
+                        },
+                        {
+                            summary: '3. Старт за три минуты',
+                            paragraphs: [
+                                '• <strong>Запись и напоминание</strong>: запись сохраняет информацию, а напоминание срабатывает в указанное время.',
+                                '• <strong>Создание и подтверждение</strong>: скажите естественно, проверьте структурированный результат и подтвердите перед сохранением.',
+                                '• <strong>Подтверждение выполнения</strong>: отмечайте выполнение по фактическому результату.'
+                            ]
+                        },
+                        {
+                            summary: '4. Важные правила',
+                            paragraphs: [
+                                '• <strong>Отключение сигнала не означает выполнение задачи.</strong> Подтверждайте выполнение по фактическим действиям.',
+                                '• <strong>Повторяющиеся напоминания учитываются по каждому событию.</strong> Выполнение сегодня не закрывает напоминание на завтра.',
+                                '• <strong>Офлайн и синхронизация</strong>: просмотр сохранённого возможен без сети, но распознавание речи, обработка и синхронизация требуют интернет; проверяйте данные перед сменой устройства.',
+                                '• <strong>Известные ограничения</strong>: офлайн-напоминания, восстановление после перезагрузки, действия с экрана блокировки и межплатформенная синхронизация зависят от текущей реализации и не гарантируются в полном объёме.'
+                            ]
+                        },
+                        {
+                            summary: '5. Частые вопросы и поддержка',
+                            paragraphs: [
+                                '• <strong>Не работает микрофон</strong>: проверьте разрешение микрофона в системе и не занят ли он другим приложением.',
+                                '• <strong>Сигнал не сработал или неверное время</strong>: проверьте уведомления, оптимизацию батареи, фон и время на устройстве, затем выполните тестовое напоминание.',
+                                '• <strong>Связь и статус</strong>: пишите на support@air2aim.com или откройте Usage Status внизу для проверки статуса и лимитов.'
+                            ]
+                        }
+                    ]
+                },
+                fr: {
+                    htmlLang: 'fr',
+                    ttsLang: 'fr-FR',
+                    label: 'FR',
+                    docTitle: 'AIR²Aim — Installation et prise en main',
+                    heading: 'Installation et prise en main',
+                    lead: 'Points essentiels sur l’installation, les autorisations, les rappels et les limites de la version actuelle.',
+                    downloadText: 'Télécharger APK',
+                    versionTag: 'Prototype · 2026',
+                    usageStatusLabel: 'Usage Status',
+                    sections: [
+                        {
+                            summary: '1. Téléchargement et installation',
+                            paragraphs: [
+                                'Installez l’APK AIR²Aim puis ouvrez l’application. Les libellés des réglages peuvent varier selon la marque Android.',
+                                '<strong>Faites d’abord un test réel pour un rappel important.</strong> Surtout après la première installation, un changement de téléphone ou une modification des réglages batterie.'
+                            ]
+                        },
+                        {
+                            summary: '2. Autorisations nécessaires',
+                            paragraphs: [
+                                '• <strong>Notifications</strong> : autorisez les notifications pour recevoir les alertes et rappels.',
+                                '• <strong>Microphone</strong> : autorisez l’accès au micro pour la saisie vocale.',
+                                '• <strong>Désactiver l’optimisation de la batterie</strong> : limite la mise en veille par le système.',
+                                '• <strong>Activité en arrière-plan</strong> : aide à maintenir les tâches de rappel.',
+                                'Les politiques d’arrière-plan varient selon les constructeurs Android ; la ponctualité ne peut pas être garantie sur tous les appareils.'
+                            ]
+                        },
+                        {
+                            summary: '3. Prise en main en trois minutes',
+                            paragraphs: [
+                                '• <strong>Enregistrement et rappel</strong> : l’enregistrement conserve une information ; le rappel alerte à l’heure prévue.',
+                                '• <strong>Créer et confirmer</strong> : parlez naturellement, vérifiez la proposition structurée puis confirmez avant d’enregistrer.',
+                                '• <strong>Confirmer l’exécution</strong> : validez selon ce qui a réellement été fait.'
+                            ]
+                        },
+                        {
+                            summary: '4. Points importants',
+                            paragraphs: [
+                                '• <strong>Fermer une alarme ne vaut pas fin de tâche.</strong> Confirmez selon l’exécution réelle.',
+                                '• <strong>Les rappels récurrents se gèrent occurrence par occurrence.</strong> Valider aujourd’hui ne valide pas demain.',
+                                '• <strong>Hors ligne et synchronisation</strong> : la consultation locale reste possible sans réseau, mais la voix, le traitement et la synchronisation nécessitent une connexion.',
+                                '• <strong>Limites connues</strong> : les rappels hors ligne, la reprise après redémarrage, l’action sur écran verrouillé et la synchronisation multi-appareils dépendent du support actuel et ne sont pas tous garantis.'
+                            ]
+                        },
+                        {
+                            summary: '5. FAQ et assistance',
+                            paragraphs: [
+                                '• <strong>Micro indisponible</strong> : vérifiez l’autorisation micro et qu’aucune autre appli ne l’utilise.',
+                                '• <strong>Rappel absent ou mauvaise heure</strong> : vérifiez notifications, batterie, arrière-plan et horloge, puis testez.',
+                                '• <strong>Assistance</strong> : écrivez à support@air2aim.com ou consultez Usage Status ci-dessous.'
+                            ]
+                        }
+                    ]
+                },
+                es: {
+                    htmlLang: 'es',
+                    ttsLang: 'es-ES',
+                    label: 'ES',
+                    docTitle: 'AIR²Aim — Instalación y primer uso',
+                    heading: 'Instalación y primer uso',
+                    lead: 'Notas prácticas sobre instalación, permisos, recordatorios y límites de la versión actual.',
+                    downloadText: 'Descargar APK',
+                    versionTag: 'Prototype · 2026',
+                    usageStatusLabel: 'Usage Status',
+                    sections: [
+                        {
+                            summary: '1. Descarga e instalación',
+                            paragraphs: [
+                                'Instala el APK de AIR²Aim y abre la app. Los nombres de ajustes pueden variar según la marca de Android.',
+                                '<strong>Haz primero una prueba real para un recordatorio importante.</strong> En especial tras instalar, cambiar de teléfono o ajustar ahorro de batería.'
+                            ]
+                        },
+                        {
+                            summary: '2. Permisos necesarios',
+                            paragraphs: [
+                                '• <strong>Notificaciones</strong>: permite notificaciones para mostrar avisos y alarmas.',
+                                '• <strong>Micrófono</strong>: permite acceso al micrófono para capturar voz.',
+                                '• <strong>Desactivar optimización de batería</strong>: reduce la suspensión en segundo plano.',
+                                '• <strong>Permitir actividad en segundo plano</strong>: ayuda a sostener tareas de recordatorio.',
+                                'Cada fabricante Android gestiona el segundo plano de forma distinta, por lo que no se garantiza puntualidad en todos los equipos.'
+                            ]
+                        },
+                        {
+                            summary: '3. Empieza en tres minutos',
+                            paragraphs: [
+                                '• <strong>Registro y recordatorio</strong>: los registros guardan información; los recordatorios avisan a la hora indicada.',
+                                '• <strong>Crear y confirmar</strong>: habla con naturalidad, revisa el resultado estructurado y confirma antes de guardar.',
+                                '• <strong>Confirmar avance</strong>: confirma según lo que hayas completado en la práctica.'
+                            ]
+                        },
+                        {
+                            summary: '4. Avisos importantes',
+                            paragraphs: [
+                                '• <strong>Cerrar una alarma no equivale a completar la tarea.</strong> Confirma según la ejecución real.',
+                                '• <strong>Los recordatorios recurrentes se gestionan por cada ocasión.</strong> Completar el de hoy no completa el de mañana.',
+                                '• <strong>Sin conexión y sincronización</strong>: ver lo guardado funciona sin conexión, pero voz, procesamiento y sincronización requieren red.',
+                                '• <strong>Limitaciones conocidas</strong>: recordatorios sin conexión, recuperación tras reiniciar, acciones en pantalla bloqueada y sincronización entre dispositivos dependen del soporte actual y no están garantizadas.'
+                            ]
+                        },
+                        {
+                            summary: '5. Preguntas frecuentes y soporte',
+                            paragraphs: [
+                                '• <strong>El micrófono no funciona</strong>: revisa el permiso de micrófono y que otra app no lo esté usando.',
+                                '• <strong>No suena o la hora no coincide</strong>: revisa notificaciones, batería, segundo plano y hora del teléfono, y haz una prueba.',
+                                '• <strong>Soporte y estado</strong>: escribe a support@air2aim.com o revisa Usage Status abajo.'
+                            ]
+                        }
+                    ]
+                }
+            };
+
+            const accordionSection = document.getElementById('accordionSection');
+            const pageHeading = document.getElementById('pageHeading');
+            const pageLead = document.getElementById('pageLead');
+            const downloadBtnText = document.getElementById('downloadBtnText');
+            const versionTag = document.getElementById('versionTag');
+            const usageStatusLink = document.getElementById('usageStatusLink');
+            const currentLangCode = document.getElementById('currentLangCode');
+            const langDropdown = document.getElementById('langDropdown');
+            const langGlobeBtn = document.getElementById('langGlobeBtn');
+            const langOptions = document.querySelectorAll('.lang-option');
+            const ttsToggle = document.getElementById('ttsToggle');
+            const ttsLabel = document.getElementById('ttsLabel');
+
+            const supportsTTS = 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
+            let isTtsEnabled = supportsTTS;
+            let activeLang = 'en';
+            let speechSessionId = 0;
+            const activeUtterances = [];
+
+            function detectInitialLanguage() {
+                const params = new URLSearchParams(window.location.search);
+                const queryLang = (params.get('lang') || '').toLowerCase().split('-')[0];
+                if (queryLang && Object.prototype.hasOwnProperty.call(I18N, queryLang)) {
+                    return queryLang;
+                }
+
+                const systemLangs = Array.isArray(navigator.languages) && navigator.languages.length > 0
+                    ? navigator.languages
+                    : [navigator.language || navigator.userLanguage || 'en'];
+
+                for (let i = 0; i < systemLangs.length; i++) {
+                    const code = String(systemLangs[i] || '').toLowerCase().trim();
+                    const base = code.split('-')[0];
+                    if (Object.prototype.hasOwnProperty.call(I18N, base)) {
+                        return base;
+                    }
+                }
+                return 'en';
+            }
+
+            function stopSpeaking() {
+                speechSessionId += 1;
+                activeUtterances.length = 0;
+                if (supportsTTS) {
+                    window.speechSynthesis.cancel();
+                }
+            }
+
+            function normalizeSpeechText(rawText) {
+                return String(rawText || '')
+                    .replace(/AIR²Aim/gi, 'Air 2 Aim')
+                    .replace(/•/g, '，')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+            }
+
+            function getCardSpeechText(cardEl) {
+                const summaryEl = cardEl.querySelector('.guide-summary');
+                const contentEl = cardEl.querySelector('.guide-content');
+                const summaryText = summaryEl ? summaryEl.textContent : '';
+                const paragraphTexts = contentEl
+                    ? Array.from(contentEl.querySelectorAll('p')).map(function (p) {
+                        return p.textContent || '';
+                    })
+                    : [];
+                return normalizeSpeechText([summaryText].concat(paragraphTexts).join('。'));
+            }
+
+            function splitIntoChunks(text) {
+                const cleaned = normalizeSpeechText(text);
+                if (!cleaned) return [];
+                const parts = cleaned.match(/[^。！？；.!?;]+(?:[。！？；.!?;]+|$)/g);
+                return parts ? parts.map(function (s) { return s.trim(); }).filter(Boolean) : [cleaned];
+            }
+
+            function speakText(text) {
+                if (!supportsTTS || !isTtsEnabled || !text) return;
+
+                stopSpeaking();
+                const sessionId = speechSessionId;
+                const chunks = splitIntoChunks(text);
+                if (!chunks.length) return;
+
+                if (window.speechSynthesis.paused) {
+                    window.speechSynthesis.resume();
+                }
+
+                chunks.forEach(function (chunk) {
+                    const utterance = new SpeechSynthesisUtterance(chunk);
+                    utterance.lang = I18N[activeLang]?.ttsLang || 'en-US';
+                    utterance.rate = 0.95;
+                    utterance.onstart = function () {
+                        if (sessionId !== speechSessionId) {
+                            window.speechSynthesis.cancel();
+                        }
+                    };
+                    activeUtterances.push(utterance);
+                    window.speechSynthesis.speak(utterance);
+                });
+            }
+
+            function updateToggleUI() {
+                if (!supportsTTS) {
+                    ttsLabel.textContent = 'off';
+                    ttsToggle.classList.remove('active');
+                    return;
+                }
+                ttsLabel.textContent = isTtsEnabled ? 'on' : 'off';
+                ttsToggle.classList.toggle('active', isTtsEnabled);
+            }
+
+            function setCardOpen(cardEl, shouldOpen) {
+                const detailEl = cardEl.querySelector('details');
+                if (shouldOpen) {
+                    detailEl.open = true;
+                    cardEl.classList.add('is-open');
+                } else {
+                    cardEl.classList.remove('is-open');
+                    detailEl.open = false;
+                }
+            }
+
+            function renderLanguage(langKey) {
+                const pack = I18N[langKey] || I18N.en;
+                activeLang = Object.prototype.hasOwnProperty.call(I18N, langKey) ? langKey : 'en';
+                stopSpeaking();
+
+                document.documentElement.lang = pack.htmlLang;
+                document.title = pack.docTitle;
+                pageHeading.textContent = pack.heading;
+                pageLead.textContent = pack.lead;
+                downloadBtnText.textContent = pack.downloadText;
+                versionTag.textContent = pack.versionTag;
+                usageStatusLink.textContent = pack.usageStatusLabel;
+                currentLangCode.textContent = pack.label;
+
+                langOptions.forEach(function (opt) {
+                    opt.classList.toggle('active', opt.getAttribute('data-lang') === activeLang);
+                });
+
+                accordionSection.innerHTML = '';
+
+                pack.sections.forEach(function (sec) {
+                    const card = document.createElement('div');
+                    card.className = 'guide-details';
+
+                    const detail = document.createElement('details');
+
+                    const summary = document.createElement('summary');
+                    summary.className = 'guide-summary';
+                    summary.textContent = sec.summary;
+
+                    const collapse = document.createElement('div');
+                    collapse.className = 'guide-collapse';
+
+                    const collapseInner = document.createElement('div');
+                    collapseInner.className = 'guide-collapse-inner';
+
+                    const content = document.createElement('div');
+                    content.className = 'guide-content';
+                    sec.paragraphs.forEach(function (htmlStr) {
+                        const p = document.createElement('p');
+                        p.innerHTML = htmlStr;
+                        content.appendChild(p);
+                    });
+
+                    summary.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const currentlyOpen = card.classList.contains('is-open');
+                        const allCards = accordionSection.querySelectorAll('.guide-details');
+                        allCards.forEach(function (other) {
+                            if (other !== card && other.classList.contains('is-open')) {
+                                setCardOpen(other, false);
+                            }
+                        });
+
+                        if (!currentlyOpen) {
+                            setCardOpen(card, true);
+                            speakText(getCardSpeechText(card));
+                        } else {
+                            setCardOpen(card, false);
+                            stopSpeaking();
+                        }
+                    });
+
+                    content.addEventListener('click', function () {
+                        speakText(getCardSpeechText(card));
+                    });
+
+                    collapseInner.appendChild(content);
+                    collapse.appendChild(collapseInner);
+                    detail.appendChild(summary);
+                    detail.appendChild(collapse);
+                    card.appendChild(detail);
+                    accordionSection.appendChild(card);
+                });
+            }
+
+            langGlobeBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const willOpen = !langDropdown.classList.contains('open');
+                langDropdown.classList.toggle('open', willOpen);
+                langGlobeBtn.setAttribute('aria-expanded', String(willOpen));
+            });
+
+            langOptions.forEach(function (opt) {
+                opt.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    const chosen = opt.getAttribute('data-lang');
+                    langDropdown.classList.remove('open');
+                    langGlobeBtn.setAttribute('aria-expanded', 'false');
+                    renderLanguage(chosen);
+                });
+            });
+
+            document.addEventListener('click', function (e) {
+                if (!langDropdown.contains(e.target)) {
+                    langDropdown.classList.remove('open');
+                    langGlobeBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            ttsToggle.addEventListener('click', function () {
+                if (!supportsTTS) return;
+                isTtsEnabled = !isTtsEnabled;
+                updateToggleUI();
+                if (!isTtsEnabled) {
+                    stopSpeaking();
+                } else {
+                    const openCard = accordionSection.querySelector('.guide-details.is-open');
+                    if (openCard) {
+                        speakText(getCardSpeechText(openCard));
+                    }
+                }
+            });
+
+            window.addEventListener('pagehide', stopSpeaking);
+            window.addEventListener('beforeunload', stopSpeaking);
+            document.addEventListener('visibilitychange', function () {
+                if (document.hidden) {
+                    stopSpeaking();
+                }
+            });
+
+            updateToggleUI();
+            renderLanguage(detectInitialLanguage());
+        })();
+    </script>
 </body>
 </html>
