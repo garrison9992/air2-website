@@ -65,7 +65,7 @@
 
     const SUPPORTED_LANGS = Object.keys(NAV_CONFIG);
 
-    // 2. 自动注入与现有界面完全一致的胶囊按钮 + 深色毛玻璃下拉菜单样式
+    // 2. 自动注入样式：半透明带点灰的轻磨砂菜单，契合整体暗色透明体系，无纯白或重灰块
     function injectStyles() {
         if (document.getElementById("air2aim-docs-nav-style")) return;
         const style = document.createElement("style");
@@ -107,14 +107,14 @@
                 right: 0;
                 top: calc(100% + 6px);
                 min-width: 205px;
-                background: rgba(20, 20, 22, 0.94);
-                backdrop-filter: blur(12px);
-                -webkit-backdrop-filter: blur(12px);
-                border: 1px solid rgba(255, 255, 255, 0.25);
+                background: rgba(110, 110, 116, 0.34);
+                backdrop-filter: blur(14px);
+                -webkit-backdrop-filter: blur(14px);
+                border: 1px solid rgba(255, 255, 255, 0.28);
                 border-radius: 10px;
                 padding: 5px;
                 z-index: 40;
-                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.48);
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.32);
             }
             .docs-nav-dropdown.open .docs-nav-menu {
                 display: block;
@@ -123,9 +123,9 @@
                 font-size: 0.68rem;
                 letter-spacing: 0.05em;
                 text-transform: uppercase;
-                color: rgba(255, 255, 255, 0.52);
+                color: rgba(255, 255, 255, 0.65);
                 padding: 5px 10px 4px 10px;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.12);
                 margin-bottom: 4px;
                 user-select: none;
             }
@@ -134,7 +134,7 @@
                 align-items: center;
                 justify-content: space-between;
                 width: 100%;
-                color: rgba(255, 255, 255, 0.9);
+                color: rgba(255, 255, 255, 0.88);
                 text-decoration: none;
                 font-size: 0.81rem;
                 padding: 7px 10px;
@@ -142,11 +142,11 @@
                 transition: background-color 0.2s ease, color 0.2s ease;
             }
             .docs-nav-item:hover {
-                background: rgba(255, 255, 255, 0.14);
+                background: rgba(255, 255, 255, 0.1);
                 color: #ffffff;
             }
             .docs-nav-item.active {
-                background: rgba(255, 255, 255, 0.2);
+                background: rgba(255, 255, 255, 0.13);
                 color: #ffffff;
                 font-weight: 600;
             }
@@ -251,7 +251,6 @@
         btn.addEventListener("click", function (e) {
             e.stopPropagation();
             const willOpen = !dropdown.classList.contains("open");
-            // 若语言下拉框正开着，顺便将其关闭，避免两个下拉菜单重叠
             const langDropdown = document.getElementById("langDropdown");
             const langGlobeBtn = document.getElementById("langGlobeBtn");
             if (langDropdown && langDropdown.classList.contains("open")) {
@@ -269,7 +268,6 @@
             }
         });
 
-        // 监听 <html lang="..."> 变化：用户在页面上切换语言时，目录标题和跳转链接自动同步更新
         const observer = new MutationObserver(function (mutations) {
             for (let i = 0; i < mutations.length; i++) {
                 if (mutations[i].attributeName === "lang") {
