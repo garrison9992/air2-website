@@ -27,7 +27,6 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* --- 背景容器与视差图层 --- */
         .bg-wrapper {
             position: fixed;
             top: 0;
@@ -86,7 +85,6 @@
             }
         }
 
-        /* --- 单页紧凑容器 --- */
         .standalone-container {
             min-height: 100vh;
             min-height: 100dvh;
@@ -138,7 +136,6 @@
             gap: 10px;
         }
 
-        /* --- 地球语言切换下拉 --- */
         .lang-dropdown {
             position: relative;
         }
@@ -209,7 +206,6 @@
             font-weight: 600;
         }
 
-        /* --- 喇叭 TTS 开关 --- */
         .tts-toggle-btn {
             display: inline-flex;
             align-items: center;
@@ -276,7 +272,6 @@
             color: var(--text-muted);
         }
 
-        /* --- 紧凑和缓折叠下拉窗区域 --- */
         .accordion-section {
             display: flex;
             flex-direction: column;
@@ -289,6 +284,10 @@
             border-radius: 10px;
             overflow: hidden;
             transition: border-color 0.28s ease, background-color 0.28s ease;
+        }
+
+        .info-details:hover {
+            border-color: rgba(255, 255, 255, 0.34);
         }
 
         .info-details.is-open {
@@ -320,6 +319,31 @@
 
         .info-details.is-open .info-summary::after {
             transform: rotate(45deg);
+        }
+
+        .info-details.is-modal-trigger .info-summary::after {
+            display: none;
+        }
+
+        .modal-trigger-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.88);
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.26);
+            padding: 2px 9px;
+            border-radius: 999px;
+            margin-left: 12px;
+            white-space: nowrap;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .info-details.is-modal-trigger:hover .modal-trigger-badge {
+            background: rgba(255, 255, 255, 0.22);
+            border-color: rgba(255, 255, 255, 0.5);
         }
 
         .info-summary::-webkit-details-marker {
@@ -359,7 +383,6 @@
             margin-bottom: 0;
         }
 
-        /* --- 紧凑底部信息 --- */
         .page-footer {
             max-width: 820px;
             width: 100%;
@@ -391,16 +414,387 @@
                 text-align: left;
             }
         }
+
+        .repeat-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.62);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        .repeat-modal-backdrop.is-visible {
+            display: flex;
+            opacity: 1;
+        }
+
+        .repeat-modal-dialog {
+            width: 100%;
+            max-width: 760px;
+            max-height: 86vh;
+            max-height: 86dvh;
+            display: flex;
+            flex-direction: column;
+            background: rgba(24, 24, 28, 0.88);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
+            overflow: hidden;
+            color: #ffffff;
+            text-shadow: none;
+            transform: translateY(8px) scale(0.985);
+            transition: transform 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .repeat-modal-backdrop.is-visible .repeat-modal-dialog {
+            transform: translateY(0) scale(1);
+        }
+
+        .repeat-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 14px 18px 10px 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .repeat-modal-title-wrap h3 {
+            font-size: 1.02rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: #ffffff;
+        }
+
+        .repeat-modal-subtitle {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.68);
+            margin-top: 2px;
+        }
+
+        .repeat-modal-close {
+            width: 30px;
+            height: 30px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            font-size: 1.1rem;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .repeat-modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #ffffff;
+        }
+
+        .card-deck-strip {
+            display: flex;
+            align-items: flex-end;
+            overflow-x: auto;
+            padding: 12px 16px 0 16px;
+            background: rgba(0, 0, 0, 0.24);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+        }
+
+        .card-deck-strip::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .card-deck-strip::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 999px;
+        }
+
+        .deck-tab-card {
+            position: relative;
+            flex: 0 0 auto;
+            min-width: 96px;
+            max-width: 142px;
+            padding: 8px 12px 9px 12px;
+            margin-right: -8px;
+            border-radius: 10px 10px 0 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: none;
+            background: rgba(42, 42, 48, 0.88);
+            color: rgba(255, 255, 255, 0.72);
+            text-align: left;
+            cursor: pointer;
+            box-shadow: -3px 0 10px rgba(0, 0, 0, 0.35);
+            transform: translateY(3px);
+            transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+                        background-color 0.22s ease,
+                        color 0.22s ease,
+                        border-color 0.22s ease,
+                        box-shadow 0.22s ease;
+        }
+
+        .deck-tab-card:last-child {
+            margin-right: 0;
+        }
+
+        .deck-tab-card:hover {
+            transform: translateY(1px);
+            color: #ffffff;
+            background: rgba(58, 58, 66, 0.94);
+        }
+
+        .deck-tab-card.is-active {
+            z-index: 12 !important;
+            transform: translateY(0);
+            background: rgba(82, 82, 92, 0.96);
+            border-color: rgba(255, 255, 255, 0.52);
+            color: #ffffff;
+            box-shadow: 0 -2px 14px rgba(0, 0, 0, 0.45), 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .deck-tab-code {
+            display: block;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.58);
+            margin-bottom: 2px;
+        }
+
+        .deck-tab-card.is-active .deck-tab-code {
+            color: #9ae6b4;
+        }
+
+        .deck-tab-name {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .deck-tab-card.is-active .deck-tab-name {
+            font-weight: 600;
+        }
+
+        .active-card-stage {
+            flex: 1 1 auto;
+            overflow-y: auto;
+            padding: 18px 20px 20px 20px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+            cursor: pointer;
+        }
+
+        .stage-card-head {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .stage-card-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .stage-card-pill {
+            font-size: 0.7rem;
+            padding: 2px 9px;
+            border-radius: 999px;
+            background: rgba(154, 230, 180, 0.16);
+            border: 1px solid rgba(154, 230, 180, 0.38);
+            color: #c6f6d5;
+        }
+
+        .stage-desc {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.92);
+            margin-bottom: 10px;
+        }
+
+        .stage-example-box {
+            border-left: 3px solid rgba(154, 230, 180, 0.7);
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 0 8px 8px 0;
+            padding: 9px 13px;
+            margin: 10px 0;
+            font-size: 0.82rem;
+            line-height: 1.55;
+            color: rgba(255, 255, 255, 0.94);
+        }
+
+        .stage-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 0.8rem;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .stage-table th,
+        .stage-table td {
+            padding: 7px 10px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: top;
+        }
+
+        .stage-table th {
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 600;
+        }
+
+        .stage-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .stage-skip {
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        .stage-week-grid {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            gap: 5px;
+            margin: 12px 0;
+        }
+
+        .stage-day {
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.48);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 2px;
+            gap: 4px;
+            font-size: 0.72rem;
+        }
+
+        .stage-day.on {
+            background: rgba(154, 230, 180, 0.15);
+            border-color: rgba(154, 230, 180, 0.42);
+            color: #c6f6d5;
+            font-weight: 600;
+        }
+
+        .stage-months-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        .stage-month {
+            border-radius: 9px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            text-align: center;
+            padding: 9px 6px;
+        }
+
+        .stage-month-label {
+            display: block;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.65);
+        }
+
+        .stage-month-day {
+            display: block;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #9ae6b4;
+            line-height: 1.25;
+            margin: 2px 0;
+        }
+
+        .stage-month-time {
+            display: block;
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.82);
+        }
+
+        .stage-note {
+            font-size: 0.79rem;
+            line-height: 1.55;
+            color: rgba(255, 255, 255, 0.74);
+            margin-top: 8px;
+        }
+
+        .repeat-modal-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 9px 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(0, 0, 0, 0.25);
+            font-size: 0.74rem;
+            color: rgba(255, 255, 255, 0.68);
+        }
+
+        .deck-nav-btns {
+            display: flex;
+            gap: 6px;
+        }
+
+        .deck-nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            color: #ffffff;
+            font-size: 0.74rem;
+            padding: 4px 10px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .deck-nav-btn:hover {
+            background: rgba(255, 255, 255, 0.22);
+        }
+
+        @media (max-width: 600px) {
+            .repeat-modal-dialog {
+                max-height: 90dvh;
+            }
+            .deck-tab-card {
+                min-width: 84px;
+                padding: 7px 10px 8px 10px;
+            }
+            .active-card-stage {
+                padding: 14px 14px 16px 14px;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- 背景图层 -->
     <div class="bg-wrapper">
         <div class="parallax-bg"></div>
     </div>
 
-    <!-- 单页容器 -->
     <div class="standalone-container">
         <div class="page-top">
             <a href="https://air2aim.com/" class="page-brand-sm" title="AIR²Aim">AIR²Aim</a>
@@ -443,7 +837,7 @@
         <div class="page-body">
             <div class="page-header-row">
                 <h2 id="pageTitle">AIR²Aim User Guide</h2>
-                <p class="page-lead" id="pageLead">Welcome to AIR²Aim. With a few simple steps, you can bring your ideas to life.</p>
+                <p class="page-lead" id="pageLead"></p>
             </div>
 
             <div class="accordion-section" id="accordionSection"></div>
@@ -459,235 +853,1259 @@
         </footer>
     </div>
 
+    <div class="repeat-modal-backdrop" id="repeatModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="repeatModalTitle">
+        <div class="repeat-modal-dialog" id="repeatModalDialog">
+            <div class="repeat-modal-header">
+                <div class="repeat-modal-title-wrap">
+                    <h3 id="repeatModalTitle">重复模式说明</h3>
+                    <div class="repeat-modal-subtitle" id="repeatModalSubtitle">点击上方任意模式卡片切换查看详细规则与示例</div>
+                </div>
+                <button type="button" class="repeat-modal-close" id="repeatModalClose" aria-label="Close">×</button>
+            </div>
+
+            <div class="card-deck-strip" id="cardDeckStrip" role="tablist"></div>
+
+            <div class="active-card-stage" id="activeCardStage"></div>
+
+            <div class="repeat-modal-footer">
+                <span id="deckCounter">1 / 9</span>
+                <div class="deck-nav-btns">
+                    <button type="button" class="deck-nav-btn" id="deckPrevBtn">←</button>
+                    <button type="button" class="deck-nav-btn" id="deckNextBtn">→</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         (function () {
             const I18N = {
                 "zh": {
-                                "htmlLang": "zh",
-                                "ttsLang": "zh-CN",
-                                "label": "中文",
-                                "docTitle": "使用指南 — AIR²Aim",
-                                "heading": "AIR²Aim 使用指南",
-                                "lead": "欢迎使用 AIR²Aim，通过简单步骤，就可让您的想法落地生根。",
-                                "supportPrefix": "联系支持：",
-                                "footerBadge": "User Guide · 2026",
-                                "items": [
-                                                {
-                                                                "summary": "1. 创建“记录”（Record）",
-                                                                "paragraphs": [
-                                                                                "点击首页的“铅笔”按钮，进入创建“记录”功能。在这里您可以通过语音或者文字方式，轻松地将有意义的事件记录，且便于日后查询。"
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "2. 创建“提醒”（Reminder）",
-                                                                "paragraphs": [
-                                                                                "点击首页的“闹钟”按钮，进入创建“提醒”功能。在这里您可以通过语音或者文字方式，设置重要事件的提醒。请尽可能清晰地说出待提醒事件的“提醒时间点”和“提醒的具体内容”。"
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "3. 语音录音操作与时长规则",
-                                                                "paragraphs": [
-                                                                                "在创建“记录”或者“提醒”页面，当您按下麦克风按钮，听到“滴”提示音后，说出您的具体内容，松开麦克风即停止录音。请注意，每段录音的最长时间为 30 秒。",
-                                                                                "请勿连续快速按下/松开麦克风。按下麦克风说话时长如果少于 2 秒，将被视为语音输入无效，需要您重新按下麦克风再次录音。"
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "4. 提醒响铃与完成归档",
-                                                                "paragraphs": [
-                                                                                "当“提醒”型事件到时间闹钟响铃后，该事件文字会变成红色，等待您确认。在您点击“标记为已完成”按钮后，该事件文字恢复常规颜色，并自动归档为“记录”型事件。"
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "5. 首页分区、检索与权限设置",
-                                                                "paragraphs": [
-                                                                                "首页上半部分为“记录”区域，您可以查询过往的记录事件；下半部分为“提醒”区域，您可以查询设置的提醒事件。",
-                                                                                "点击首页顶部的放大镜，您可以对全部事件，通过“关键词”和限定日期范围，进行检索。",
-                                                                                "本软件需要设置允许手机相关权限，才能正常工作，具体操作请参考《权限设置》。"
-                                                                ]
-                                                }
-                                ]
+                    "htmlLang": "zh",
+                    "ttsLang": "zh-CN",
+                    "label": "中文",
+                    "docTitle": "使用指南 — AIR²Aim",
+                    "heading": "AIR²Aim 使用指南",
+                    "lead": "",
+                    "supportPrefix": "联系支持：",
+                    "footerBadge": "User Guide · 2026",
+                    "items": [
+                        {
+                            "summary": "1. 创建“记录”（Record）",
+                            "paragraphs": [
+                                "点击首页的“铅笔”按钮，进入创建“记录”功能。在这里您可以通过语音或者文字方式，轻松地将有意义的事件记录，且便于日后查询。"
+                            ]
+                        },
+                        {
+                            "summary": "2. 创建“提醒”（Reminder）",
+                            "paragraphs": [
+                                "点击首页的“闹钟”按钮，进入创建“提醒”功能。在这里您可以通过语音或者文字方式，设置重要事件的提醒。请尽可能清晰地说出待提醒事件的“提醒时间点”和“提醒的具体内容”。"
+                            ]
+                        },
+                        {
+                            "summary": "3. 重复模式说明",
+                            "isModalTrigger": true,
+                            "triggerBadge": "查看 8 种模式卡片 ↗"
+                        },
+                        {
+                            "summary": "4. 提醒响铃与完成归档",
+                            "paragraphs": [
+                                "“提醒”型事件到时间闹钟响铃后，文字会变成红色，等您确认。",
+                                "点击“标记为已完成”后，文字恢复正常颜色，自动变成“记录”型事件，并显示在“记录区域”。"
+                            ]
+                        },
+                        {
+                            "summary": "5. 语音录音操作与时长规则",
+                            "paragraphs": [
+                                "在创建“记录”或“提醒”页面，按住“麦克风”按钮说话，松开就停止录音。每段最长 30 秒。",
+                                "别连续快速按住再松开麦克风。说话不到 2 秒算无效，需要重新按住录音。"
+                            ]
+                        },
+                        {
+                            "summary": "6. 首页分区、检索与权限设置",
+                            "paragraphs": [
+                                "首页上半部分是“记录”区域，看以前的记录；下半部分是“提醒”区域，看设好的提醒。拖动中间的分界线，可以调整两个区域的大小。",
+                                "点首页顶部的放大镜，可以按“关键词”和日期范围搜全部事件。",
+                                "需要打开手机里的相关权限，软件才能正常用，具体看《权限设置》。"
+                            ]
+                        }
+                    ],
+                    "repeatModal": {
+                        "title": "重复模式具体细则与示例",
+                        "subtitle": "点击上方叠放卡片切换模式（再次点击正文可重听语音）",
+                        "prevLabel": "上一张",
+                        "nextLabel": "下一张",
+                        "cards": [
+                            {
+                                "code": "R00",
+                                "tabName": "一次性",
+                                "title": "R00 — 仅提醒一次（Once）",
+                                "badge": "单次触发",
+                                "html": `
+                                    <p class="stage-desc">在指定的日期和时间提醒您完成某件事情，只执行一次。</p>
+                                    <div class="stage-example-box"><strong>示例：</strong>11月28日上午9点半提醒我去爬山。</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>执行日期</th><th>提醒时间</th></tr></thead>
+                                        <tbody><tr><td>2026-11-28</td><td>09:30</td></tr></tbody>
+                                    </table>
+                                    <p class="stage-note">确认完成后，不会再产生下一次周期提醒。</p>
+                                `,
+                                "speech": "R00，仅提醒一次。在指定的日期和时间提醒您完成某件事情，只执行一次。例如：11月28日上午9点半提醒我去爬山。确认完成后，不会再产生下一次周期提醒。"
+                            },
+                            {
+                                "code": "R01",
+                                "tabName": "每天",
+                                "title": "R01 — 每天重复（Every day）",
+                                "badge": "每日周期",
+                                "html": `
+                                    <p class="stage-desc">每天在相同的时间提醒您完成指定事项，包括周六、周日及节假日。</p>
+                                    <div class="stage-example-box"><strong>示例：</strong>每天早上8点提醒我测量血压。</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>日期</th><th>时间</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>11月27日</td><td>08:00</td></tr>
+                                            <tr><td>11月28日</td><td>08:00</td></tr>
+                                            <tr><td>11月29日</td><td>08:00</td></tr>
+                                            <tr><td>11月30日 ……</td><td>08:00</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="stage-note">每天的提醒独立确认完成。今天点击完成，不影响明天的正常响铃。</p>
+                                `,
+                                "speech": "R01，每天重复。每天在相同的时间提醒您完成指定事项，包括周六、周日及节假日。例如：每天早上8点提醒我测量血压。每天的提醒独立确认完成，今天完成不影响明天。"
+                            },
+                            {
+                                "code": "R02",
+                                "tabName": "每周",
+                                "title": "R02 — 每周指定星期重复（Every week）",
+                                "badge": "每周固定日",
+                                "html": `
+                                    <p class="stage-desc">在每周指定的星期几、指定的时间提醒您完成某件事情。</p>
+                                    <div class="stage-example-box"><strong>示例：</strong>每周一上午9点提醒我参加工作会议。</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>日期</th><th>星期</th><th>时间</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>11月30日</td><td>周一</td><td>09:00</td></tr>
+                                            <tr><td>12月7日</td><td>周一</td><td>09:00</td></tr>
+                                            <tr><td>12月14日</td><td>周一</td><td>09:00</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="stage-note">如果您只说“每周提醒我交报告”而未说明星期几，Anna 会主动向您确认具体星期和时刻。</p>
+                                `,
+                                "speech": "R02，每周指定星期重复。在每周指定的星期几和指定时间提醒您。例如：每周一上午9点提醒我参加工作会议。如果未说明星期几，Anna 会主动向您确认。"
+                            },
+                            {
+                                "code": "R03",
+                                "tabName": "工作日",
+                                "title": "R03 — 每个工作日重复（Every weekday）",
+                                "badge": "周一至周五",
+                                "html": `
+                                    <p class="stage-desc">每周一至周五在指定时间提醒您，周六、周日不提醒。</p>
+                                    <div class="stage-example-box"><strong>示例：</strong>每个工作日上午8点提醒我准备上班。</div>
+                                    <div class="stage-week-grid">
+                                        <div class="stage-day on"><span>周一</span><span>🔔</span><span>08:00</span></div>
+                                        <div class="stage-day on"><span>周二</span><span>🔔</span><span>08:00</span></div>
+                                        <div class="stage-day on"><span>周三</span><span>🔔</span><span>08:00</span></div>
+                                        <div class="stage-day on"><span>周四</span><span>🔔</span><span>08:00</span></div>
+                                        <div class="stage-day on"><span>周五</span><span>🔔</span><span>08:00</span></div>
+                                        <div class="stage-day"><span>周六</span><span>—</span><span>休息</span></div>
+                                        <div class="stage-day"><span>周日</span><span>—</span><span>休息</span></div>
+                                    </div>
+                                    <p class="stage-note">工作日固定按周一至周五执行，不随法定节假日自动跳过。</p>
+                                `,
+                                "speech": "R03，每个工作日重复。每周一至周五在指定时间提醒您，周六周日不提醒。例如：每个工作日上午8点提醒我准备上班。工作日固定按周一至周五执行，遇到法定节假日不会自动跳过。"
+                            },
+                            {
+                                "code": "R04",
+                                "tabName": "周末",
+                                "title": "R04 — 每个周末重复（Every weekend）",
+                                "badge": "周六与周日",
+                                "html": `
+                                    <p class="stage-desc">每周六和周日分别在指定时间提醒您。</p>
+                                    <div class="stage-example-box"><strong>示例：</strong>每个周末下午4点10分提醒我去游泳。</div>
+                                    <div class="stage-week-grid">
+                                        <div class="stage-day"><span>周一</span><span>—</span><span>—</span></div>
+                                        <div class="stage-day"><span>周二</span><span>—</span><span>—</span></div>
+                                        <div class="stage-day"><span>周三</span><span>—</span><span>—</span></div>
+                                        <div class="stage-day"><span>周四</span><span>—</span><span>—</span></div>
+                                        <div class="stage-day"><span>周五</span><span>—</span><span>—</span></div>
+                                        <div class="stage-day on"><span>周六</span><span>🔔</span><span>16:10</span></div>
+                                        <div class="stage-day on"><span>周日</span><span>🔔</span><span>16:10</span></div>
+                                    </div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>常见说法</th><th>实际含义</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>每周六</td><td>每周提醒一次（仅星期六）</td></tr>
+                                            <tr><td>每个周末 / 周六和周日</td><td>每周提醒两次（周六、周日分别确认）</td></tr>
+                                            <tr><td>这个周末</td><td>一次性提醒（需明确周六还是周日）</td></tr>
+                                        </tbody>
+                                    </table>
+                                `,
+                                "speech": "R04，每个周末重复。每周六和周日分别在指定时间提醒您，周六和周日各自独立确认。注意区分：每个周末是周期重复提醒，而这个周末是指一次性提醒。"
+                            },
+                            {
+                                "code": "R05",
+                                "tabName": "每月1–28日",
+                                "title": "R05 — 每月指定日期（1～28日）",
+                                "badge": "每月固定日",
+                                "html": `
+                                    <p class="stage-desc">每个月在指定日期、指定时间提醒您。由于每个月都至少有 28 天，不会出现日期缺失。</p>
+                                    <div class="stage-example-box"><strong>示例：</strong>每个月15号上午10点提醒我交房租。</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>触发日期</th><th>时间</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>2026-12-15</td><td>10:00</td></tr>
+                                            <tr><td>2027-01-15</td><td>10:00</td></tr>
+                                            <tr><td>2027-02-15</td><td>10:00</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="stage-note">按固定日历日期重复，而不是每隔 30 天计算。</p>
+                                `,
+                                "speech": "R05，每月1至28日重复。每个月在指定日期和指定时间提醒您。例如：每个月15号上午10点提醒我交房租。这是按固定日历日期重复，而不是每隔30天计算。"
+                            },
+                            {
+                                "code": "R06",
+                                "tabName": "每月29–31日",
+                                "title": "R06 — 每月 29、30 或 31 日重复",
+                                "badge": "双策略可选",
+                                "html": `
+                                    <p class="stage-desc">部分月份不存在 29、30 或 31 日（如 2 月无 30 日、4 月无 31 日）。设置时 Anna 会请您二选一：</p>
+                                    <div class="stage-example-box"><strong>示例（每月31日上午9点交电费）：</strong><br>• <strong>方式 A（缺日跳过）：</strong>只在确实有 31 日的月份提醒。<br>• <strong>方式 B（改为每月最后一天）：</strong>改为每个月的最后一天提醒。</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>月份（2027年）</th><th>方式 A：缺日跳过</th><th>方式 B：改为月末</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>1月</td><td>31日</td><td>31日</td></tr>
+                                            <tr><td>2月</td><td class="stage-skip">跳过</td><td>28日</td></tr>
+                                            <tr><td>3月</td><td>31日</td><td>31日</td></tr>
+                                            <tr><td>4月</td><td class="stage-skip">跳过</td><td>30日</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="stage-note">说明：选择方式 B 后，规则即转为“每月最后一天”；若原定每月 30 日，在有 31 天的月份也会在 31 日提醒。</p>
+                                `,
+                                "speech": "R06，每月29、30或31日重复。因为部分月份没有这些日期，Anna 会请您在两种方式中选择：方式A，缺日跳过，只在存在该日期的月份提醒；方式B，改为每月最后一天，无论当月多少天都在月末当天提醒。"
+                            },
+                            {
+                                "code": "R07",
+                                "tabName": "每月最后一天",
+                                "title": "R07 — 每月最后一天重复",
+                                "badge": "自动适配月末",
+                                "html": `
+                                    <p class="stage-desc">不论当月有 28 天、29 天、30 天还是 31 天，都在该月最后一天的指定时间提醒您。</p>
+                                    <div class="stage-example-box"><strong>示例：</strong>每个月最后一天晚上8点提醒我统计本月支出。</div>
+                                    <div class="stage-months-grid">
+                                        <div class="stage-month"><span class="stage-month-label">2027年1月</span><span class="stage-month-day">31</span><span class="stage-month-time">20:00 🔔</span></div>
+                                        <div class="stage-month"><span class="stage-month-label">2027年2月</span><span class="stage-month-day">28</span><span class="stage-month-time">20:00 🔔</span></div>
+                                        <div class="stage-month"><span class="stage-month-label">2027年3月</span><span class="stage-month-day">31</span><span class="stage-month-time">20:00 🔔</span></div>
+                                        <div class="stage-month"><span class="stage-month-label">2027年4月</span><span class="stage-month-day">30</span><span class="stage-month-time">20:00 🔔</span></div>
+                                        <div class="stage-month"><span class="stage-month-label">2027年5月</span><span class="stage-month-day">31</span><span class="stage-month-time">20:00 🔔</span></div>
+                                        <div class="stage-month"><span class="stage-month-label">2027年6月</span><span class="stage-month-day">30</span><span class="stage-month-time">20:00 🔔</span></div>
+                                    </div>
+                                    <p class="stage-note">闰年 2 月自动在 29 日提醒，平年 2 月在 28 日提醒。</p>
+                                `,
+                                "speech": "R07，每月最后一天重复。不论当月是28天、29天、30天还是31天，系统都会自动在该月最后一天的指定时间提醒您。例如：每个月最后一天晚上8点提醒我统计本月支出。"
+                            },
+                            {
+                                "code": "RULES",
+                                "tabName": "通用规则",
+                                "title": "所有重复提醒的通用规则",
+                                "badge": "必读要点",
+                                "html": `
+                                    <div class="stage-example-box"><strong>组合表达示例：</strong>从12月1日开始，每天早上8点提醒我吃药。</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>规则项目</th><th>执行标准</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>内容与时刻</td><td>需明确提醒事项以及具体的小时和分钟</td></tr>
+                                            <tr><td>首次开始日期</td><td>支持指定从某一天正式开始执行</td></tr>
+                                            <tr><td>独立完成确认</td><td>每一次周期提醒独立确认，不受上一次是否完成影响</td></tr>
+                                            <tr><td>时区与节假日</td><td>按手机当前本地时间执行；不自动跳过法定节假日</td></tr>
+                                        </tbody>
+                                    </table>
+                                `,
+                                "speech": "所有重复提醒的通用规则：设置时请明确提醒内容、小时和分钟，也可指定首次开始日期，例如从12月1日开始每天早上8点提醒我吃药。每一次提醒独立确认完成，按手机当前本地时间执行，且不会自动跳过法定节假日。"
+                            }
+                        ]
+                    }
                 },
                 "en": {
-                                "htmlLang": "en",
-                                "ttsLang": "en-US",
-                                "label": "EN",
-                                "docTitle": "User Guide — AIR²Aim",
-                                "heading": "AIR²Aim User Guide",
-                                "lead": "Welcome to AIR²Aim. With a few simple steps, you can bring your ideas to life.",
-                                "supportPrefix": "Support: ",
-                                "footerBadge": "User Guide · 2026",
-                                "items": [
-                                                {
-                                                                "summary": "1. Create a “Record”",
-                                                                "paragraphs": [
-                                                                                "Tap the “Pencil” button on the home screen to create a “Record”. Here you can easily record meaningful events via voice or text for future retrieval."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "2. Create a “Reminder”",
-                                                                "paragraphs": [
-                                                                                "Tap the “Alarm” button on the home screen to create a “Reminder”. Set reminders for important events using voice or text. Please clearly state the reminder time and specific details."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "3. Voice Recording & Duration Rules",
-                                                                "paragraphs": [
-                                                                                "On the Record or Reminder creation page, press and hold the microphone button. After hearing the beep, speak your content, and release the microphone to stop recording. Note: Max recording time is 30 seconds.",
-                                                                                "Do not rapidly tap/release the microphone continuously. Speech shorter than 2 seconds will be considered invalid and will require re-recording."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "4. Reminder Alert & Completion Archive",
-                                                                "paragraphs": [
-                                                                                "When a reminder alarms, the text turns red awaiting confirmation. Tapping “Mark as Completed” restores the text color and automatically archives it as a “Record”."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "5. Home Layout, Search & Permissions",
-                                                                "paragraphs": [
-                                                                                "The upper half of the home screen is the “Record” area for past entries; the lower half is the “Reminder” area for your active reminders.",
-                                                                                "Tap the magnifying glass at the top of the home screen to search all events by keywords and date range.",
-                                                                                "The app requires necessary device permissions to function properly. Please refer to “Permissions” for details."
-                                                                ]
-                                                }
-                                ]
+                    "htmlLang": "en",
+                    "ttsLang": "en-US",
+                    "label": "EN",
+                    "docTitle": "User Guide — AIR²Aim",
+                    "heading": "AIR²Aim User Guide",
+                    "lead": "",
+                    "supportPrefix": "Support: ",
+                    "footerBadge": "User Guide · 2026",
+                    "items": [
+                        {
+                            "summary": "1. Create a “Record”",
+                            "paragraphs": [
+                                "Tap the “Pencil” button on the home screen to create a “Record”. Here you can easily record meaningful events via voice or text for future retrieval."
+                            ]
+                        },
+                        {
+                            "summary": "2. Create a “Reminder”",
+                            "paragraphs": [
+                                "Tap the “Alarm” button on the home screen to create a “Reminder”. Set reminders for important events using voice or text. Please clearly state the reminder time and specific details."
+                            ]
+                        },
+                        {
+                            "summary": "3. Repeat Reminder Modes",
+                            "isModalTrigger": true,
+                            "triggerBadge": "View 8 Mode Cards ↗"
+                        },
+                        {
+                            "summary": "4. Reminder Alert & Completion Archive",
+                            "paragraphs": [
+                                "When a reminder goes off, the text turns red until you confirm it.",
+                                "Tap “Mark as Completed” and the text goes back to normal, turns into a “Record”, and shows up in the “Record” area."
+                            ]
+                        },
+                        {
+                            "summary": "5. Voice Recording & Duration Rules",
+                            "paragraphs": [
+                                "On the Record or Reminder screen, hold down the “Mic” button to talk, and let go to stop. Max length is 30 seconds.",
+                                "Don’t quickly tap and let go of the mic over and over. Anything under 2 seconds won’t count—just hold and try again."
+                            ]
+                        },
+                        {
+                            "summary": "6. Home Layout, Search & Permissions",
+                            "paragraphs": [
+                                "The top half of the home screen is the “Record” area for past notes; the bottom half is the “Reminder” area for upcoming reminders. Drag the line in the middle to resize both areas.",
+                                "Tap the magnifying glass at the top to search all items by keyword and date.",
+                                "Turn on the needed phone permissions so the app works right. See “Permissions” for steps."
+                            ]
+                        }
+                    ],
+                    "repeatModal": {
+                        "title": "Repeat Reminder Rules & Examples",
+                        "subtitle": "Tap any stacked card above to switch modes (tap the card body to replay voice)",
+                        "prevLabel": "Prev",
+                        "nextLabel": "Next",
+                        "cards": [
+                            {
+                                "code": "R00",
+                                "tabName": "Once",
+                                "title": "R00 — Once (One-time Reminder)",
+                                "badge": "Single Trigger",
+                                "html": `
+                                    <p class="stage-desc">Reminds you once at the specified date and time.</p>
+                                    <div class="stage-example-box"><strong>Example:</strong> Remind me to go hiking at 9:30 AM on November 28.</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Date</th><th>Time</th></tr></thead>
+                                        <tbody><tr><td>2026-11-28</td><td>09:30</td></tr></tbody>
+                                    </table>
+                                    <p class="stage-note">No further recurring alerts are generated once completed.</p>
+                                `,
+                                "speech": "R00, Once. Reminds you once at the specified date and time. Example: Remind me to go hiking at 9:30 AM on November 28."
+                            },
+                            {
+                                "code": "R01",
+                                "tabName": "Every day",
+                                "title": "R01 — Every day",
+                                "badge": "Daily Cycle",
+                                "html": `
+                                    <p class="stage-desc">Reminds you at the same time every day, including weekends and holidays.</p>
+                                    <div class="stage-example-box"><strong>Example:</strong> Remind me to measure my blood pressure every day at 8 AM.</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Date</th><th>Time</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Nov 27</td><td>08:00</td></tr>
+                                            <tr><td>Nov 28</td><td>08:00</td></tr>
+                                            <tr><td>Nov 29</td><td>08:00</td></tr>
+                                            <tr><td>Nov 30 ...</td><td>08:00</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="stage-note">Each daily occurrence is confirmed independently; completing today does not affect tomorrow.</p>
+                                `,
+                                "speech": "R01, Every day. Reminds you at the same time every day, including weekends and holidays. Example: Remind me to measure my blood pressure every day at 8 AM."
+                            },
+                            {
+                                "code": "R02",
+                                "tabName": "Every week",
+                                "title": "R02 — Every week",
+                                "badge": "Fixed Weekday",
+                                "html": `
+                                    <p class="stage-desc">Reminds you on a specified day of the week at the specified time.</p>
+                                    <div class="stage-example-box"><strong>Example:</strong> Remind me to attend the work meeting every Monday at 9 AM.</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Date</th><th>Weekday</th><th>Time</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Nov 30</td><td>Monday</td><td>09:00</td></tr>
+                                            <tr><td>Dec 7</td><td>Monday</td><td>09:00</td></tr>
+                                            <tr><td>Dec 14</td><td>Monday</td><td>09:00</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="stage-note">If you only say “remind me weekly” without specifying a weekday, Anna will ask you to clarify the day and time.</p>
+                                `,
+                                "speech": "R02, Every week. Reminds you on a specified day of the week at the specified time. Example: Remind me to attend the work meeting every Monday at 9 AM."
+                            },
+                            {
+                                "code": "R03",
+                                "tabName": "Weekday",
+                                "title": "R03 — Every weekday",
+                                "badge": "Mon – Fri",
+                                "html": `
+                                    <p class="stage-desc">Reminds you Monday through Friday at the set time; silent on Saturday and Sunday.</p>
+                                    <div class="stage-example-box"><strong>Example:</strong> Remind me to get ready for work every weekday at 8 AM.</div>
+                                    <div class="stage-week-grid">
+                                        <div class="stage-day on"><span>Mon</span><span>🔔</span><span>08:00</span></div>
+                                        <div class="stage-day on"><span>Tue</span><span>🔔</span><span>08:00</span></div>
+                                        <div class="stage-day on"><span>Wed</span><span>🔔</span><span>08:00</span></div>
+                                        <div class="stage-day on"><span>Thu</span><span>🔔</span><span>08:00</span></div>
+                                        <div class="stage-day on"><span>Fri</span><span>🔔</span><span>08:00</span></div>
+                                        <div class="stage-day"><span>Sat</span><span>—</span><span>Off</span></div>
+                                        <div class="stage-day"><span>Sun</span><span>—</span><span>Off</span></div>
+                                    </div>
+                                    <p class="stage-note">Weekdays strictly follow Monday to Friday and do not automatically skip public holidays.</p>
+                                `,
+                                "speech": "R03, Every weekday. Reminds you Monday through Friday at the set time, and stays silent on Saturday and Sunday."
+                            },
+                            {
+                                "code": "R04",
+                                "tabName": "Weekend",
+                                "title": "R04 — Every weekend",
+                                "badge": "Sat & Sun",
+                                "html": `
+                                    <p class="stage-desc">Reminds you separately on both Saturday and Sunday at the set time.</p>
+                                    <div class="stage-example-box"><strong>Example:</strong> Remind me to go swimming every weekend at 4:10 PM.</div>
+                                    <div class="stage-week-grid">
+                                        <div class="stage-day"><span>Mon</span><span>—</span><span>—</span></div>
+                                        <div class="stage-day"><span>Tue</span><span>—</span><span>—</span></div>
+                                        <div class="stage-day"><span>Wed</span><span>—</span><span>—</span></div>
+                                        <div class="stage-day"><span>Thu</span><span>—</span><span>—</span></div>
+                                        <div class="stage-day"><span>Fri</span><span>—</span><span>—</span></div>
+                                        <div class="stage-day on"><span>Sat</span><span>🔔</span><span>16:10</span></div>
+                                        <div class="stage-day on"><span>Sun</span><span>🔔</span><span>16:10</span></div>
+                                    </div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Phrase</th><th>Meaning</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Every Saturday</td><td>Once a week (Saturday only)</td></tr>
+                                            <tr><td>Every weekend</td><td>Twice a week (Sat & Sun confirmed separately)</td></tr>
+                                            <tr><td>This weekend</td><td>One-time reminder (specify Sat or Sun)</td></tr>
+                                        </tbody>
+                                    </table>
+                                `,
+                                "speech": "R04, Every weekend. Reminds you separately on Saturday and Sunday at the set time. Note that Every weekend repeats weekly, while This weekend is a one-time reminder."
+                            },
+                            {
+                                "code": "R05",
+                                "tabName": "Day 1–28",
+                                "title": "R05 — Monthly on Day 1–28",
+                                "badge": "Fixed Calendar Day",
+                                "html": `
+                                    <p class="stage-desc">Reminds you on the chosen date every month. Since every month has at least 28 days, no dates are ever missing.</p>
+                                    <div class="stage-example-box"><strong>Example:</strong> Remind me to pay the rent on the 15th of every month at 10 AM.</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Date</th><th>Time</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>2026-12-15</td><td>10:00</td></tr>
+                                            <tr><td>2027-01-15</td><td>10:00</td></tr>
+                                            <tr><td>2027-02-15</td><td>10:00</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="stage-note">Repeats by calendar date, not every 30 days.</p>
+                                `,
+                                "speech": "R05, Monthly on Day 1 to 28. Reminds you on the chosen date every month at the set time. Example: Remind me to pay the rent on the 15th of every month at 10 AM."
+                            },
+                            {
+                                "code": "R06",
+                                "tabName": "Day 29–31",
+                                "title": "R06 — Monthly on Day 29, 30, or 31",
+                                "badge": "Two Options",
+                                "html": `
+                                    <p class="stage-desc">Some months do not have a 29th, 30th, or 31st. Anna lets you choose between two rules:</p>
+                                    <div class="stage-example-box"><strong>Example (31st of every month at 9 AM):</strong><br>• <strong>Option A (Skip missing months):</strong> Trigger only in months that have a 31st.<br>• <strong>Option B (Last day of every month):</strong> Trigger on the final day of every month.</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Month (2027)</th><th>Option A: Skip</th><th>Option B: Month-End</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Jan</td><td>31st</td><td>31st</td></tr>
+                                            <tr><td>Feb</td><td class="stage-skip">Skip</td><td>28th</td></tr>
+                                            <tr><td>Mar</td><td>31st</td><td>31st</td></tr>
+                                            <tr><td>Apr</td><td class="stage-skip">Skip</td><td>30th</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="stage-note">Note: Choosing Option B switches the rule to “Last day of every month” (so a 30th reminder will trigger on the 31st in 31-day months).</p>
+                                `,
+                                "speech": "R06, Monthly on Day 29, 30, or 31. Because some months lack these dates, Anna lets you choose Option A to skip months without that date, or Option B to trigger on the last day of every month."
+                            },
+                            {
+                                "code": "R07",
+                                "tabName": "Month-End",
+                                "title": "R07 — On the last day of every month",
+                                "badge": "Auto Month-End",
+                                "html": `
+                                    <p class="stage-desc">Automatically triggers on the final day of each month (28th, 29th, 30th, or 31st) at the set time.</p>
+                                    <div class="stage-example-box"><strong>Example:</strong> Remind me to review my monthly expenses at 8 PM on the last day of every month.</div>
+                                    <div class="stage-months-grid">
+                                        <div class="stage-month"><span class="stage-month-label">Jan 2027</span><span class="stage-month-day">31</span><span class="stage-month-time">20:00 🔔</span></div>
+                                        <div class="stage-month"><span class="stage-month-label">Feb 2027</span><span class="stage-month-day">28</span><span class="stage-month-time">20:00 🔔</span></div>
+                                        <div class="stage-month"><span class="stage-month-label">Mar 2027</span><span class="stage-month-day">31</span><span class="stage-month-time">20:00 🔔</span></div>
+                                        <div class="stage-month"><span class="stage-month-label">Apr 2027</span><span class="stage-month-day">30</span><span class="stage-month-time">20:00 🔔</span></div>
+                                        <div class="stage-month"><span class="stage-month-label">May 2027</span><span class="stage-month-day">31</span><span class="stage-month-time">20:00 🔔</span></div>
+                                        <div class="stage-month"><span class="stage-month-label">Jun 2027</span><span class="stage-month-day">30</span><span class="stage-month-time">20:00 🔔</span></div>
+                                    </div>
+                                    <p class="stage-note">Triggers on Feb 29 in leap years and Feb 28 in regular years.</p>
+                                `,
+                                "speech": "R07, On the last day of every month. Automatically triggers on the final day of each month at the specified time."
+                            },
+                            {
+                                "code": "RULES",
+                                "tabName": "General",
+                                "title": "General Rules for All Repeat Reminders",
+                                "badge": "Key Rules",
+                                "html": `
+                                    <div class="stage-example-box"><strong>Combined Example:</strong> Starting December 1, remind me to take my medicine every day at 8 AM.</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Item</th><th>Rule</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Task & Time</td><td>Specify both the task content and exact hour & minute</td></tr>
+                                            <tr><td>Start Date</td><td>Optional start date can be included in your request</td></tr>
+                                            <tr><td>Independent Check</td><td>Each cycle is confirmed separately without affecting the next</td></tr>
+                                            <tr><td>Time Zone & Holidays</td><td>Follows device local time; public holidays are not skipped</td></tr>
+                                        </tbody>
+                                    </table>
+                                `,
+                                "speech": "General rules for all repeat reminders: specify the task, exact hour and minute, and an optional start date. Each cycle is confirmed independently and follows your device local time."
+                            }
+                        ]
+                    }
                 },
                 "ru": {
-                                "htmlLang": "ru",
-                                "ttsLang": "ru-RU",
-                                "label": "RU",
-                                "docTitle": "Руководство пользователя — AIR²Aim",
-                                "heading": "Руководство пользователя AIR²Aim",
-                                "lead": "Добро пожаловать в AIR²Aim. Всего за несколько простых шагов ваши идеи воплотятся в жизнь.",
-                                "supportPrefix": "Поддержка: ",
-                                "footerBadge": "User Guide · 2026",
-                                "items": [
-                                                {
-                                                                "summary": "1. Создание «Записи»",
-                                                                "paragraphs": [
-                                                                                "Нажмите кнопку «Карандаш» на главном экране, чтобы создать «Запись». Здесь вы можете легко фиксировать события голосом или текстом для дальнейшего поиска."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "2. Создание «Напоминания»",
-                                                                "paragraphs": [
-                                                                                "Нажмите кнопку «Будильник» на главном экране, чтобы создать «Напоминание». Устанавливайте напоминания голосом или текстом, четко указывая время и суть задачи."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "3. Голосовая запись и правила длительности",
-                                                                "paragraphs": [
-                                                                                "На странице создания записи или напоминания нажмите и удерживайте кнопку микрофона. После звукового сигнала произнесите текст, а затем отпустите кнопку, чтобы остановить запись. Максимальная длительность — 30 секунд.",
-                                                                                "Не нажимайте и не отпускайте микрофон слишком быстро. Если речь длится менее 2 секунд, запись будет засчитана как недействительная."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "4. Срабатывание напоминания и архивация",
-                                                                "paragraphs": [
-                                                                                "Когда наступит время напоминания, текст станет красным. После нажатия кнопки «Отметить как выполненное» текст вернется к обычному цвету, а запись автоматически перенесется в архив."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "5. Главный экран, поиск и разрешения",
-                                                                "paragraphs": [
-                                                                                "Верхняя половина главного экрана — зона «Записи», нижняя — зона «Напоминания».",
-                                                                                "Нажмите на значок лупы вверху экрана, чтобы выполнить поиск по ключевым словам и диапазону дат.",
-                                                                                "Для корректной работы приложения требуются соответствующие разрешения. Подробнее см. в разделе «Настройки разрешений»."
-                                                                ]
-                                                }
-                                ]
+                    "htmlLang": "ru",
+                    "ttsLang": "ru-RU",
+                    "label": "RU",
+                    "docTitle": "Руководство пользователя — AIR²Aim",
+                    "heading": "Руководство пользователя AIR²Aim",
+                    "lead": "",
+                    "supportPrefix": "Поддержка: ",
+                    "footerBadge": "User Guide · 2026",
+                    "items": [
+                        {
+                            "summary": "1. Создание «Записи»",
+                            "paragraphs": [
+                                "Нажмите кнопку «Карандаш» на главном экране, чтобы создать «Запись». Здесь вы можете легко фиксировать события голосом или текстом для дальнейшего поиска."
+                            ]
+                        },
+                        {
+                            "summary": "2. Создание «Напоминания»",
+                            "paragraphs": [
+                                "Нажмите кнопку «Будильник» на главном экране, чтобы создать «Напоминание». Устанавливайте напоминания голосом или текстом, четко указывая время и суть задачи."
+                            ]
+                        },
+                        {
+                            "summary": "3. Режимы повторяющихся напоминаний",
+                            "isModalTrigger": true,
+                            "triggerBadge": "8 карточек режимов ↗"
+                        },
+                        {
+                            "summary": "4. Срабатывание напоминания и архивация",
+                            "paragraphs": [
+                                "Когда приходит время напоминания, текст становится красным и ждёт подтверждения.",
+                                "Нажмите «Отметить как выполненное» — текст станет обычным, превратится в «Запись» и появится в разделе «Записи»."
+                            ]
+                        },
+                        {
+                            "summary": "5. Голосовая запись и правила длительности",
+                            "paragraphs": [
+                                "На экране создания записи или напоминания зажмите «Микрофон», скажите, что нужно, и отпустите. Максимум — 30 секунд.",
+                                "Не нажимайте и не отпускайте микрофон слишком быстро подряд. Если говорили меньше 2 секунд, запись не засчитается — просто запишите заново."
+                            ]
+                        },
+                        {
+                            "summary": "6. Главный экран, поиск и разрешения",
+                            "paragraphs": [
+                                "Сверху на главном экране — «Записи» (прошлое), снизу — «Напоминания» (предстоящее). Потяните разделитель посередине, чтобы изменить размер зон.",
+                                "Нажмите на лупу сверху, чтобы искать по словам и датам.",
+                                "Включите нужные разрешения телефона, чтобы всё работало как надо. Подробнее — в разделе «Разрешения»."
+                            ]
+                        }
+                    ],
+                    "repeatModal": {
+                        "title": "Правила и примеры повторяющихся напоминаний",
+                        "subtitle": "Нажмите на любую карточку сверху для просмотра (нажмите на текст для озвучивания)",
+                        "prevLabel": "Назад",
+                        "nextLabel": "Вперёд",
+                        "cards": [
+                            {
+                                "code": "R00",
+                                "tabName": "Один раз",
+                                "title": "R00 — Только один раз (Once)",
+                                "badge": "Разовый",
+                                "html": `
+                                    <p class="stage-desc">Напоминает один раз в указанную дату и время.</p>
+                                    <div class="stage-example-box"><strong>Пример:</strong> Напомни мне пойти в поход 28 ноября в 9:30 утра.</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Дата</th><th>Время</th></tr></thead>
+                                        <tbody><tr><td>2026-11-28</td><td>09:30</td></tr></tbody>
+                                    </table>
+                                    <p class="stage-note">После выполнения новые повторы не создаются.</p>
+                                `,
+                                "speech": "R00, Только один раз. Напоминает один раз в указанную дату и время. Пример: Напомни мне пойти в поход 28 ноября в 9:30 утра."
+                            },
+                            {
+                                "code": "R01",
+                                "tabName": "Ежедневно",
+                                "title": "R01 — Ежедневно (Every day)",
+                                "badge": "Каждый день",
+                                "html": `
+                                    <p class="stage-desc">Срабатывает каждый день в одно и то же время, включая выходные и праздники.</p>
+                                    <div class="stage-example-box"><strong>Пример:</strong> Напоминай мне измерять давление каждый день в 8 утра.</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Дата</th><th>Время</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>27 ноя</td><td>08:00</td></tr>
+                                            <tr><td>28 ноя</td><td>08:00</td></tr>
+                                            <tr><td>29 ноя</td><td>08:00</td></tr>
+                                            <tr><td>30 ноя ...</td><td>08:00</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="stage-note">Каждое напоминание подтверждается отдельно; выполнение сегодня не отменяет завтрашний сигнал.</p>
+                                `,
+                                "speech": "R01, Ежедневно. Срабатывает каждый день в одно и то же время, включая выходные и праздники."
+                            },
+                            {
+                                "code": "R02",
+                                "tabName": "Еженедельно",
+                                "title": "R02 — Еженедельно (Every week)",
+                                "badge": "День недели",
+                                "html": `
+                                    <p class="stage-desc">Срабатывает каждую неделю в выбранный день недели и заданное время.</p>
+                                    <div class="stage-example-box"><strong>Пример:</strong> Напоминай мне о рабочей встрече каждый понедельник в 9 утра.</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Дата</th><th>День</th><th>Время</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>30 ноя</td><td>Пн</td><td>09:00</td></tr>
+                                            <tr><td>7 дек</td><td>Пн</td><td>09:00</td></tr>
+                                            <tr><td>14 дек</td><td>Пн</td><td>09:00</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="stage-note">Если день недели не назван, Anna уточнит его перед созданием напоминания.</p>
+                                `,
+                                "speech": "R02, Еженедельно. Срабатывает каждую неделю в выбранный день недели и заданное время."
+                            },
+                            {
+                                "code": "R03",
+                                "tabName": "Будни",
+                                "title": "R03 — По будням (Every weekday)",
+                                "badge": "Пн – Пт",
+                                "html": `
+                                    <p class="stage-desc">Срабатывает с понедельника по пятницу в указанное время; в субботу и воскресенье не звонит.</p>
+                                    <div class="stage-example-box"><strong>Пример:</strong> Напоминай мне собираться на работу каждый будний день в 8 утра.</div>
+                                    <div class="stage-week-grid">
+                                        <div class="stage-day on"><span>Пн</span><span>🔔</span><span>08:00</span></div>
+                                        <div class="stage-day on"><span>Вт</span><span>🔔</span><span>08:00</span></div>
+                                        <div class="stage-day on"><span>Ср</span><span>🔔</span><span>08:00</span></div>
+                                        <div class="stage-day on"><span>Чт</span><span>🔔</span><span>08:00</span></div>
+                                        <div class="stage-day on"><span>Пт</span><span>🔔</span><span>08:00</span></div>
+                                        <div class="stage-day"><span>Сб</span><span>—</span><span>Вых</span></div>
+                                        <div class="stage-day"><span>Вс</span><span>—</span><span>Вых</span></div>
+                                    </div>
+                                    <p class="stage-note">Будни фиксированы с понедельника по пятницу и не пропускают государственные праздники.</p>
+                                `,
+                                "speech": "R03, По будням. Срабатывает с понедельника по пятницу в указанное время, в субботу и воскресенье не звонит."
+                            },
+                            {
+                                "code": "R04",
+                                "tabName": "Выходные",
+                                "title": "R04 — По выходным (Every weekend)",
+                                "badge": "Сб и Вс",
+                                "html": `
+                                    <p class="stage-desc">Срабатывает отдельно в субботу и в воскресенье в указанное время.</p>
+                                    <div class="stage-example-box"><strong>Пример:</strong> Напоминай мне ходить в бассейн каждые выходные в 16:10.</div>
+                                    <div class="stage-week-grid">
+                                        <div class="stage-day"><span>Пн</span><span>—</span><span>—</span></div>
+                                        <div class="stage-day"><span>Вт</span><span>—</span><span>—</span></div>
+                                        <div class="stage-day"><span>Ср</span><span>—</span><span>—</span></div>
+                                        <div class="stage-day"><span>Чт</span><span>—</span><span>—</span></div>
+                                        <div class="stage-day"><span>Пт</span><span>—</span><span>—</span></div>
+                                        <div class="stage-day on"><span>Сб</span><span>🔔</span><span>16:10</span></div>
+                                        <div class="stage-day on"><span>Вс</span><span>🔔</span><span>16:10</span></div>
+                                    </div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Фраза</th><th>Значение</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Каждую субботу</td><td>Раз в неделю (только в субботу)</td></tr>
+                                            <tr><td>Каждые выходные</td><td>Дважды в неделю (Сб и Вс отдельно)</td></tr>
+                                            <tr><td>В эти выходные</td><td>Разовое напоминание (уточните Сб или Вс)</td></tr>
+                                        </tbody>
+                                    </table>
+                                `,
+                                "speech": "R04, По выходным. Срабатывает отдельно в субботу и воскресенье в указанное время."
+                            },
+                            {
+                                "code": "R05",
+                                "tabName": "1–28 число",
+                                "title": "R05 — Ежемесячно (1–28 число)",
+                                "badge": "Фикс. дата",
+                                "html": `
+                                    <p class="stage-desc">Срабатывает каждый месяц в выбранное число и время. Так как в каждом месяце минимум 28 дней, пропусков не бывает.</p>
+                                    <div class="stage-example-box"><strong>Пример:</strong> Напоминай мне платить за аренду 15-го числа каждого месяца в 10 утра.</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Дата</th><th>Время</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>2026-12-15</td><td>10:00</td></tr>
+                                            <tr><td>2027-01-15</td><td>10:00</td></tr>
+                                            <tr><td>2027-02-15</td><td>10:00</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="stage-note">Повтор идет по календарному числу, а не через каждые 30 дней.</p>
+                                `,
+                                "speech": "R05, Ежемесячно с 1 по 28 число. Срабатывает каждый месяц в выбранное число и время."
+                            },
+                            {
+                                "code": "R06",
+                                "tabName": "29–31 число",
+                                "title": "R06 — Ежемесячно (29, 30 или 31 число)",
+                                "badge": "2 варианта",
+                                "html": `
+                                    <p class="stage-desc">В некоторых месяцах нет 29, 30 или 31 числа. Anna предложит выбрать один из двух вариантов:</p>
+                                    <div class="stage-example-box"><strong>Пример (31-го числа в 9:00):</strong><br>• <strong>Вариант A (Пропускать):</strong> срабатывать только в месяцах, где есть 31-е число.<br>• <strong>Вариант B (Последний день месяца):</strong> перенести на последний день каждого месяца.</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Месяц (2027)</th><th>Вариант A: Пропуск</th><th>Вариант B: Конец месяца</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Янв</td><td>31</td><td>31</td></tr>
+                                            <tr><td>Фев</td><td class="stage-skip">Пропуск</td><td>28</td></tr>
+                                            <tr><td>Мар</td><td>31</td><td>31</td></tr>
+                                            <tr><td>Апр</td><td class="stage-skip">Пропуск</td><td>30</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="stage-note">Вариант B переводит правило в режим «в последний день каждого месяца».</p>
+                                `,
+                                "speech": "R06, Ежемесячно 29, 30 или 31 числа. Можно выбрать вариант A для пропуска коротких месяцев или вариант B для срабатывания в последний день каждого месяца."
+                            },
+                            {
+                                "code": "R07",
+                                "tabName": "Конец месяца",
+                                "title": "R07 — В последний день каждого месяца",
+                                "badge": "Авто-конец",
+                                "html": `
+                                    <p class="stage-desc">Автоматически срабатывает в последний день каждого месяца (28, 29, 30 или 31 числа) в заданное время.</p>
+                                    <div class="stage-example-box"><strong>Пример:</strong> Напоминай мне подводить итоги расходов в последний день каждого месяца в 8 вечера.</div>
+                                    <div class="stage-months-grid">
+                                        <div class="stage-month"><span class="stage-month-label">Янв 2027</span><span class="stage-month-day">31</span><span class="stage-month-time">20:00 🔔</span></div>
+                                        <div class="stage-month"><span class="stage-month-label">Фев 2027</span><span class="stage-month-day">28</span><span class="stage-month-time">20:00 🔔</span></div>
+                                        <div class="stage-month"><span class="stage-month-label">Мар 2027</span><span class="stage-month-day">31</span><span class="stage-month-time">20:00 🔔</span></div>
+                                        <div class="stage-month"><span class="stage-month-label">Апр 2027</span><span class="stage-month-day">30</span><span class="stage-month-time">20:00 🔔</span></div>
+                                        <div class="stage-month"><span class="stage-month-label">Май 2027</span><span class="stage-month-day">31</span><span class="stage-month-time">20:00 🔔</span></div>
+                                        <div class="stage-month"><span class="stage-month-label">Июн 2027</span><span class="stage-month-day">30</span><span class="stage-month-time">20:00 🔔</span></div>
+                                    </div>
+                                    <p class="stage-note">В високосный год в феврале сработает 29-го числа, в обычный — 28-го.</p>
+                                `,
+                                "speech": "R07, В последний день каждого месяца. Автоматически срабатывает в последний день месяца в указанное время."
+                            },
+                            {
+                                "code": "RULES",
+                                "tabName": "Общие",
+                                "title": "Общие правила повторяющихся напоминаний",
+                                "badge": "Важно",
+                                "html": `
+                                    <div class="stage-example-box"><strong>Пример:</strong> Начиная с 1 декабря напоминай мне принимать лекарство каждый день в 8 утра.</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Параметр</th><th>Правило</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Задача и время</td><td>Указывайте суть задачи, точный час и минуты</td></tr>
+                                            <tr><td>Дата начала</td><td>Можно задать конкретную дату первого запуска</td></tr>
+                                            <tr><td>Подтверждение</td><td>Каждый повтор подтверждается независимо от предыдущих</td></tr>
+                                            <tr><td>Часовой пояс</td><td>Работает по местному времени телефона; праздники не пропускаются</td></tr>
+                                        </tbody>
+                                    </table>
+                                `,
+                                "speech": "Общие правила: указывайте задачу, точное время и при необходимости дату начала. Каждый повтор подтверждается отдельно и работает по местному времени телефона."
+                            }
+                        ]
+                    }
                 },
                 "fr": {
-                                "htmlLang": "fr",
-                                "ttsLang": "fr-FR",
-                                "label": "FR",
-                                "docTitle": "Guide d’utilisation — AIR²Aim",
-                                "heading": "Guide d’utilisation AIR²Aim",
-                                "lead": "Bienvenue sur AIR²Aim. En quelques étapes simples, donnez vie à vos idées.",
-                                "supportPrefix": "Support : ",
-                                "footerBadge": "User Guide · 2026",
-                                "items": [
-                                                {
-                                                                "summary": "1. Créer un « Enregistrement »",
-                                                                "paragraphs": [
-                                                                                "Appuyez sur le bouton « Crayon » sur l’écran d’accueil pour créer un « Enregistrement ». Vous pouvez y consigner facilement des événements importants par la voix ou par texte pour les retrouver plus tard."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "2. Créer un « Rappel »",
-                                                                "paragraphs": [
-                                                                                "Appuyez sur le bouton « Réveil » sur l’écran d’accueil pour créer un « Rappel ». Programmez des rappels par la voix ou par texte en précisant clairement l’heure et les détails de la tâche."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "3. Enregistrement vocal et règles de durée",
-                                                                "paragraphs": [
-                                                                                "Sur la page de création d’un enregistrement ou d’un rappel, maintenez le bouton du microphone enfoncé. Après le bip sonore, énoncez votre contenu, puis relâchez le bouton pour arrêter l’enregistrement. Durée maximale : 30 secondes.",
-                                                                                "N’appuyez pas et ne relâchez pas le microphone trop rapidement. Une prise de parole de moins de 2 secondes sera considérée comme invalide et devra être réenregistrée."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "4. Alarme de rappel et archivage",
-                                                                "paragraphs": [
-                                                                                "Lorsque l’heure d’un rappel arrive, le texte devient rouge en attente de confirmation. En appuyant sur « Marquer comme terminé », le texte retrouve sa couleur normale et est automatiquement archivé dans les « Enregistrements »."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "5. Écran d’accueil, recherche et autorisations",
-                                                                "paragraphs": [
-                                                                                "La moitié supérieure de l’écran d’accueil correspond à la zone « Enregistrements » pour vos entrées passées ; la moitié inférieure correspond à la zone « Rappels » pour vos rappels actifs.",
-                                                                                "Appuyez sur la loupe en haut de l’écran d’accueil pour rechercher des événements par mots-clés et plage de dates.",
-                                                                                "L’application nécessite les autorisations système appropriées pour fonctionner correctement. Veuillez consulter la section « Autorisations » pour plus de détails."
-                                                                ]
-                                                }
-                                ]
+                    "htmlLang": "fr",
+                    "ttsLang": "fr-FR",
+                    "label": "FR",
+                    "docTitle": "Guide d’utilisation — AIR²Aim",
+                    "heading": "Guide d’utilisation AIR²Aim",
+                    "lead": "",
+                    "supportPrefix": "Support : ",
+                    "footerBadge": "User Guide · 2026",
+                    "items": [
+                        {
+                            "summary": "1. Créer un « Enregistrement »",
+                            "paragraphs": [
+                                "Appuyez sur le bouton « Crayon » sur l’écran d’accueil pour créer un « Enregistrement ». Vous pouvez y consigner facilement des événements importants par la voix ou par texte pour les retrouver plus tard."
+                            ]
+                        },
+                        {
+                            "summary": "2. Créer un « Rappel »",
+                            "paragraphs": [
+                                "Appuyez sur le bouton « Réveil » sur l’écran d’accueil pour créer un « Rappel ». Programmez des rappels par la voix ou par texte en précisant clairement l’heure et les détails de la tâche."
+                            ]
+                        },
+                        {
+                            "summary": "3. Modes de répétition des rappels",
+                            "isModalTrigger": true,
+                            "triggerBadge": "Voir les 8 cartes ↗"
+                        },
+                        {
+                            "summary": "4. Alarme de rappel et archivage",
+                            "paragraphs": [
+                                "Quand l’heure d’un rappel sonne, le texte passe en rouge en attendant votre confirmation.",
+                                "Appuyez sur « Marquer comme terminé » : le texte redevient normal, passe en « Enregistrement » et s’affiche dans la zone « Enregistrements »."
+                            ]
+                        },
+                        {
+                            "summary": "5. Enregistrement vocal et règles de durée",
+                            "paragraphs": [
+                                "Sur l’écran de création d’une note ou d’un rappel, maintenez le bouton « Micro » pour parler et relâchez pour arrêter. 30 secondes maximum.",
+                                "Évitez d’appuyer et de relâcher le micro très vite à la suite. Moins de 2 secondes ne compte pas : maintenez et recommencez."
+                            ]
+                        },
+                        {
+                            "summary": "6. Écran d’accueil, recherche et autorisations",
+                            "paragraphs": [
+                                "En haut de l’accueil se trouvent les « Enregistrements » (passé) et en bas les « Rappels » (à venir). Glissez la barre du milieu pour ajuster la taille des deux zones.",
+                                "Touchez la loupe en haut pour chercher par mot-clé et par date.",
+                                "Autorisez les accès nécessaires sur votre téléphone pour que l’appli marche bien. Voir « Autorisations »."
+                            ]
+                        }
+                    ],
+                    "repeatModal": {
+                        "title": "Règles et exemples de répétition",
+                        "subtitle": "Touchez une carte empilée ci-dessus pour changer de mode (touchez le texte pour réécouter)",
+                        "prevLabel": "Préc.",
+                        "nextLabel": "Suiv.",
+                        "cards": [
+                            {
+                                "code": "R00",
+                                "tabName": "Une fois",
+                                "title": "R00 — Une seule fois (Once)",
+                                "badge": "Unique",
+                                "html": `
+                                    <p class="stage-desc">Vous rappelle une seule fois à la date et à l’heure indiquées.</p>
+                                    <div class="stage-example-box"><strong>Exemple :</strong> Rappelle-moi d’aller faire une randonnée le 28 novembre à 9h30.</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Date</th><th>Heure</th></tr></thead>
+                                        <tbody><tr><td>2026-11-28</td><td>09:30</td></tr></tbody>
+                                    </table>
+                                    <p class="stage-note">Aucune autre occurrence n’est créée une fois le rappel validé.</p>
+                                `,
+                                "speech": "R00, Une seule fois. Vous rappelle une seule fois à la date et à l’heure indiquées."
+                            },
+                            {
+                                "code": "R01",
+                                "tabName": "Chaque jour",
+                                "title": "R01 — Tous les jours (Every day)",
+                                "badge": "Quotidien",
+                                "html": `
+                                    <p class="stage-desc">Vous rappelle chaque jour à la même heure, week-ends et jours fériés inclus.</p>
+                                    <div class="stage-example-box"><strong>Exemple :</strong> Rappelle-moi de prendre ma tension tous les jours à 8h.</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Date</th><th>Heure</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>27 nov.</td><td>08:00</td></tr>
+                                            <tr><td>28 nov.</td><td>08:00</td></tr>
+                                            <tr><td>29 nov.</td><td>08:00</td></tr>
+                                            <tr><td>30 nov. ...</td><td>08:00</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="stage-note">Chaque rappel quotidien est confirmé séparément.</p>
+                                `,
+                                "speech": "R01, Tous les jours. Vous rappelle chaque jour à la même heure, week-ends et jours fériés inclus."
+                            },
+                            {
+                                "code": "R02",
+                                "tabName": "Chaque semaine",
+                                "title": "R02 — Chaque semaine (Every week)",
+                                "badge": "Jour fixe",
+                                "html": `
+                                    <p class="stage-desc">Vous rappelle chaque semaine le jour et à l’heure précisés.</p>
+                                    <div class="stage-example-box"><strong>Exemple :</strong> Rappelle-moi la réunion d’équipe chaque lundi à 9h.</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Date</th><th>Jour</th><th>Heure</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>30 nov.</td><td>Lundi</td><td>09:00</td></tr>
+                                            <tr><td>7 déc.</td><td>Lundi</td><td>09:00</td></tr>
+                                            <tr><td>14 déc.</td><td>Lundi</td><td>09:00</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="stage-note">Si le jour de la semaine n’est pas précisé, Anna vous le demandera.</p>
+                                `,
+                                "speech": "R02, Chaque semaine. Vous rappelle chaque semaine le jour et à l’heure précisés."
+                            },
+                            {
+                                "code": "R03",
+                                "tabName": "Jours ouvrés",
+                                "title": "R03 — Chaque jour ouvré (Every weekday)",
+                                "badge": "Lun – Ven",
+                                "html": `
+                                    <p class="stage-desc">Vous rappelle du lundi au vendredi à l’heure fixée ; silencieux le samedi et le dimanche.</p>
+                                    <div class="stage-example-box"><strong>Exemple :</strong> Rappelle-moi de me préparer pour le travail chaque jour ouvré à 8h.</div>
+                                    <div class="stage-week-grid">
+                                        <div class="stage-day on"><span>Lun</span><span>🔔</span><span>08:00</span></div>
+                                        <div class="stage-day on"><span>Mar</span><span>🔔</span><span>08:00</span></div>
+                                        <div class="stage-day on"><span>Mer</span><span>🔔</span><span>08:00</span></div>
+                                        <div class="stage-day on"><span>Jeu</span><span>🔔</span><span>08:00</span></div>
+                                        <div class="stage-day on"><span>Ven</span><span>🔔</span><span>08:00</span></div>
+                                        <div class="stage-day"><span>Sam</span><span>—</span><span>Repos</span></div>
+                                        <div class="stage-day"><span>Dim</span><span>—</span><span>Repos</span></div>
+                                    </div>
+                                    <p class="stage-note">Correspond strictement au lundi–vendredi sans ignorer les jours fériés.</p>
+                                `,
+                                "speech": "R03, Chaque jour ouvré. Vous rappelle du lundi au vendredi à l’heure fixée."
+                            },
+                            {
+                                "code": "R04",
+                                "tabName": "Week-end",
+                                "title": "R04 — Chaque week-end (Every weekend)",
+                                "badge": "Sam & Dim",
+                                "html": `
+                                    <p class="stage-desc">Vous rappelle séparément le samedi et le dimanche à l’heure choisie.</p>
+                                    <div class="stage-example-box"><strong>Exemple :</strong> Rappelle-moi d’aller nager chaque week-end à 16h10.</div>
+                                    <div class="stage-week-grid">
+                                        <div class="stage-day"><span>Lun</span><span>—</span><span>—</span></div>
+                                        <div class="stage-day"><span>Mar</span><span>—</span><span>—</span></div>
+                                        <div class="stage-day"><span>Mer</span><span>—</span><span>—</span></div>
+                                        <div class="stage-day"><span>Jeu</span><span>—</span><span>—</span></div>
+                                        <div class="stage-day"><span>Ven</span><span>—</span><span>—</span></div>
+                                        <div class="stage-day on"><span>Sam</span><span>🔔</span><span>16:10</span></div>
+                                        <div class="stage-day on"><span>Dim</span><span>🔔</span><span>16:10</span></div>
+                                    </div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Expression</th><th>Signification</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Chaque samedi</td><td>Une fois par semaine (samedi uniquement)</td></tr>
+                                            <tr><td>Chaque week-end</td><td>Deux fois par semaine (samedi et dimanche)</td></tr>
+                                            <tr><td>Ce week-end</td><td>Rappel ponctuel (préciser samedi ou dimanche)</td></tr>
+                                        </tbody>
+                                    </table>
+                                `,
+                                "speech": "R04, Chaque week-end. Vous rappelle séparément le samedi et le dimanche à l’heure choisie."
+                            },
+                            {
+                                "code": "R05",
+                                "tabName": "Jour 1–28",
+                                "title": "R05 — Chaque mois du 1er au 28",
+                                "badge": "Date fixe",
+                                "html": `
+                                    <p class="stage-desc">Vous rappelle chaque mois à la date choisie. Tous les mois ayant au moins 28 jours, aucune date ne manque.</p>
+                                    <div class="stage-example-box"><strong>Exemple :</strong> Rappelle-moi de payer le loyer le 15 de chaque mois à 10h.</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Date</th><th>Heure</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>2026-12-15</td><td>10:00</td></tr>
+                                            <tr><td>2027-01-15</td><td>10:00</td></tr>
+                                            <tr><td>2027-02-15</td><td>10:00</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="stage-note">Répétition calendaire fixe, et non tous les 30 jours.</p>
+                                `,
+                                "speech": "R05, Chaque mois du 1er au 28. Vous rappelle chaque mois à la date choisie."
+                            },
+                            {
+                                "code": "R06",
+                                "tabName": "Jour 29–31",
+                                "title": "R06 — Chaque mois le 29, 30 ou 31",
+                                "badge": "2 options",
+                                "html": `
+                                    <p class="stage-desc">Certains mois ne comptent pas 29, 30 ou 31 jours. Anna vous propose deux options :</p>
+                                    <div class="stage-example-box"><strong>Exemple (le 31 de chaque mois à 9h) :</strong><br>• <strong>Option A (Ignorer) :</strong> déclencher uniquement les mois ayant un 31.<br>• <strong>Option B (Dernier jour du mois) :</strong> déclencher le dernier jour de chaque mois.</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Mois (2027)</th><th>Option A : Ignorer</th><th>Option B : Fin de mois</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Janv.</td><td>31</td><td>31</td></tr>
+                                            <tr><td>Févr.</td><td class="stage-skip">Ignoré</td><td>28</td></tr>
+                                            <tr><td>Mars</td><td>31</td><td>31</td></tr>
+                                            <tr><td>Avr.</td><td class="stage-skip">Ignoré</td><td>30</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="stage-note">L’option B bascule la règle sur « le dernier jour de chaque mois ».</p>
+                                `,
+                                "speech": "R06, Chaque mois le 29, 30 ou 31. Vous pouvez ignorer les mois sans cette date ou choisir le dernier jour de chaque mois."
+                            },
+                            {
+                                "code": "R07",
+                                "tabName": "Fin de mois",
+                                "title": "R07 — Le dernier jour de chaque mois",
+                                "badge": "Fin auto",
+                                "html": `
+                                    <p class="stage-desc">Se déclenche automatiquement le dernier jour de chaque mois (28, 29, 30 ou 31) à l’heure prévue.</p>
+                                    <div class="stage-example-box"><strong>Exemple :</strong> Rappelle-moi de faire le bilan de mes dépenses le dernier jour de chaque mois à 20h.</div>
+                                    <div class="stage-months-grid">
+                                        <div class="stage-month"><span class="stage-month-label">Janv. 2027</span><span class="stage-month-day">31</span><span class="stage-month-time">20:00 🔔</span></div>
+                                        <div class="stage-month"><span class="stage-month-label">Févr. 2027</span><span class="stage-month-day">28</span><span class="stage-month-time">20:00 🔔</span></div>
+                                        <div class="stage-month"><span class="stage-month-label">Mars 2027</span><span class="stage-month-day">31</span><span class="stage-month-time">20:00 🔔</span></div>
+                                        <div class="stage-month"><span class="stage-month-label">Avr. 2027</span><span class="stage-month-day">30</span><span class="stage-month-time">20:00 🔔</span></div>
+                                        <div class="stage-month"><span class="stage-month-label">Mai 2027</span><span class="stage-month-day">31</span><span class="stage-month-time">20:00 🔔</span></div>
+                                        <div class="stage-month"><span class="stage-month-label">Juin 2027</span><span class="stage-month-day">30</span><span class="stage-month-time">20:00 🔔</span></div>
+                                    </div>
+                                    <p class="stage-note">Déclenchement le 29 février les années bissextiles, le 28 sinon.</p>
+                                `,
+                                "speech": "R07, Le dernier jour de chaque mois. Se déclenche automatiquement le dernier jour du mois à l’heure prévue."
+                            },
+                            {
+                                "code": "RULES",
+                                "tabName": "Général",
+                                "title": "Règles générales des rappels récurrents",
+                                "badge": "Essentiel",
+                                "html": `
+                                    <div class="stage-example-box"><strong>Exemple :</strong> À partir du 1er décembre, rappelle-moi de prendre mes médicaments tous les jours à 8h.</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Élément</th><th>Règle</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Contenu & heure</td><td>Préciser la tâche ainsi que l’heure et les minutes exactes</td></tr>
+                                            <tr><td>Date de début</td><td>Possibilité d’indiquer une date de démarrage</td></tr>
+                                            <tr><td>Validation</td><td>Chaque occurrence est confirmée indépendamment</td></tr>
+                                            <tr><td>Fuseau horaire</td><td>Suit l’heure locale du téléphone ; jours fériés non ignorés</td></tr>
+                                        </tbody>
+                                    </table>
+                                `,
+                                "speech": "Règles générales : précisez la tâche, l’heure exacte et éventuellement une date de début. Chaque rappel est confirmé séparément."
+                            }
+                        ]
+                    }
                 },
                 "es": {
-                                "htmlLang": "es",
-                                "ttsLang": "es-ES",
-                                "label": "ES",
-                                "docTitle": "Guía de usuario — AIR²Aim",
-                                "heading": "Guía de usuario de AIR²Aim",
-                                "lead": "Te damos la bienvenida a AIR²Aim. Con unos sencillos pasos, haz realidad tus ideas.",
-                                "supportPrefix": "Soporte: ",
-                                "footerBadge": "User Guide · 2026",
-                                "items": [
-                                                {
-                                                                "summary": "1. Crear un «Registro»",
-                                                                "paragraphs": [
-                                                                                "Pulsa el botón «Lápiz» en la pantalla principal para crear un «Registro». Aquí puedes guardar fácilmente eventos importantes por voz o texto para consultarlos más adelante."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "2. Crear un «Recordatorio»",
-                                                                "paragraphs": [
-                                                                                "Pulsa el botón «Alarma» en la pantalla principal para crear un «Recordatorio». Configura recordatorios por voz o texto indicando con claridad la hora y los detalles específicos."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "3. Grabación de voz y reglas de duración",
-                                                                "paragraphs": [
-                                                                                "En la página de creación de registro o recordatorio, mantén pulsado el botón del micrófono. Tras oír el pitido, di tu contenido y suelta el micrófono para detener la grabación. Nota: la duración máxima es de 30 segundos.",
-                                                                                "No pulses ni sueltes el micrófono de forma rápida y repetida. Si hablas menos de 2 segundos, la grabación se considerará no válida y tendrás que volver a grabar."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "4. Alarma de recordatorio y archivo",
-                                                                "paragraphs": [
-                                                                                "Cuando suena la alarma de un recordatorio, el texto se vuelve rojo a la espera de confirmación. Al pulsar «Marcar como completado», el texto recupera su color habitual y se archiva automáticamente como un «Registro»."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "5. Pantalla principal, búsqueda y permisos",
-                                                                "paragraphs": [
-                                                                                "La mitad superior de la pantalla principal es el área de «Registros» para entradas anteriores; la mitad inferior es el área de «Recordatorios» para tus recordatorios activos.",
-                                                                                "Pulsa la lupa en la parte superior de la pantalla principal para buscar eventos por palabras clave y rango de fechas.",
-                                                                                "La aplicación requiere los permisos necesarios del dispositivo para funcionar correctamente. Consulta la sección «Permisos» para más detalles."
-                                                                ]
-                                                }
-                                ]
+                    "htmlLang": "es",
+                    "ttsLang": "es-ES",
+                    "label": "ES",
+                    "docTitle": "Guía de usuario — AIR²Aim",
+                    "heading": "Guía de usuario de AIR²Aim",
+                    "lead": "",
+                    "supportPrefix": "Soporte: ",
+                    "footerBadge": "User Guide · 2026",
+                    "items": [
+                        {
+                            "summary": "1. Crear un «Registro»",
+                            "paragraphs": [
+                                "Pulsa el botón «Lápiz» en la pantalla principal para crear un «Registro». Aquí puedes guardar fácilmente eventos importantes por voz o texto para consultarlos más adelante."
+                            ]
+                        },
+                        {
+                            "summary": "2. Crear un «Recordatorio»",
+                            "paragraphs": [
+                                "Pulsa el botón «Alarma» en la pantalla principal para crear un «Recordatorio». Configura recordatorios por voz o texto indicando con claridad la hora y los detalles específicos."
+                            ]
+                        },
+                        {
+                            "summary": "3. Modos de repetición",
+                            "isModalTrigger": true,
+                            "triggerBadge": "Ver 8 tarjetas de modo ↗"
+                        },
+                        {
+                            "summary": "4. Alarma de recordatorio y archivo",
+                            "paragraphs": [
+                                "Cuando suena un recordatorio, el texto se pone rojo hasta que lo confirmes.",
+                                "Toca «Marcar como completado» y el texto vuelve a su color normal, pasa a ser un «Registro» y aparece en la zona de «Registros»."
+                            ]
+                        },
+                        {
+                            "summary": "5. Grabación de voz y reglas de duración",
+                            "paragraphs": [
+                                "En la pantalla de crear registro o recordatorio, mantén pulsado el botón «Micrófono» para hablar y suéltalo para parar. Máximo 30 segundos.",
+                                "No pulses y sueltes el micrófono muy rápido seguido. Si hablas menos de 2 segundos no vale; vuelve a mantener pulsado y graba otra vez."
+                            ]
+                        },
+                        {
+                            "summary": "6. Pantalla principal, búsqueda y permisos",
+                            "paragraphs": [
+                                "Arriba en la pantalla principal está la zona de «Registros» (lo pasado) y abajo la de «Recordatorios» (lo pendiente). Arrastra la línea del medio para cambiar el tamaño de cada zona.",
+                                "Toca la lupa de arriba para buscar todo por palabra clave y fecha.",
+                                "Activa los permisos necesarios en el teléfono para que funcione bien. Mira «Permisos» para los pasos."
+                            ]
+                        }
+                    ],
+                    "repeatModal": {
+                        "title": "Reglas y ejemplos de repetición",
+                        "subtitle": "Toca cualquier tarjeta apilada arriba para cambiar de modo (toca el texto para volver a escuchar)",
+                        "prevLabel": "Anterior",
+                        "nextLabel": "Siguiente",
+                        "cards": [
+                            {
+                                "code": "R00",
+                                "tabName": "Una vez",
+                                "title": "R00 — Solo una vez (Once)",
+                                "badge": "Aviso único",
+                                "html": `
+                                    <p class="stage-desc">Te avisa una sola vez en la fecha y hora indicadas.</p>
+                                    <div class="stage-example-box"><strong>Ejemplo:</strong> Recuérdame ir de excursión el 28 de noviembre a las 9:30 AM.</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Fecha</th><th>Hora</th></tr></thead>
+                                        <tbody><tr><td>2026-11-28</td><td>09:30</td></tr></tbody>
+                                    </table>
+                                    <p class="stage-note">Una vez completado, no se generan más avisos periódicos.</p>
+                                `,
+                                "speech": "R00, Solo una vez. Te avisa una sola vez en la fecha y hora indicadas."
+                            },
+                            {
+                                "code": "R01",
+                                "tabName": "Cada día",
+                                "title": "R01 — Todos los días (Every day)",
+                                "badge": "Ciclo diario",
+                                "html": `
+                                    <p class="stage-desc">Te avisa todos los días a la misma hora, incluidos fines de semana y festivos.</p>
+                                    <div class="stage-example-box"><strong>Ejemplo:</strong> Recuérdame tomarme la tensión todos los días a las 8 AM.</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Fecha</th><th>Hora</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>27 nov</td><td>08:00</td></tr>
+                                            <tr><td>28 nov</td><td>08:00</td></tr>
+                                            <tr><td>29 nov</td><td>08:00</td></tr>
+                                            <tr><td>30 nov ...</td><td>08:00</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="stage-note">Cada aviso diario se confirma de forma independiente.</p>
+                                `,
+                                "speech": "R01, Todos los días. Te avisa todos los días a la misma hora, incluidos fines de semana y festivos."
+                            },
+                            {
+                                "code": "R02",
+                                "tabName": "Cada semana",
+                                "title": "R02 — Cada semana (Every week)",
+                                "badge": "Día fijo",
+                                "html": `
+                                    <p class="stage-desc">Te avisa cada semana el día de la semana y a la hora indicados.</p>
+                                    <div class="stage-example-box"><strong>Ejemplo:</strong> Recuérdame asistir a la reunión de trabajo cada lunes a las 9 AM.</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Fecha</th><th>Día</th><th>Hora</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>30 nov</td><td>Lunes</td><td>09:00</td></tr>
+                                            <tr><td>7 dic</td><td>Lunes</td><td>09:00</td></tr>
+                                            <tr><td>14 dic</td><td>Lunes</td><td>09:00</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="stage-note">Si no indicas qué día de la semana, Anna te lo preguntará antes de guardarlo.</p>
+                                `,
+                                "speech": "R02, Cada semana. Te avisa cada semana el día de la semana y a la hora indicados."
+                            },
+                            {
+                                "code": "R03",
+                                "tabName": "Laborables",
+                                "title": "R03 — De lunes a viernes (Every weekday)",
+                                "badge": "Lun – Vie",
+                                "html": `
+                                    <p class="stage-desc">Te avisa de lunes a viernes a la hora indicada; no suena ni sábado ni domingo.</p>
+                                    <div class="stage-example-box"><strong>Ejemplo:</strong> Recuérdame prepararme para el trabajo cada día laborable a las 8 AM.</div>
+                                    <div class="stage-week-grid">
+                                        <div class="stage-day on"><span>Lun</span><span>🔔</span><span>08:00</span></div>
+                                        <div class="stage-day on"><span>Mar</span><span>🔔</span><span>08:00</span></div>
+                                        <div class="stage-day on"><span>Mié</span><span>🔔</span><span>08:00</span></div>
+                                        <div class="stage-day on"><span>Jue</span><span>🔔</span><span>08:00</span></div>
+                                        <div class="stage-day on"><span>Vie</span><span>🔔</span><span>08:00</span></div>
+                                        <div class="stage-day"><span>Sáb</span><span>—</span><span>Libre</span></div>
+                                        <div class="stage-day"><span>Dom</span><span>—</span><span>Libre</span></div>
+                                    </div>
+                                    <p class="stage-note">Corresponde estrictamente de lunes a viernes sin omitir días festivos.</p>
+                                `,
+                                "speech": "R03, De lunes a viernes. Te avisa de lunes a viernes a la hora indicada; no suena ni sábado ni domingo."
+                            },
+                            {
+                                "code": "R04",
+                                "tabName": "Fin de semana",
+                                "title": "R04 — Fines de semana (Every weekend)",
+                                "badge": "Sáb y Dom",
+                                "html": `
+                                    <p class="stage-desc">Te avisa por separado tanto el sábado como el domingo a la hora fijada.</p>
+                                    <div class="stage-example-box"><strong>Ejemplo:</strong> Recuérdame ir a nadar cada fin de semana a las 4:10 PM.</div>
+                                    <div class="stage-week-grid">
+                                        <div class="stage-day"><span>Lun</span><span>—</span><span>—</span></div>
+                                        <div class="stage-day"><span>Mar</span><span>—</span><span>—</span></div>
+                                        <div class="stage-day"><span>Mié</span><span>—</span><span>—</span></div>
+                                        <div class="stage-day"><span>Jue</span><span>—</span><span>—</span></div>
+                                        <div class="stage-day"><span>Vie</span><span>—</span><span>—</span></div>
+                                        <div class="stage-day on"><span>Sáb</span><span>🔔</span><span>16:10</span></div>
+                                        <div class="stage-day on"><span>Dom</span><span>🔔</span><span>16:10</span></div>
+                                    </div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Expresión</th><th>Significado</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Cada sábado</td><td>Una vez por semana (solo sábado)</td></tr>
+                                            <tr><td>Cada fin de semana</td><td>Dos veces por semana (sábado y domingo)</td></tr>
+                                            <tr><td>Este fin de semana</td><td>Recordatorio único (indicar sábado o domingo)</td></tr>
+                                        </tbody>
+                                    </table>
+                                `,
+                                "speech": "R04, Fines de semana. Te avisa por separado tanto el sábado como el domingo a la hora fijada."
+                            },
+                            {
+                                "code": "R05",
+                                "tabName": "Día 1–28",
+                                "title": "R05 — Cada mes del día 1 al 28",
+                                "badge": "Fecha fija",
+                                "html": `
+                                    <p class="stage-desc">Te avisa cada mes en la fecha elegida. Como todos los meses tienen al menos 28 días, nunca falta la fecha.</p>
+                                    <div class="stage-example-box"><strong>Ejemplo:</strong> Recuérdame pagar el alquiler el día 15 de cada mes a las 10 AM.</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Fecha</th><th>Hora</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>2026-12-15</td><td>10:00</td></tr>
+                                            <tr><td>2027-01-15</td><td>10:00</td></tr>
+                                            <tr><td>2027-02-15</td><td>10:00</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="stage-note">Repetición por fecha de calendario, no cada 30 días.</p>
+                                `,
+                                "speech": "R05, Cada mes del día 1 al 28. Te avisa cada mes en la fecha elegida."
+                            },
+                            {
+                                "code": "R06",
+                                "tabName": "Día 29–31",
+                                "title": "R06 — Cada mes el día 29, 30 o 31",
+                                "badge": "2 opciones",
+                                "html": `
+                                    <p class="stage-desc">Algunos meses no tienen día 29, 30 o 31. Anna te permite elegir entre dos opciones:</p>
+                                    <div class="stage-example-box"><strong>Ejemplo (día 31 de cada mes a las 9 AM):</strong><br>• <strong>Opción A (Omitir):</strong> avisar solo en los meses que tengan día 31.<br>• <strong>Opción B (Último día del mes):</strong> avisar el último día de cada mes.</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Mes (2027)</th><th>Opción A: Omitir</th><th>Opción B: Fin de mes</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Ene</td><td>31</td><td>31</td></tr>
+                                            <tr><td>Feb</td><td class="stage-skip">Omitir</td><td>28</td></tr>
+                                            <tr><td>Mar</td><td>31</td><td>31</td></tr>
+                                            <tr><td>Abr</td><td class="stage-skip">Omitir</td><td>30</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="stage-note">La opción B cambia la regla a «el último día de cada mes».</p>
+                                `,
+                                "speech": "R06, Cada mes el día 29, 30 o 31. Puedes elegir omitir los meses sin esa fecha o avisar el último día de cada mes."
+                            },
+                            {
+                                "code": "R07",
+                                "tabName": "Fin de mes",
+                                "title": "R07 — El último día de cada mes",
+                                "badge": "Fin automático",
+                                "html": `
+                                    <p class="stage-desc">Se activa automáticamente el último día de cada mes (28, 29, 30 o 31) a la hora fijada.</p>
+                                    <div class="stage-example-box"><strong>Ejemplo:</strong> Recuérdame revisar mis gastos mensuales a las 8 PM el último día de cada mes.</div>
+                                    <div class="stage-months-grid">
+                                        <div class="stage-month"><span class="stage-month-label">Ene 2027</span><span class="stage-month-day">31</span><span class="stage-month-time">20:00 🔔</span></div>
+                                        <div class="stage-month"><span class="stage-month-label">Feb 2027</span><span class="stage-month-day">28</span><span class="stage-month-time">20:00 🔔</span></div>
+                                        <div class="stage-month"><span class="stage-month-label">Mar 2027</span><span class="stage-month-day">31</span><span class="stage-month-time">20:00 🔔</span></div>
+                                        <div class="stage-month"><span class="stage-month-label">Abr 2027</span><span class="stage-month-day">30</span><span class="stage-month-time">20:00 🔔</span></div>
+                                        <div class="stage-month"><span class="stage-month-label">May 2027</span><span class="stage-month-day">31</span><span class="stage-month-time">20:00 🔔</span></div>
+                                        <div class="stage-month"><span class="stage-month-label">Jun 2027</span><span class="stage-month-day">30</span><span class="stage-month-time">20:00 🔔</span></div>
+                                    </div>
+                                    <p class="stage-note">En años bisiestos se activa el 29 de febrero y en años normales el 28.</p>
+                                `,
+                                "speech": "R07, El último día de cada mes. Se activa automáticamente el último día del mes a la hora fijada."
+                            },
+                            {
+                                "code": "RULES",
+                                "tabName": "Generales",
+                                "title": "Reglas generales de repetición",
+                                "badge": "Clave",
+                                "html": `
+                                    <div class="stage-example-box"><strong>Ejemplo:</strong> A partir del 1 de diciembre, recuérdame tomar mi medicina todos los días a las 8 AM.</div>
+                                    <table class="stage-table">
+                                        <thead><tr><th>Elemento</th><th>Regla</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Tarea y hora</td><td>Indica la tarea y la hora y minutos exactos</td></tr>
+                                            <tr><td>Fecha de inicio</td><td>Puedes especificar una fecha de comienzo</td></tr>
+                                            <tr><td>Confirmación</td><td>Cada aviso se confirma por separado</td></tr>
+                                            <tr><td>Zona horaria</td><td>Sigue la hora local del móvil; no omite festivos</td></tr>
+                                        </tbody>
+                                    </table>
+                                `,
+                                "speech": "Reglas generales: indica la tarea, la hora exacta y una fecha de inicio opcional. Cada aviso se confirma por separado."
+                            }
+                        ]
+                    }
                 }
-};
+            };
 
             const accordionSection = document.getElementById('accordionSection');
             const pageTitle = document.getElementById('pageTitle');
@@ -701,9 +2119,20 @@
             const ttsToggle = document.getElementById('ttsToggle');
             const ttsLabel = document.getElementById('ttsLabel');
 
+            const repeatModalBackdrop = document.getElementById('repeatModalBackdrop');
+            const repeatModalTitle = document.getElementById('repeatModalTitle');
+            const repeatModalSubtitle = document.getElementById('repeatModalSubtitle');
+            const repeatModalClose = document.getElementById('repeatModalClose');
+            const cardDeckStrip = document.getElementById('cardDeckStrip');
+            const activeCardStage = document.getElementById('activeCardStage');
+            const deckCounter = document.getElementById('deckCounter');
+            const deckPrevBtn = document.getElementById('deckPrevBtn');
+            const deckNextBtn = document.getElementById('deckNextBtn');
+
             const supportsTTS = 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
             let isTtsEnabled = supportsTTS;
             let activeLang = 'en';
+            let activeDeckIndex = 0;
             let speechSessionId = 0;
             const activeUtterances = [];
 
@@ -801,6 +2230,7 @@
 
             function setCardOpen(cardEl, shouldOpen) {
                 const detailEl = cardEl.querySelector('details');
+                if (!detailEl) return;
                 if (shouldOpen) {
                     detailEl.open = true;
                     cardEl.classList.add('is-open');
@@ -809,6 +2239,117 @@
                     detailEl.open = false;
                 }
             }
+
+            function renderDeckCard(index, shouldSpeak) {
+                const pack = I18N[activeLang] || I18N.en;
+                const modalData = pack.repeatModal;
+                const cards = modalData.cards;
+                const total = cards.length;
+                activeDeckIndex = ((index % total) + total) % total;
+
+                repeatModalTitle.textContent = modalData.title;
+                repeatModalSubtitle.textContent = modalData.subtitle;
+                deckPrevBtn.textContent = '← ' + modalData.prevLabel;
+                deckNextBtn.textContent = modalData.nextLabel + ' →';
+                deckCounter.textContent = (activeDeckIndex + 1) + ' / ' + total;
+
+                cardDeckStrip.innerHTML = '';
+                cards.forEach(function (c, idx) {
+                    const tab = document.createElement('button');
+                    tab.type = 'button';
+                    tab.className = 'deck-tab-card' + (idx === activeDeckIndex ? ' is-active' : '');
+                    tab.setAttribute('role', 'tab');
+                    tab.setAttribute('aria-selected', String(idx === activeDeckIndex));
+                    const dist = Math.abs(idx - activeDeckIndex);
+                    tab.style.zIndex = idx === activeDeckIndex ? '12' : String(Math.max(1, 10 - dist));
+
+                    tab.innerHTML =
+                        '<span class="deck-tab-code">' + c.code + '</span>' +
+                        '<span class="deck-tab-name">' + c.tabName + '</span>';
+
+                    tab.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        renderDeckCard(idx, true);
+                    });
+
+                    cardDeckStrip.appendChild(tab);
+
+                    if (idx === activeDeckIndex) {
+                        requestAnimationFrame(function () {
+                            tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                        });
+                    }
+                });
+
+                const activeCard = cards[activeDeckIndex];
+                activeCardStage.innerHTML =
+                    '<div class="stage-card-head">' +
+                        '<div class="stage-card-title">' + activeCard.title + '</div>' +
+                        '<span class="stage-card-pill">' + activeCard.badge + '</span>' +
+                    '</div>' +
+                    activeCard.html;
+                activeCardStage.scrollTop = 0;
+
+                if (shouldSpeak) {
+                    speakText(activeCard.speech);
+                }
+            }
+
+            function openRepeatModal() {
+                const allCards = accordionSection.querySelectorAll('.info-details');
+                allCards.forEach(function (other) {
+                    if (other.classList.contains('is-open')) {
+                        setCardOpen(other, false);
+                    }
+                });
+
+                repeatModalBackdrop.classList.add('is-visible');
+                document.body.style.overflow = 'hidden';
+                renderDeckCard(activeDeckIndex, true);
+            }
+
+            function closeRepeatModal() {
+                repeatModalBackdrop.classList.remove('is-visible');
+                document.body.style.overflow = '';
+                stopSpeaking();
+            }
+
+            repeatModalClose.addEventListener('click', closeRepeatModal);
+
+            repeatModalBackdrop.addEventListener('click', function (e) {
+                if (e.target === repeatModalBackdrop) {
+                    closeRepeatModal();
+                }
+            });
+
+            activeCardStage.addEventListener('click', function () {
+                const pack = I18N[activeLang] || I18N.en;
+                const activeCard = pack.repeatModal.cards[activeDeckIndex];
+                if (activeCard) {
+                    speakText(activeCard.speech);
+                }
+            });
+
+            deckPrevBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                renderDeckCard(activeDeckIndex - 1, true);
+            });
+
+            deckNextBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                renderDeckCard(activeDeckIndex + 1, true);
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (!repeatModalBackdrop.classList.contains('is-visible')) return;
+                if (e.key === 'Escape') {
+                    closeRepeatModal();
+                } else if (e.key === 'ArrowLeft') {
+                    renderDeckCard(activeDeckIndex - 1, true);
+                } else if (e.key === 'ArrowRight') {
+                    renderDeckCard(activeDeckIndex + 1, true);
+                }
+            });
 
             function renderLanguage(langKey) {
                 const pack = I18N[langKey] || I18N.en;
@@ -831,7 +2372,36 @@
 
                 pack.items.forEach(function (item) {
                     const card = document.createElement('div');
-                    card.className = 'info-details';
+                    card.className = 'info-details' + (item.isModalTrigger ? ' is-modal-trigger' : '');
+
+                    if (item.isModalTrigger) {
+                        const triggerRow = document.createElement('div');
+                        triggerRow.className = 'info-summary';
+                        triggerRow.setAttribute('role', 'button');
+                        triggerRow.setAttribute('tabindex', '0');
+
+                        const titleSpan = document.createElement('span');
+                        titleSpan.textContent = item.summary;
+
+                        const badgeSpan = document.createElement('span');
+                        badgeSpan.className = 'modal-trigger-badge';
+                        badgeSpan.textContent = item.triggerBadge || '↗';
+
+                        triggerRow.appendChild(titleSpan);
+                        triggerRow.appendChild(badgeSpan);
+
+                        triggerRow.addEventListener('click', openRepeatModal);
+                        triggerRow.addEventListener('keydown', function (e) {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                openRepeatModal();
+                            }
+                        });
+
+                        card.appendChild(triggerRow);
+                        accordionSection.appendChild(card);
+                        return;
+                    }
 
                     const detail = document.createElement('details');
 
@@ -883,6 +2453,10 @@
                     card.appendChild(detail);
                     accordionSection.appendChild(card);
                 });
+
+                if (repeatModalBackdrop.classList.contains('is-visible')) {
+                    renderDeckCard(activeDeckIndex, false);
+                }
             }
 
             langGlobeBtn.addEventListener('click', function (e) {
@@ -915,6 +2489,10 @@
                 updateToggleUI();
                 if (!isTtsEnabled) {
                     stopSpeaking();
+                } else if (repeatModalBackdrop.classList.contains('is-visible')) {
+                    const pack = I18N[activeLang] || I18N.en;
+                    const activeCard = pack.repeatModal.cards[activeDeckIndex];
+                    if (activeCard) speakText(activeCard.speech);
                 } else {
                     const openCard = accordionSection.querySelector('.info-details.is-open');
                     if (openCard) {
