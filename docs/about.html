@@ -291,6 +291,10 @@
             transition: border-color 0.28s ease, background-color 0.28s ease;
         }
 
+        .info-details:hover {
+            border-color: rgba(255, 255, 255, 0.34);
+        }
+
         .info-details.is-open {
             border-color: rgba(255, 255, 255, 0.42);
             background: rgba(0, 0, 0, 0.36);
@@ -443,7 +447,7 @@
         <div class="page-body">
             <div class="page-header-row">
                 <h2 id="pageTitle">About AIR²Aim</h2>
-                <p class="page-lead" id="pageLead">Current version: 1.0.73 · Say Naturally. Move Smoothly.</p>
+                <p class="page-lead" id="pageLead"></p>
             </div>
 
             <div class="accordion-section" id="accordionSection"></div>
@@ -468,7 +472,7 @@
                                 "label": "中文",
                                 "docTitle": "关于 — AIR²Aim",
                                 "heading": "关于 AIR²Aim",
-                                "lead": "当前版本：1.0.73 · Say Naturally. Move Smoothly.",
+                                "lead": "",
                                 "supportPrefix": "联系支持：",
                                 "footerBadge": "About · 2026",
                                 "items": [
@@ -499,7 +503,7 @@
                                 "label": "EN",
                                 "docTitle": "About — AIR²Aim",
                                 "heading": "About AIR²Aim",
-                                "lead": "Current version: 1.0.73 · Say Naturally. Move Smoothly.",
+                                "lead": "",
                                 "supportPrefix": "Support: ",
                                 "footerBadge": "About · 2026",
                                 "items": [
@@ -530,7 +534,7 @@
                                 "label": "RU",
                                 "docTitle": "О приложении — AIR²Aim",
                                 "heading": "О приложении AIR²Aim",
-                                "lead": "Текущая версия: 1.0.73 · Говорите естественно. Действуйте легко.",
+                                "lead": "",
                                 "supportPrefix": "Поддержка: ",
                                 "footerBadge": "About · 2026",
                                 "items": [
@@ -561,7 +565,7 @@
                                 "label": "FR",
                                 "docTitle": "À propos — AIR²Aim",
                                 "heading": "À propos d’AIR²Aim",
-                                "lead": "Version actuelle : 1.0.73 · Parlez naturellement. Agissez en toute simplicité.",
+                                "lead": "",
                                 "supportPrefix": "Support : ",
                                 "footerBadge": "About · 2026",
                                 "items": [
@@ -592,7 +596,7 @@
                                 "label": "ES",
                                 "docTitle": "Acerca de — AIR²Aim",
                                 "heading": "Acerca de AIR²Aim",
-                                "lead": "Versión actual: 1.0.73 · Habla con naturalidad. Avanza sin esfuerzo.",
+                                "lead": "",
                                 "supportPrefix": "Soporte: ",
                                 "footerBadge": "About · 2026",
                                 "items": [
@@ -731,6 +735,7 @@
 
             function setCardOpen(cardEl, shouldOpen) {
                 const detailEl = cardEl.querySelector('details');
+                if (!detailEl) return;
                 if (shouldOpen) {
                     detailEl.open = true;
                     cardEl.classList.add('is-open');
