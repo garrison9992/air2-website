@@ -1,10 +1,11 @@
 (function () {
-    // 1. 五语目录配置（链接统一使用 /docs/ 路径，适配 download/index.html 与 docs/ 各页面）
+    // 1. 五语目录配置（第一行新增“下载”，链接统一使用根相对路径适配全站目录）
     const NAV_CONFIG = {
         zh: {
             ariaLabel: "页面目录导航",
             sectionTitle: "文档目录",
             items: [
+                { file: "/download/index.html", label: "下载" },
                 { file: "/docs/about.html", label: "关于 AIR²Aim" },
                 { file: "/docs/UserGuide.html", label: "使用指南" },
                 { file: "/docs/Permissions.html", label: "权限设置" },
@@ -18,6 +19,7 @@
             ariaLabel: "Page directory navigation",
             sectionTitle: "Documentation",
             items: [
+                { file: "/download/index.html", label: "Download" },
                 { file: "/docs/about.html", label: "About AIR²Aim" },
                 { file: "/docs/UserGuide.html", label: "User Guide" },
                 { file: "/docs/Permissions.html", label: "Permissions" },
@@ -31,6 +33,7 @@
             ariaLabel: "Навигация по разделам",
             sectionTitle: "Документация",
             items: [
+                { file: "/download/index.html", label: "Скачать" },
                 { file: "/docs/about.html", label: "О приложении AIR²Aim" },
                 { file: "/docs/UserGuide.html", label: "Руководство пользователя" },
                 { file: "/docs/Permissions.html", label: "Разрешения" },
@@ -44,6 +47,7 @@
             ariaLabel: "Navigation des pages",
             sectionTitle: "Documentation",
             items: [
+                { file: "/download/index.html", label: "Télécharger" },
                 { file: "/docs/about.html", label: "À propos d’AIR²Aim" },
                 { file: "/docs/UserGuide.html", label: "Guide d’utilisation" },
                 { file: "/docs/Permissions.html", label: "Autorisations" },
@@ -57,6 +61,7 @@
             ariaLabel: "Navegación de páginas",
             sectionTitle: "Documentación",
             items: [
+                { file: "/download/index.html", label: "Descargar" },
                 { file: "/docs/about.html", label: "Acerca de AIR²Aim" },
                 { file: "/docs/UserGuide.html", label: "Guía de uso" },
                 { file: "/docs/Permissions.html", label: "Permisos" },
@@ -181,9 +186,13 @@
         return "en";
     }
 
-    // 获取当前页面路径（小写，用于匹配高亮）
+    // 获取当前页面路径（小写，用于匹配高亮，兼容 /download/ 与 /download/index.html）
     function getCurrentPath() {
-        return (window.location.pathname || "").toLowerCase();
+        let path = (window.location.pathname || "").toLowerCase();
+        if (path.endsWith("/")) {
+            path += "index.html";
+        }
+        return path;
     }
 
     function initDocsNav() {
