@@ -1,69 +1,69 @@
 (function () {
-    // 1. 五语目录配置（新增 Feedback.html 作为第 7 项）
+    // 1. 五语目录配置（链接统一使用 /docs/ 路径，适配 download/index.html 与 docs/ 各页面）
     const NAV_CONFIG = {
         zh: {
             ariaLabel: "页面目录导航",
             sectionTitle: "文档目录",
             items: [
-                { file: "about.html", label: "关于 AIR²Aim" },
-                { file: "UserGuide.html", label: "使用指南" },
-                { file: "Permissions.html", label: "权限设置" },
-                { file: "ServiceTerms.html", label: "服务条款" },
-                { file: "Privacy.html", label: "隐私政策" },
-                { file: "UsageStatus.html", label: "使用状态与额度" },
-                { file: "Feedback.html", label: "意见反馈" }
+                { file: "/docs/about.html", label: "关于 AIR²Aim" },
+                { file: "/docs/UserGuide.html", label: "使用指南" },
+                { file: "/docs/Permissions.html", label: "权限设置" },
+                { file: "/docs/ServiceTerms.html", label: "服务条款" },
+                { file: "/docs/Privacy.html", label: "隐私政策" },
+                { file: "/docs/UsageStatus.html", label: "使用状态与额度" },
+                { file: "/docs/Feedback.html", label: "意见反馈" }
             ]
         },
         en: {
             ariaLabel: "Page directory navigation",
             sectionTitle: "Documentation",
             items: [
-                { file: "about.html", label: "About AIR²Aim" },
-                { file: "UserGuide.html", label: "User Guide" },
-                { file: "Permissions.html", label: "Permissions" },
-                { file: "ServiceTerms.html", label: "Service Terms" },
-                { file: "Privacy.html", label: "Privacy Policy" },
-                { file: "UsageStatus.html", label: "Usage Status" },
-                { file: "Feedback.html", label: "Feedback" }
+                { file: "/docs/about.html", label: "About AIR²Aim" },
+                { file: "/docs/UserGuide.html", label: "User Guide" },
+                { file: "/docs/Permissions.html", label: "Permissions" },
+                { file: "/docs/ServiceTerms.html", label: "Service Terms" },
+                { file: "/docs/Privacy.html", label: "Privacy Policy" },
+                { file: "/docs/UsageStatus.html", label: "Usage Status" },
+                { file: "/docs/Feedback.html", label: "Feedback" }
             ]
         },
         ru: {
             ariaLabel: "Навигация по разделам",
             sectionTitle: "Документация",
             items: [
-                { file: "about.html", label: "О приложении AIR²Aim" },
-                { file: "UserGuide.html", label: "Руководство пользователя" },
-                { file: "Permissions.html", label: "Разрешения" },
-                { file: "ServiceTerms.html", label: "Условия использования" },
-                { file: "Privacy.html", label: "Политика конфиденциальности" },
-                { file: "UsageStatus.html", label: "Статус использования" },
-                { file: "Feedback.html", label: "Обратная связь" }
+                { file: "/docs/about.html", label: "О приложении AIR²Aim" },
+                { file: "/docs/UserGuide.html", label: "Руководство пользователя" },
+                { file: "/docs/Permissions.html", label: "Разрешения" },
+                { file: "/docs/ServiceTerms.html", label: "Условия использования" },
+                { file: "/docs/Privacy.html", label: "Политика конфиденциальности" },
+                { file: "/docs/UsageStatus.html", label: "Статус использования" },
+                { file: "/docs/Feedback.html", label: "Обратная связь" }
             ]
         },
         fr: {
             ariaLabel: "Navigation des pages",
             sectionTitle: "Documentation",
             items: [
-                { file: "about.html", label: "À propos d’AIR²Aim" },
-                { file: "UserGuide.html", label: "Guide d’utilisation" },
-                { file: "Permissions.html", label: "Autorisations" },
-                { file: "ServiceTerms.html", label: "Conditions d’utilisation" },
-                { file: "Privacy.html", label: "Politique de confidentialité" },
-                { file: "UsageStatus.html", label: "Statut d’utilisation" },
-                { file: "Feedback.html", label: "Commentaires" }
+                { file: "/docs/about.html", label: "À propos d’AIR²Aim" },
+                { file: "/docs/UserGuide.html", label: "Guide d’utilisation" },
+                { file: "/docs/Permissions.html", label: "Autorisations" },
+                { file: "/docs/ServiceTerms.html", label: "Conditions d’utilisation" },
+                { file: "/docs/Privacy.html", label: "Politique de confidentialité" },
+                { file: "/docs/UsageStatus.html", label: "Statut d’utilisation" },
+                { file: "/docs/Feedback.html", label: "Commentaires" }
             ]
         },
         es: {
             ariaLabel: "Navegación de páginas",
             sectionTitle: "Documentación",
             items: [
-                { file: "about.html", label: "Acerca de AIR²Aim" },
-                { file: "UserGuide.html", label: "Guía de uso" },
-                { file: "Permissions.html", label: "Permisos" },
-                { file: "ServiceTerms.html", label: "Términos de servicio" },
-                { file: "Privacy.html", label: "Política de privacidad" },
-                { file: "UsageStatus.html", label: "Estado de uso" },
-                { file: "Feedback.html", label: "Comentarios" }
+                { file: "/docs/about.html", label: "Acerca de AIR²Aim" },
+                { file: "/docs/UserGuide.html", label: "Guía de uso" },
+                { file: "/docs/Permissions.html", label: "Permisos" },
+                { file: "/docs/ServiceTerms.html", label: "Términos de servicio" },
+                { file: "/docs/Privacy.html", label: "Política de privacidad" },
+                { file: "/docs/UsageStatus.html", label: "Estado de uso" },
+                { file: "/docs/Feedback.html", label: "Comentarios" }
             ]
         }
     };
@@ -181,11 +181,9 @@
         return "en";
     }
 
-    // 获取当前页面文件名（不区分大小写匹配高亮）
-    function getCurrentFileName() {
-        const path = window.location.pathname || "";
-        const raw = path.substring(path.lastIndexOf("/") + 1);
-        return (raw || "index.html").toLowerCase();
+    // 获取当前页面路径（小写，用于匹配高亮）
+    function getCurrentPath() {
+        return (window.location.pathname || "").toLowerCase();
     }
 
     function initDocsNav() {
@@ -227,7 +225,7 @@
         function renderNavMenu() {
             const lang = getCurrentLang();
             const pack = NAV_CONFIG[lang] || NAV_CONFIG.en;
-            const currentFile = getCurrentFileName();
+            const currentPath = getCurrentPath();
 
             btn.setAttribute("aria-label", pack.ariaLabel);
             menu.innerHTML = "";
@@ -244,7 +242,7 @@
                 link.textContent = item.label;
                 link.setAttribute("role", "menuitem");
 
-                if (item.file.toLowerCase() === currentFile) {
+                if (currentPath.endsWith(item.file.toLowerCase())) {
                     link.classList.add("active");
                     link.setAttribute("aria-current", "page");
                 }
