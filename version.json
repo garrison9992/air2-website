@@ -1,5 +1,10 @@
-
 {
-  "latestVersion": "1.0.75",
-  "notes": "AIR²Aim v1.0.75"
+  "latestVersion": "1.0.76",
+  "notes": {
+    "zh": "优化语音识别，提升系统稳定性。",
+    "en": "Improved speech recognition and overall system stability.",
+    "ru": "Улучшено распознавание речи и повышена стабильность системы.",
+    "fr": "Amélioration de la reconnaissance vocale et de la stabilité du système.",
+    "es": "Mejora del reconocimiento de voz y de la estabilidad del sistema."
+  }
 }
