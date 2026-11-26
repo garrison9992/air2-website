@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Feedback — AIR²Aim</title>
+    <style>
+        :root {
+            --text-primary: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.72);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
+            color: var(--text-primary);
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* --- 背景容器与视差图层 --- */
+        .bg-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            background-color: #111111;
+            z-index: -1;
+        }
+
+        .parallax-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-image: url('../bg1.jpg');
+            transform: scale(1.05);
+            animation: bgInitialZoom 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @media (max-width: 768px) {
+            .parallax-bg {
+                background-image: url('../bg2.jpg');
+            }
+        }
+
+        @keyframes bgInitialZoom {
+            0% {
+                opacity: 0;
+                transform: scale(1.12);
+            }
+            30% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes contentFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- 单页紧凑容器 --- */
+        .standalone-container {
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 24px 48px;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            color: #ffffff;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            animation: contentFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+            opacity: 0;
+        }
+
+        @media (max-width: 768px) {
+            .standalone-container {
+                padding: 18px 18px 24px 18px;
+            }
+        }
+
+        .page-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 820px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .page-brand-sm {
+            font-size: 1.15rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            word-spacing: -0.15em;
+            color: #ffffff;
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .page-brand-sm:hover {
+            opacity: 0.85;
+        }
+
+        .top-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* --- 地球语言切换下拉 --- */
+        .lang-dropdown {
+            position: relative;
+        }
+
+        .lang-globe-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            color: #ffffff;
+            font-size: 0.72rem;
+            letter-spacing: 0.04em;
+            padding: 5px 11px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: border-color 0.25s ease, background-color 0.25s ease;
+        }
+
+        .lang-globe-btn:hover,
+        .lang-dropdown.open .lang-globe-btn {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: #ffffff;
+        }
+
+        .lang-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: calc(100% + 6px);
+            min-width: 128px;
+            background: rgba(20, 20, 22, 0.94);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 10px;
+            padding: 4px;
+            z-index: 30;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+        }
+
+        .lang-dropdown.open .lang-menu {
+            display: block;
+        }
+
+        .lang-option {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-size: 0.8rem;
+            text-align: left;
+            padding: 7px 10px;
+            border-radius: 7px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s ease;
+        }
+
+        .lang-option:hover {
+            background: rgba(255, 255, 255, 0.14);
+        }
+
+        .lang-option.active {
+            background: rgba(255, 255, 255, 0.2);
+            font-weight: 600;
+        }
+
+        /* --- 喇叭 TTS 开关 --- */
+        .tts-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            color: #ffffff;
+            font-size: 0.72rem;
+            letter-spacing: 0.04em;
+            padding: 5px 11px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: opacity 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+        }
+
+        .tts-toggle-btn.active {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: #ffffff;
+            opacity: 1;
+        }
+
+        .tts-toggle-btn:not(.active) {
+            opacity: 0.65;
+        }
+
+        .tts-toggle-btn .icon-mute {
+            display: none;
+        }
+
+        .tts-toggle-btn:not(.active) .icon-sound {
+            display: none;
+        }
+
+        .tts-toggle-btn:not(.active) .icon-mute {
+            display: inline-block;
+        }
+
+        .page-body {
+            margin: 14px auto;
+            max-width: 820px;
+            width: 100%;
+        }
+
+        .page-header-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 8px 16px;
+            margin-bottom: 12px;
+        }
+
+        .page-body h2 {
+            font-size: clamp(1.5rem, 2.8vw, 2rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+            color: #ffffff;
+        }
+
+        .page-lead {
+            font-size: 0.84rem;
+            line-height: 1.45;
+            color: var(--text-muted);
+        }
+
+        /* --- 占位卡片容器（后续替换为问卷与反馈表单） --- */
+        .placeholder-card {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px dashed rgba(255, 255, 255, 0.28);
+            border-radius: 12px;
+            padding: 36px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.25s ease, background-color 0.25s ease;
+        }
+
+        .placeholder-card:hover {
+            border-color: rgba(255, 255, 255, 0.45);
+            background: rgba(0, 0, 0, 0.34);
+        }
+
+        .placeholder-title {
+            font-size: 1.02rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        .placeholder-desc {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        /* --- 紧凑底部信息 --- */
+        .page-footer {
+            max-width: 820px;
+            width: 100%;
+            margin: 6px auto 0 auto;
+            padding-top: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px 16px;
+            font-size: 0.74rem;
+            color: var(--text-muted);
+        }
+
+        .footer-contact a {
+            color: #ffffff;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+            padding-bottom: 1px;
+        }
+
+        .footer-meta {
+            text-align: right;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 768px) {
+            .footer-meta {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 背景图层 -->
+    <div class="bg-wrapper">
+        <div class="parallax-bg"></div>
+    </div>
+
+    <!-- 单页容器 -->
+    <div class="standalone-container">
+        <div class="page-top">
+            <a href="https://air2aim.com/" class="page-brand-sm" title="AIR²Aim">AIR²Aim</a>
+
+            <div class="top-controls">
+                <div class="lang-dropdown" id="langDropdown">
+                    <button type="button" class="lang-globe-btn" id="langGlobeBtn" aria-expanded="false" aria-label="Switch language">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M2 12h20"></path>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                        <span id="currentLangCode">EN</span>
+                    </button>
+                    <div class="lang-menu" id="langMenu" role="menu">
+                        <button type="button" class="lang-option" data-lang="zh"><span>中文</span><span>ZH</span></button>
+                        <button type="button" class="lang-option active" data-lang="en"><span>English</span><span>EN</span></button>
+                        <button type="button" class="lang-option" data-lang="ru"><span>Русский</span><span>RU</span></button>
+                        <button type="button" class="lang-option" data-lang="fr"><span>Français</span><span>FR</span></button>
+                        <button type="button" class="lang-option" data-lang="es"><span>Español</span><span>ES</span></button>
+                    </div>
+                </div>
+
+                <button type="button" class="tts-toggle-btn active" id="ttsToggle" aria-label="Toggle voice reading">
+                    <svg class="icon-sound" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                    </svg>
+                    <svg class="icon-mute" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <line x1="23" y1="9" x2="17" y2="15"></line>
+                        <line x1="17" y1="9" x2="23" y2="15"></line>
+                    </svg>
+                    <span id="ttsLabel">on</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="page-body">
+            <div class="page-header-row">
+                <h2 id="pageTitle">Feedback</h2>
+                <p class="page-lead" id="pageLead">Share your thoughts and help shape AIR²Aim.</p>
+            </div>
+
+            <!-- 意见反馈与问卷占位区域 -->
+            <div class="placeholder-card" id="placeholderCard">
+                <div class="placeholder-title" id="placeholderTitle">Feedback & Survey Coming Soon</div>
+                <p class="placeholder-desc" id="placeholderDesc">
+                    We are preparing our feedback form and user survey here. In the meantime, feel free to reach out directly via support@air2aim.com.
+                </p>
+            </div>
+        </div>
+
+        <footer class="page-footer">
+            <div class="footer-contact">
+                <span id="supportPrefix">Support: </span><a href="mailto:support@air2aim.com">support@air2aim.com</a> · <span id="footerBadge">Feedback · 2026</span>
+            </div>
+            <div class="footer-meta">
+                Anna Intelligence Recorder & Reminder · Developed in Yerevan, Armenia · 2026
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        (function () {
+            const I18N = {
+                "zh": {
+                    "htmlLang": "zh",
+                    "ttsLang": "zh-CN",
+                    "label": "中文",
+                    "docTitle": "意见反馈 — AIR²Aim",
+                    "heading": "意见反馈",
+                    "lead": "分享你的想法与建议，帮助我们不断完善 AIR²Aim。",
+                    "placeholderTitle": "意见反馈与用户问卷即将上线",
+                    "placeholderDesc": "我们正在完善此处的在线反馈与问卷功能。在此期间，如有任何建议或问题，欢迎直接发送邮件至 support@air2aim.com。",
+                    "supportPrefix": "联系支持：",
+                    "footerBadge": "Feedback · 2026"
+                },
+                "en": {
+                    "htmlLang": "en",
+                    "ttsLang": "en-US",
+                    "label": "EN",
+                    "docTitle": "Feedback — AIR²Aim",
+                    "heading": "Feedback",
+                    "lead": "Share your thoughts and help shape AIR²Aim.",
+                    "placeholderTitle": "Feedback & Survey Coming Soon",
+                    "placeholderDesc": "We are preparing our online feedback form and user survey here. In the meantime, feel free to reach out directly via support@air2aim.com.",
+                    "supportPrefix": "Support: ",
+                    "footerBadge": "Feedback · 2026"
+                },
+                "ru": {
+                    "htmlLang": "ru",
+                    "ttsLang": "ru-RU",
+                    "label": "RU",
+                    "docTitle": "Обратная связь — AIR²Aim",
+                    "heading": "Обратная связь",
+                    "lead": "Поделитесь своими идеями и помогите сделать AIR²Aim лучше.",
+                    "placeholderTitle": "Форма обратной связи и опрос скоро появятся",
+                    "placeholderDesc": "Мы готовим здесь форму обратной связи и опрос пользователей. Пока что вы можете написать нам напрямую на support@air2aim.com.",
+                    "supportPrefix": "Поддержка: ",
+                    "footerBadge": "Feedback · 2026"
+                },
+                "fr": {
+                    "htmlLang": "fr",
+                    "ttsLang": "fr-FR",
+                    "label": "FR",
+                    "docTitle": "Commentaires — AIR²Aim",
+                    "heading": "Commentaires",
+                    "lead": "Partagez vos idées et aidez-nous à améliorer AIR²Aim.",
+                    "placeholderTitle": "Formulaire de retour et enquête bientôt disponibles",
+                    "placeholderDesc": "Nous préparons ici notre formulaire de commentaires et notre enquête utilisateurs. En attendant, n’hésitez pas à nous écrire à support@air2aim.com.",
+                    "supportPrefix": "Support : ",
+                    "footerBadge": "Feedback · 2026"
+                },
+                "es": {
+                    "htmlLang": "es",
+                    "ttsLang": "es-ES",
+                    "label": "ES",
+                    "docTitle": "Comentarios — AIR²Aim",
+                    "heading": "Comentarios",
+                    "lead": "Comparte tus ideas y ayúdanos a mejorar AIR²Aim.",
+                    "placeholderTitle": "Formulario de comentarios y encuesta próximamente",
+                    "placeholderDesc": "Estamos preparando aquí nuestro formulario de comentarios y encuesta para usuarios. Mientras tanto, puedes escribirnos directamente a support@air2aim.com.",
+                    "supportPrefix": "Soporte: ",
+                    "footerBadge": "Feedback · 2026"
+                }
+            };
+
+            const pageTitle = document.getElementById('pageTitle');
+            const pageLead = document.getElementById('pageLead');
+            const placeholderCard = document.getElementById('placeholderCard');
+            const placeholderTitle = document.getElementById('placeholderTitle');
+            const placeholderDesc = document.getElementById('placeholderDesc');
+            const supportPrefix = document.getElementById('supportPrefix');
+            const footerBadge = document.getElementById('footerBadge');
+            const currentLangCode = document.getElementById('currentLangCode');
+            const langDropdown = document.getElementById('langDropdown');
+            const langGlobeBtn = document.getElementById('langGlobeBtn');
+            const langOptions = document.querySelectorAll('.lang-option');
+            const ttsToggle = document.getElementById('ttsToggle');
+            const ttsLabel = document.getElementById('ttsLabel');
+
+            const supportsTTS = 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
+            let isTtsEnabled = supportsTTS;
+            let activeLang = 'en';
+            let speechSessionId = 0;
+            const activeUtterances = [];
+
+            function detectInitialLanguage() {
+                const params = new URLSearchParams(window.location.search);
+                const queryLang = (params.get('lang') || '').toLowerCase().split('-')[0];
+                if (queryLang && Object.prototype.hasOwnProperty.call(I18N, queryLang)) {
+                    return queryLang;
+                }
+
+                const systemLangs = Array.isArray(navigator.languages) && navigator.languages.length > 0
+                    ? navigator.languages
+                    : [navigator.language || navigator.userLanguage || 'en'];
+
+                for (let i = 0; i < systemLangs.length; i++) {
+                    const code = String(systemLangs[i] || '').toLowerCase().trim();
+                    const base = code.split('-')[0];
+                    if (Object.prototype.hasOwnProperty.call(I18N, base)) {
+                        return base;
+                    }
+                }
+                return 'en';
+            }
+
+            function stopSpeaking() {
+                speechSessionId += 1;
+                activeUtterances.length = 0;
+                if (supportsTTS) {
+                    window.speechSynthesis.cancel();
+                }
+            }
+
+            function normalizeSpeechText(rawText) {
+                return String(rawText || '')
+                    .replace(/AIR²Aim/gi, 'Air 2 Aim')
+                    .replace(/•/g, '，')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+            }
+
+            function splitIntoChunks(text) {
+                const cleaned = normalizeSpeechText(text);
+                if (!cleaned) return [];
+                const parts = cleaned.match(/[^。！？；.!?;]+(?:[。！？；.!?;]+|$)/g);
+                return parts ? parts.map(function (s) { return s.trim(); }).filter(Boolean) : [cleaned];
+            }
+
+            function speakText(text) {
+                if (!supportsTTS || !isTtsEnabled || !text) return;
+
+                stopSpeaking();
+                const sessionId = speechSessionId;
+                const chunks = splitIntoChunks(text);
+                if (!chunks.length) return;
+
+                if (window.speechSynthesis.paused) {
+                    window.speechSynthesis.resume();
+                }
+
+                chunks.forEach(function (chunk) {
+                    const utterance = new SpeechSynthesisUtterance(chunk);
+                    utterance.lang = I18N[activeLang]?.ttsLang || 'en-US';
+                    utterance.rate = 0.95;
+                    utterance.onstart = function () {
+                        if (sessionId !== speechSessionId) {
+                            window.speechSynthesis.cancel();
+                        }
+                    };
+                    activeUtterances.push(utterance);
+                    window.speechSynthesis.speak(utterance);
+                });
+            }
+
+            function getPlaceholderSpeechText() {
+                return normalizeSpeechText([placeholderTitle.textContent, placeholderDesc.textContent].join('。'));
+            }
+
+            function updateToggleUI() {
+                if (!supportsTTS) {
+                    ttsLabel.textContent = 'off';
+                    ttsToggle.classList.remove('active');
+                    return;
+                }
+                ttsLabel.textContent = isTtsEnabled ? 'on' : 'off';
+                ttsToggle.classList.toggle('active', isTtsEnabled);
+            }
+
+            function renderLanguage(langKey) {
+                const pack = I18N[langKey] || I18N.en;
+                activeLang = Object.prototype.hasOwnProperty.call(I18N, langKey) ? langKey : 'en';
+                stopSpeaking();
+
+                document.documentElement.lang = pack.htmlLang;
+                document.title = pack.docTitle;
+                pageTitle.textContent = pack.heading;
+                pageLead.textContent = pack.lead;
+                placeholderTitle.textContent = pack.placeholderTitle;
+                placeholderDesc.textContent = pack.placeholderDesc;
+                supportPrefix.textContent = pack.supportPrefix;
+                footerBadge.textContent = pack.footerBadge;
+                currentLangCode.textContent = pack.label;
+
+                langOptions.forEach(function (opt) {
+                    opt.classList.toggle('active', opt.getAttribute('data-lang') === activeLang);
+                });
+            }
+
+            placeholderCard.addEventListener('click', function () {
+                speakText(getPlaceholderSpeechText());
+            });
+
+            langGlobeBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const willOpen = !langDropdown.classList.contains('open');
+                langDropdown.classList.toggle('open', willOpen);
+                langGlobeBtn.setAttribute('aria-expanded', String(willOpen));
+            });
+
+            langOptions.forEach(function (opt) {
+                opt.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    const chosen = opt.getAttribute('data-lang');
+                    langDropdown.classList.remove('open');
+                    langGlobeBtn.setAttribute('aria-expanded', 'false');
+                    renderLanguage(chosen);
+                });
+            });
+
+            document.addEventListener('click', function (e) {
+                if (!langDropdown.contains(e.target)) {
+                    langDropdown.classList.remove('open');
+                    langGlobeBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            ttsToggle.addEventListener('click', function () {
+                if (!supportsTTS) return;
+                isTtsEnabled = !isTtsEnabled;
+                updateToggleUI();
+                if (!isTtsEnabled) {
+                    stopSpeaking();
+                } else {
+                    speakText(getPlaceholderSpeechText());
+                }
+            });
+
+            window.addEventListener('pagehide', stopSpeaking);
+            window.addEventListener('beforeunload', stopSpeaking);
+            document.addEventListener('visibilitychange', function () {
+                if (document.hidden) {
+                    stopSpeaking();
+                }
+            });
+
+            updateToggleUI();
+            renderLanguage(detectInitialLanguage());
+        })();
+    </script>
+<script src="docs-nav.js"></script>
+</body>
+</html>

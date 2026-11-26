@@ -1,5 +1,5 @@
 (function () {
-    // 1. 五语目录配置（顺序按 1-about, 2-UserGuide, 3-Permissions, 4-ServiceTerms, 5-Privacy, 6-UsageStatus 排列）
+    // 1. 五语目录配置（新增 Feedback.html 作为第 7 项）
     const NAV_CONFIG = {
         zh: {
             ariaLabel: "页面目录导航",
@@ -10,7 +10,8 @@
                 { file: "Permissions.html", label: "权限设置" },
                 { file: "ServiceTerms.html", label: "服务条款" },
                 { file: "Privacy.html", label: "隐私政策" },
-                { file: "UsageStatus.html", label: "使用状态与额度" }
+                { file: "UsageStatus.html", label: "使用状态与额度" },
+                { file: "Feedback.html", label: "意见反馈" }
             ]
         },
         en: {
@@ -22,7 +23,8 @@
                 { file: "Permissions.html", label: "Permissions" },
                 { file: "ServiceTerms.html", label: "Service Terms" },
                 { file: "Privacy.html", label: "Privacy Policy" },
-                { file: "UsageStatus.html", label: "Usage Status" }
+                { file: "UsageStatus.html", label: "Usage Status" },
+                { file: "Feedback.html", label: "Feedback" }
             ]
         },
         ru: {
@@ -34,7 +36,8 @@
                 { file: "Permissions.html", label: "Разрешения" },
                 { file: "ServiceTerms.html", label: "Условия использования" },
                 { file: "Privacy.html", label: "Политика конфиденциальности" },
-                { file: "UsageStatus.html", label: "Статус использования" }
+                { file: "UsageStatus.html", label: "Статус использования" },
+                { file: "Feedback.html", label: "Обратная связь" }
             ]
         },
         fr: {
@@ -46,7 +49,8 @@
                 { file: "Permissions.html", label: "Autorisations" },
                 { file: "ServiceTerms.html", label: "Conditions d’utilisation" },
                 { file: "Privacy.html", label: "Politique de confidentialité" },
-                { file: "UsageStatus.html", label: "Statut d’utilisation" }
+                { file: "UsageStatus.html", label: "Statut d’utilisation" },
+                { file: "Feedback.html", label: "Commentaires" }
             ]
         },
         es: {
@@ -58,7 +62,8 @@
                 { file: "Permissions.html", label: "Permisos" },
                 { file: "ServiceTerms.html", label: "Términos de servicio" },
                 { file: "Privacy.html", label: "Política de privacidad" },
-                { file: "UsageStatus.html", label: "Estado de uso" }
+                { file: "UsageStatus.html", label: "Estado de uso" },
+                { file: "Feedback.html", label: "Comentarios" }
             ]
         }
     };
