@@ -321,4 +321,867 @@
             font-size: 0.75rem;
             color: var(--accent-ok);
             background: rgba(154, 230, 180, 0.12);
-            border: 1px solid rgba(154, 230, 180,
+            border: 1px solid rgba(154, 230, 180, 0.32);
+            padding: 3px 10px;
+            border-radius: 999px;
+        }
+
+        .identity-badge.is-visible {
+            display: inline-flex;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 6px;
+        }
+
+        .form-textarea {
+            width: 100%;
+            min-height: 150px;
+            resize: vertical;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            background: rgba(12, 12, 14, 0.55);
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 0.88rem;
+            line-height: 1.55;
+            padding: 11px 13px;
+            outline: none;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
+        }
+
+        .form-textarea:focus {
+            border-color: rgba(255, 255, 255, 0.65);
+            background: rgba(12, 12, 14, 0.72);
+        }
+
+        .form-input {
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            background: rgba(12, 12, 14, 0.55);
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 0.84rem;
+            padding: 9px 12px;
+            outline: none;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
+        }
+
+        .form-input:focus {
+            border-color: rgba(255, 255, 255, 0.65);
+            background: rgba(12, 12, 14, 0.72);
+        }
+
+        .field-meta-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-top: 6px;
+            font-size: 0.74rem;
+            color: var(--text-muted);
+        }
+
+        .char-counter.is-near {
+            color: #fbd38d;
+        }
+
+        .char-counter.is-max {
+            color: #feb2b2;
+            font-weight: 600;
+        }
+
+        .form-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .submit-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            color: #ffffff;
+            font-size: 0.84rem;
+            font-weight: 600;
+            padding: 9px 20px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: #ffffff;
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        .status-msg {
+            display: none;
+            font-size: 0.83rem;
+            line-height: 1.5;
+            padding: 10px 13px;
+            border-radius: 10px;
+            text-shadow: none;
+        }
+
+        .status-msg.is-visible {
+            display: block;
+        }
+
+        .status-msg.is-thanks {
+            background: rgba(154, 230, 180, 0.16);
+            border: 1px solid rgba(154, 230, 180, 0.45);
+            color: #dcfce7;
+        }
+
+        .status-msg.is-warn {
+            background: rgba(251, 211, 141, 0.16);
+            border: 1px solid rgba(251, 211, 141, 0.45);
+            color: #fef3c7;
+        }
+
+        .status-msg.is-err {
+            background: rgba(254, 178, 178, 0.16);
+            border: 1px solid rgba(254, 178, 178, 0.45);
+            color: #fee2e2;
+        }
+
+        .debug-context-note {
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.56);
+            line-height: 1.45;
+            word-break: break-all;
+        }
+
+        .survey-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.62);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        .survey-modal-backdrop.is-visible {
+            display: flex;
+            opacity: 1;
+        }
+
+        .survey-modal-dialog {
+            width: 100%;
+            max-width: 560px;
+            max-height: 86vh;
+            max-height: 86dvh;
+            display: flex;
+            flex-direction: column;
+            background: rgba(24, 24, 28, 0.9);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
+            overflow: hidden;
+            color: #ffffff;
+            text-shadow: none;
+        }
+
+        .survey-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 14px 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .survey-modal-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .survey-modal-close {
+            width: 30px;
+            height: 30px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            font-size: 1.1rem;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .survey-modal-body {
+            padding: 16px 18px 20px 18px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .survey-placeholder-box {
+            border-radius: 10px;
+            border: 1px dashed rgba(255, 255, 255, 0.26);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px 14px;
+            font-size: 0.82rem;
+            line-height: 1.55;
+            color: rgba(255, 255, 255, 0.82);
+        }
+
+        .page-footer {
+            max-width: 820px;
+            width: 100%;
+            margin: 6px auto 0 auto;
+            padding-top: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px 16px;
+            font-size: 0.74rem;
+            color: var(--text-muted);
+        }
+
+        .footer-contact a {
+            color: #ffffff;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+            padding-bottom: 1px;
+        }
+
+        .footer-meta {
+            text-align: right;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 768px) {
+            .footer-meta {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-wrapper">
+        <div class="parallax-bg"></div>
+    </div>
+
+    <div class="standalone-container">
+        <div class="page-top">
+            <a href="https://air2aim.com/" class="page-brand-sm" title="AIR²Aim">AIR²Aim</a>
+
+            <div class="top-controls">
+                <div class="lang-dropdown" id="langDropdown">
+                    <button type="button" class="lang-globe-btn" id="langGlobeBtn" aria-expanded="false" aria-label="Switch language">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M2 12h20"></path>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                        <span id="currentLangCode">EN</span>
+                    </button>
+                    <div class="lang-menu" id="langMenu" role="menu">
+                        <button type="button" class="lang-option" data-lang="zh"><span>中文</span><span>ZH</span></button>
+                        <button type="button" class="lang-option active" data-lang="en"><span>English</span><span>EN</span></button>
+                        <button type="button" class="lang-option" data-lang="ru"><span>Русский</span><span>RU</span></button>
+                        <button type="button" class="lang-option" data-lang="fr"><span>Français</span><span>FR</span></button>
+                        <button type="button" class="lang-option" data-lang="es"><span>Español</span><span>ES</span></button>
+                    </div>
+                </div>
+
+                <button type="button" class="tts-toggle-btn active" id="ttsToggle" aria-label="Toggle voice reading">
+                    <svg class="icon-sound" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                    </svg>
+                    <svg class="icon-mute" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <line x1="23" y1="9" x2="17" y2="15"></line>
+                        <line x1="17" y1="9" x2="23" y2="15"></line>
+                    </svg>
+                    <span id="ttsLabel">on</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="page-body">
+            <div class="page-header-row">
+                <h2 id="pageTitle">Feedback</h2>
+                <button type="button" class="survey-trigger-btn" id="openSurveyBtn">
+                    <span id="surveyBtnText">Quick Survey ↗</span>
+                </button>
+            </div>
+
+            <section class="panel-card" aria-labelledby="freeFeedbackTitle">
+                <div class="panel-head">
+                    <div class="panel-title" id="freeFeedbackTitle">Free-form Feedback</div>
+                    <div class="identity-badge" id="identityBadge"></div>
+                </div>
+
+                <form id="feedbackForm" novalidate>
+                    <div>
+                        <label class="form-label" for="feedbackText" id="feedbackTextLabel">Your comments, suggestions, or issues (up to 1,000 characters)</label>
+                        <textarea id="feedbackText" class="form-textarea" maxlength="1000" required></textarea>
+                        <div class="field-meta-row">
+                            <span id="feedbackHint">Plain text only · No login required</span>
+                            <span class="char-counter" id="charCounter">0 / 1000</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 10px;">
+                        <label class="form-label" for="contactEmail" id="contactEmailLabel">Reply email (optional)</label>
+                        <input type="email" id="contactEmail" class="form-input" autocomplete="email">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="submit-btn" id="submitFeedbackBtn">Submit Feedback</button>
+                    </div>
+                </form>
+
+                <div class="status-msg" id="feedbackStatus" role="status" aria-live="polite"></div>
+                <div class="debug-context-note" id="contextSummary"></div>
+            </section>
+        </div>
+
+        <footer class="page-footer">
+            <div class="footer-contact">
+                <span id="supportPrefix">Support: </span><a href="mailto:support@air2aim.com">support@air2aim.com</a> · <span id="footerBadge">Feedback · 2026</span>
+            </div>
+            <div class="footer-meta">
+                Anna Intelligence Recorder & Reminder · Developed in Yerevan, Armenia · 2026
+            </div>
+        </footer>
+    </div>
+
+    <!-- 调查问卷弹出框 -->
+    <div class="survey-modal-backdrop" id="surveyModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="surveyModalTitle">
+        <div class="survey-modal-dialog" id="surveyModalDialog">
+            <div class="survey-modal-header">
+                <h3 id="surveyModalTitle">Quick Survey</h3>
+                <button type="button" class="survey-modal-close" id="surveyModalClose" aria-label="Close">×</button>
+            </div>
+            <div class="survey-modal-body">
+                <div class="survey-placeholder-box" id="surveyPlaceholderDesc">
+                    Survey questions will be added here in a future step.
+                </div>
+                <button type="button" class="submit-btn" id="submitSurveyBtn">Submit Survey</button>
+                <div class="status-msg" id="surveyStatus" role="status" aria-live="polite"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            const SUPABASE_URL = 'https://lfeamcnozuicrofdpwwm.supabase.co';
+            const SUPABASE_KEY = 'sb_publishable_b56uyFoPowyjQ_dj-8tO-w_tVffk_Jb';
+            const FEEDBACK_ENDPOINT = SUPABASE_URL + '/rest/v1/user_feedback';
+
+            const MAX_CHARS = 1000;
+            const PARAM_KEYS = ['lang', 'email', 'uid', 'version', 'platform', 'os_version', 'sdk', 'brand', 'manufacturer', 'model'];
+
+            const I18N = {
+                "zh": {
+                    "htmlLang": "zh",
+                    "ttsLang": "zh-CN",
+                    "label": "中文",
+                    "docTitle": "意见反馈 — AIR²Aim",
+                    "heading": "意见反馈",
+                    "surveyBtn": "调查问卷 ↗",
+                    "freeTitle": "自由填写意见反馈",
+                    "textLabel": "您的想法、建议或遇到的问题（最多 1000 字）",
+                    "textPlaceholder": "请写下您的意见或建议……",
+                    "textHint": "最多 1000 个字符 · 免登录提交",
+                    "emailLabel": "联系邮箱（选填，用于需要回复时联系您）",
+                    "emailPlaceholder": "name@example.com",
+                    "submitBtn": "提交反馈",
+                    "submittingBtn": "正在提交...",
+                    "emptyWarn": "请先填写反馈内容后再提交。",
+                    "thanksMsg": "谢谢您的反馈！我们已收到您的留言。",
+                    "errorMsg": "提交未成功，请检查网络后重试，或发邮件至 support@air2aim.com。",
+                    "surveyTitle": "调查问卷",
+                    "surveyDesc": "问卷题项将在后续步骤中补充，表内已预留对应字段。",
+                    "surveySubmit": "提交问卷",
+                    "surveyThanks": "谢谢您的反馈！",
+                    "accountPrefix": "已识别账号：",
+                    "uidPrefix": "用户 ID：",
+                    "guestLabel": "访客模式",
+                    "supportPrefix": "联系支持：",
+                    "footerBadge": "Feedback · 2026"
+                },
+                "en": {
+                    "htmlLang": "en",
+                    "ttsLang": "en-US",
+                    "label": "EN",
+                    "docTitle": "Feedback — AIR²Aim",
+                    "heading": "Feedback",
+                    "surveyBtn": "Quick Survey ↗",
+                    "freeTitle": "Free-form Feedback",
+                    "textLabel": "Your comments, suggestions, or issues (up to 1,000 characters)",
+                    "textPlaceholder": "Share your thoughts or feedback...",
+                    "textHint": "Up to 1,000 characters · No login required",
+                    "emailLabel": "Reply email (optional)",
+                    "emailPlaceholder": "name@example.com",
+                    "submitBtn": "Submit Feedback",
+                    "submittingBtn": "Submitting...",
+                    "emptyWarn": "Please enter your feedback before submitting.",
+                    "thanksMsg": "Thank you for your feedback! Your message has been received.",
+                    "errorMsg": "Submission failed. Please check your connection and try again, or email support@air2aim.com.",
+                    "surveyTitle": "Quick Survey",
+                    "surveyDesc": "Survey questions will be added in a later step. Database fields are already prepared.",
+                    "surveySubmit": "Submit Survey",
+                    "surveyThanks": "Thank you for your feedback!",
+                    "accountPrefix": "Signed-in context: ",
+                    "uidPrefix": "User ID: ",
+                    "guestLabel": "Guest mode",
+                    "supportPrefix": "Support: ",
+                    "footerBadge": "Feedback · 2026"
+                },
+                "ru": {
+                    "htmlLang": "ru",
+                    "ttsLang": "ru-RU",
+                    "label": "RU",
+                    "docTitle": "Обратная связь — AIR²Aim",
+                    "heading": "Обратная связь",
+                    "surveyBtn": "Опрос ↗",
+                    "freeTitle": "Свободный отзыв",
+                    "textLabel": "Ваши идеи, предложения или замечания (до 1000 символов)",
+                    "textPlaceholder": "Напишите ваш отзыв...",
+                    "textHint": "Максимум 1000 символов · Без входа в аккаунт",
+                    "emailLabel": "Email для ответа (необязательно)",
+                    "emailPlaceholder": "name@example.com",
+                    "submitBtn": "Отправить отзыв",
+                    "submittingBtn": "Отправка...",
+                    "emptyWarn": "Пожалуйста, введите текст отзыва перед отправкой.",
+                    "thanksMsg": "Спасибо за ваш отзыв! Ваше сообщение получено.",
+                    "errorMsg": "Не удалось отправить. Проверьте подключение и повторите попытку или напишите на support@air2aim.com.",
+                    "surveyTitle": "Быстрый опрос",
+                    "surveyDesc": "Вопросы опроса будут добавлены позже. Поля в базе данных уже подготовлены.",
+                    "surveySubmit": "Отправить опрос",
+                    "surveyThanks": "Спасибо за ваш отзыв!",
+                    "accountPrefix": "Контекст аккаунта: ",
+                    "uidPrefix": "ID пользователя: ",
+                    "guestLabel": "Гостевой режим",
+                    "supportPrefix": "Поддержка: ",
+                    "footerBadge": "Feedback · 2026"
+                },
+                "fr": {
+                    "htmlLang": "fr",
+                    "ttsLang": "fr-FR",
+                    "label": "FR",
+                    "docTitle": "Retour d’expérience — AIR²Aim",
+                    "heading": "Retour d’expérience",
+                    "surveyBtn": "Sondage ↗",
+                    "freeTitle": "Commentaire libre",
+                    "textLabel": "Vos remarques, suggestions ou problèmes (1 000 caractères max.)",
+                    "textPlaceholder": "Écrivez votre message...",
+                    "textHint": "1 000 caractères maximum · Sans connexion",
+                    "emailLabel": "E-mail de réponse (facultatif)",
+                    "emailPlaceholder": "nom@exemple.com",
+                    "submitBtn": "Envoyer",
+                    "submittingBtn": "Envoi...",
+                    "emptyWarn": "Veuillez saisir un message avant l’envoi.",
+                    "thanksMsg": "Merci pour votre retour ! Votre message a bien été enregistré.",
+                    "errorMsg": "Échec de l’envoi. Vérifiez votre connexion et réessayez, ou écrivez à support@air2aim.com.",
+                    "surveyTitle": "Sondage rapide",
+                    "surveyDesc": "Les questions du sondage seront ajoutées prochainement.",
+                    "surveySubmit": "Envoyer le sondage",
+                    "surveyThanks": "Merci pour votre retour !",
+                    "accountPrefix": "Compte détecté : ",
+                    "uidPrefix": "ID utilisateur : ",
+                    "guestLabel": "Mode invité",
+                    "supportPrefix": "Support : ",
+                    "footerBadge": "Feedback · 2026"
+                },
+                "es": {
+                    "htmlLang": "es",
+                    "ttsLang": "es-ES",
+                    "label": "ES",
+                    "docTitle": "Comentarios — AIR²Aim",
+                    "heading": "Comentarios",
+                    "surveyBtn": "Encuesta ↗",
+                    "freeTitle": "Comentarios libres",
+                    "textLabel": "Tus ideas, sugerencias o problemas (máx. 1 000 caracteres)",
+                    "textPlaceholder": "Escribe tus comentarios...",
+                    "textHint": "Máximo 1 000 caracteres · Sin iniciar sesión",
+                    "emailLabel": "Correo de respuesta (opcional)",
+                    "emailPlaceholder": "nombre@ejemplo.com",
+                    "submitBtn": "Enviar comentario",
+                    "submittingBtn": "Enviando...",
+                    "emptyWarn": "Escribe un comentario antes de enviar.",
+                    "thanksMsg": "¡Gracias por tus comentarios! Hemos recibido tu mensaje.",
+                    "errorMsg": "Error al enviar. Revisa tu conexión e inténtalo de nuevo, o escribe a support@air2aim.com.",
+                    "surveyTitle": "Encuesta rápida",
+                    "surveyDesc": "Las preguntas de la encuesta se añadirán más adelante.",
+                    "surveySubmit": "Enviar encuesta",
+                    "surveyThanks": "¡Gracias por tus comentarios!",
+                    "accountPrefix": "Cuenta detectada: ",
+                    "uidPrefix": "ID de usuario: ",
+                    "guestLabel": "Modo invitado",
+                    "supportPrefix": "Soporte: ",
+                    "footerBadge": "Feedback · 2026"
+                }
+            };
+
+            function parseFragmentContext() {
+                const rawHash = (window.location.hash || '').replace(/^#/, '');
+                const hashParams = new URLSearchParams(rawHash);
+                const ctx = {};
+                PARAM_KEYS.forEach(function (k) {
+                    const val = hashParams.get(k);
+                    if (val !== null && String(val).trim() !== '') {
+                        ctx[k] = String(val).trim();
+                    }
+                });
+                return ctx;
+            }
+
+            const fragmentCtx = parseFragmentContext();
+
+            const pageTitle = document.getElementById('pageTitle');
+            const surveyBtnText = document.getElementById('surveyBtnText');
+            const freeFeedbackTitle = document.getElementById('freeFeedbackTitle');
+            const identityBadge = document.getElementById('identityBadge');
+            const feedbackForm = document.getElementById('feedbackForm');
+            const feedbackTextLabel = document.getElementById('feedbackTextLabel');
+            const feedbackText = document.getElementById('feedbackText');
+            const feedbackHint = document.getElementById('feedbackHint');
+            const charCounter = document.getElementById('charCounter');
+            const contactEmailLabel = document.getElementById('contactEmailLabel');
+            const contactEmail = document.getElementById('contactEmail');
+            const submitFeedbackBtn = document.getElementById('submitFeedbackBtn');
+            const feedbackStatus = document.getElementById('feedbackStatus');
+            const contextSummary = document.getElementById('contextSummary');
+            const supportPrefix = document.getElementById('supportPrefix');
+            const footerBadge = document.getElementById('footerBadge');
+
+            const currentLangCode = document.getElementById('currentLangCode');
+            const langDropdown = document.getElementById('langDropdown');
+            const langGlobeBtn = document.getElementById('langGlobeBtn');
+            const langOptions = document.querySelectorAll('.lang-option');
+            const ttsToggle = document.getElementById('ttsToggle');
+            const ttsLabel = document.getElementById('ttsLabel');
+
+            const openSurveyBtn = document.getElementById('openSurveyBtn');
+            const surveyModalBackdrop = document.getElementById('surveyModalBackdrop');
+            const surveyModalClose = document.getElementById('surveyModalClose');
+            const surveyModalTitle = document.getElementById('surveyModalTitle');
+            const surveyPlaceholderDesc = document.getElementById('surveyPlaceholderDesc');
+            const submitSurveyBtn = document.getElementById('submitSurveyBtn');
+            const surveyStatus = document.getElementById('surveyStatus');
+
+            const supportsTTS = 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
+            let isTtsEnabled = supportsTTS;
+            let activeLang = 'en';
+            let isSubmitting = false;
+            let speechSessionId = 0;
+            const activeUtterances = [];
+
+            function detectInitialLanguage() {
+                const fragLang = (fragmentCtx.lang || '').toLowerCase().split('-')[0];
+                if (fragLang && Object.prototype.hasOwnProperty.call(I18N, fragLang)) {
+                    return fragLang;
+                }
+
+                const params = new URLSearchParams(window.location.search);
+                const queryLang = (params.get('lang') || '').toLowerCase().split('-')[0];
+                if (queryLang && Object.prototype.hasOwnProperty.call(I18N, queryLang)) {
+                    return queryLang;
+                }
+
+                const systemLangs = Array.isArray(navigator.languages) && navigator.languages.length > 0
+                    ? navigator.languages
+                    : [navigator.language || navigator.userLanguage || 'en'];
+
+                for (let i = 0; i < systemLangs.length; i++) {
+                    const code = String(systemLangs[i] || '').toLowerCase().trim();
+                    const base = code.split('-')[0];
+                    if (Object.prototype.hasOwnProperty.call(I18N, base)) {
+                        return base;
+                    }
+                }
+                return 'en';
+            }
+
+            function stopSpeaking() {
+                speechSessionId += 1;
+                activeUtterances.length = 0;
+                if (supportsTTS) {
+                    window.speechSynthesis.cancel();
+                }
+            }
+
+            function speakText(text) {
+                if (!supportsTTS || !isTtsEnabled || !text) return;
+                stopSpeaking();
+                const sessionId = speechSessionId;
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = I18N[activeLang]?.ttsLang || 'en-US';
+                utterance.rate = 0.95;
+                utterance.onstart = function () {
+                    if (sessionId !== speechSessionId) {
+                        window.speechSynthesis.cancel();
+                    }
+                };
+                activeUtterances.push(utterance);
+                window.speechSynthesis.speak(utterance);
+            }
+
+            function updateToggleUI() {
+                if (!supportsTTS) {
+                    ttsLabel.textContent = 'off';
+                    ttsToggle.classList.remove('active');
+                    return;
+                }
+                ttsLabel.textContent = isTtsEnabled ? 'on' : 'off';
+                ttsToggle.classList.toggle('active', isTtsEnabled);
+            }
+
+            function updateCharCounter() {
+                const len = feedbackText.value.length;
+                charCounter.textContent = len + ' / ' + MAX_CHARS;
+                charCounter.classList.toggle('is-near', len >= 850 && len < MAX_CHARS);
+                charCounter.classList.toggle('is-max', len >= MAX_CHARS);
+            }
+
+            function renderIdentity(pack) {
+                if (fragmentCtx.email) {
+                    identityBadge.textContent = pack.accountPrefix + fragmentCtx.email;
+                    identityBadge.classList.add('is-visible');
+                    if (!contactEmail.value) {
+                        contactEmail.value = fragmentCtx.email;
+                    }
+                } else if (fragmentCtx.uid) {
+                    identityBadge.textContent = pack.uidPrefix + fragmentCtx.uid;
+                    identityBadge.classList.add('is-visible');
+                } else {
+                    identityBadge.textContent = '';
+                    identityBadge.classList.remove('is-visible');
+                }
+
+                const entries = Object.keys(fragmentCtx);
+                if (entries.length > 0) {
+                    contextSummary.textContent = 'Context: ' + entries.map(function (k) {
+                        return k + '=' + fragmentCtx[k];
+                    }).join(' · ');
+                } else {
+                    contextSummary.textContent = 'Context: ' + pack.guestLabel;
+                }
+            }
+
+            function renderLanguage(langKey) {
+                const pack = I18N[langKey] || I18N.en;
+                activeLang = Object.prototype.hasOwnProperty.call(I18N, langKey) ? langKey : 'en';
+                stopSpeaking();
+
+                document.documentElement.lang = pack.htmlLang;
+                document.title = pack.docTitle;
+                pageTitle.textContent = pack.heading;
+                surveyBtnText.textContent = pack.surveyBtn;
+                freeFeedbackTitle.textContent = pack.freeTitle;
+                feedbackTextLabel.textContent = pack.textLabel;
+                feedbackText.placeholder = pack.textPlaceholder;
+                feedbackHint.textContent = pack.textHint;
+                contactEmailLabel.textContent = pack.emailLabel;
+                contactEmail.placeholder = pack.emailPlaceholder;
+                submitFeedbackBtn.textContent = isSubmitting ? pack.submittingBtn : pack.submitBtn;
+
+                surveyModalTitle.textContent = pack.surveyTitle;
+                surveyPlaceholderDesc.textContent = pack.surveyDesc;
+                submitSurveyBtn.textContent = pack.surveySubmit;
+
+                supportPrefix.textContent = pack.supportPrefix;
+                footerBadge.textContent = pack.footerBadge;
+                currentLangCode.textContent = pack.label;
+
+                langOptions.forEach(function (opt) {
+                    opt.classList.toggle('active', opt.getAttribute('data-lang') === activeLang);
+                });
+
+                renderIdentity(pack);
+            }
+
+            function showStatus(el, msg, typeClass) {
+                el.textContent = msg;
+                el.className = 'status-msg is-visible ' + typeClass;
+            }
+
+            async function insertToSupabase(payload) {
+                const res = await fetch(FEEDBACK_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': 'Bearer ' + SUPABASE_KEY,
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify(payload)
+                });
+                if (!res.ok) {
+                    const errText = await res.text().catch(function () { return ''; });
+                    throw new Error('HTTP ' + res.status + ' ' + errText);
+                }
+            }
+
+            feedbackText.addEventListener('input', function () {
+                if (feedbackText.value.length > MAX_CHARS) {
+                    feedbackText.value = feedbackText.value.slice(0, MAX_CHARS);
+                }
+                updateCharCounter();
+            });
+
+            feedbackForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                if (isSubmitting) return;
+
+                const pack = I18N[activeLang] || I18N.en;
+                const content = feedbackText.value.trim();
+                if (!content) {
+                    showStatus(feedbackStatus, pack.emptyWarn, 'is-warn');
+                    feedbackText.focus();
+                    return;
+                }
+
+                const emailVal = contactEmail.value.trim() || fragmentCtx.email || null;
+                const payload = {
+                    feedback_type: 'free_text',
+                    content: content,
+                    contact_email: emailVal,
+                    uid: fragmentCtx.uid || null,
+                    lang: fragmentCtx.lang || activeLang,
+                    app_version: fragmentCtx.version || null,
+                    platform: fragmentCtx.platform || 'web',
+                    os_version: fragmentCtx.os_version || null,
+                    sdk: fragmentCtx.sdk || null,
+                    brand: fragmentCtx.brand || null,
+                    manufacturer: fragmentCtx.manufacturer || null,
+                    model: fragmentCtx.model || null,
+                    page_url: window.location.pathname
+                };
+
+                isSubmitting = true;
+                submitFeedbackBtn.disabled = true;
+                submitFeedbackBtn.textContent = pack.submittingBtn;
+                feedbackStatus.className = 'status-msg';
+
+                try {
+                    await insertToSupabase(payload);
+                    feedbackText.value = '';
+                    updateCharCounter();
+                    showStatus(feedbackStatus, pack.thanksMsg, 'is-thanks');
+                    speakText(pack.thanksMsg);
+                } catch (err) {
+                    console.error('Feedback submit failed:', err);
+                    showStatus(feedbackStatus, pack.errorMsg, 'is-err');
+                } finally {
+                    isSubmitting = false;
+                    submitFeedbackBtn.disabled = false;
+                    const currentPack = I18N[activeLang] || I18N.en;
+                    submitFeedbackBtn.textContent = currentPack.submitBtn;
+                }
+            });
+
+            function openSurveyModal() {
+                surveyStatus.className = 'status-msg';
+                surveyStatus.textContent = '';
+                surveyModalBackdrop.classList.add('is-visible');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeSurveyModal() {
+                surveyModalBackdrop.classList.remove('is-visible');
+                document.body.style.overflow = '';
+            }
+
+            openSurveyBtn.addEventListener('click', openSurveyModal);
+            surveyModalClose.addEventListener('click', closeSurveyModal);
+            surveyModalBackdrop.addEventListener('click', function (e) {
+                if (e.target === surveyModalBackdrop) {
+                    closeSurveyModal();
+                }
+            });
+
+            submitSurveyBtn.addEventListener('click', function () {
+                const pack = I18N[activeLang] || I18N.en;
+                showStatus(surveyStatus, pack.surveyThanks, 'is-thanks');
+                speakText(pack.surveyThanks);
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && surveyModalBackdrop.classList.contains('is-visible')) {
+                    closeSurveyModal();
+                }
+            });
+
+            langGlobeBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const willOpen = !langDropdown.classList.contains('open');
+                langDropdown.classList.toggle('open', willOpen);
+                langGlobeBtn.setAttribute('aria-expanded', String(willOpen));
+            });
+
+            langOptions.forEach(function (opt) {
+                opt.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    const chosen = opt.getAttribute('data-lang');
+                    langDropdown.classList.remove('open');
+                    langGlobeBtn.setAttribute('aria-expanded', 'false');
+                    renderLanguage(chosen);
+                });
+            });
+
+            document.addEventListener('click', function (e) {
+                if (!langDropdown.contains(e.target)) {
+                    langDropdown.classList.remove('open');
+                    langGlobeBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            ttsToggle.addEventListener('click', function () {
+                if (!supportsTTS) return;
+                isTtsEnabled = !isTtsEnabled;
+                updateToggleUI();
+                if (!isTtsEnabled) {
+                    stopSpeaking();
+                }
+            });
+
+            window.addEventListener('pagehide', stopSpeaking);
+            window.addEventListener('beforeunload', stopSpeaking);
+            document.addEventListener('visibilitychange', function () {
+                if (document.hidden) {
+                    stopSpeaking();
+                }
+            });
+
+            updateToggleUI();
+            updateCharCounter();
+            renderLanguage(detectInitialLanguage());
+        })();
+    </script>
+<script src="docs-nav.js"></script>
+</body>
+</html>
