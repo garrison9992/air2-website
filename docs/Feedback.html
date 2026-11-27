@@ -457,13 +457,6 @@
             color: #fee2e2;
         }
 
-        .debug-context-note {
-            font-size: 0.72rem;
-            color: rgba(255, 255, 255, 0.56);
-            line-height: 1.45;
-            word-break: break-all;
-        }
-
         .survey-modal-backdrop {
             position: fixed;
             inset: 0;
@@ -663,7 +656,6 @@
                 </form>
 
                 <div class="status-msg" id="feedbackStatus" role="status" aria-live="polite"></div>
-                <div class="debug-context-note" id="contextSummary"></div>
             </section>
         </div>
 
@@ -726,9 +718,8 @@
                     "surveyDesc": "问卷题项将在后续步骤中补充，表内已预留对应字段。",
                     "surveySubmit": "提交问卷",
                     "surveyThanks": "谢谢您的反馈！",
-                    "accountPrefix": "已识别账号：",
+                    "accountPrefix": "用户账号：",
                     "uidPrefix": "用户 ID：",
-                    "guestLabel": "访客模式",
                     "supportPrefix": "联系支持：",
                     "footerBadge": "Feedback · 2026"
                 },
@@ -754,9 +745,8 @@
                     "surveyDesc": "Survey questions will be added in a later step. Database fields are already prepared.",
                     "surveySubmit": "Submit Survey",
                     "surveyThanks": "Thank you for your feedback!",
-                    "accountPrefix": "Signed-in context: ",
+                    "accountPrefix": "Account: ",
                     "uidPrefix": "User ID: ",
-                    "guestLabel": "Guest mode",
                     "supportPrefix": "Support: ",
                     "footerBadge": "Feedback · 2026"
                 },
@@ -782,9 +772,8 @@
                     "surveyDesc": "Вопросы опроса будут добавлены позже. Поля в базе данных уже подготовлены.",
                     "surveySubmit": "Отправить опрос",
                     "surveyThanks": "Спасибо за ваш отзыв!",
-                    "accountPrefix": "Контекст аккаунта: ",
+                    "accountPrefix": "Аккаунт: ",
                     "uidPrefix": "ID пользователя: ",
-                    "guestLabel": "Гостевой режим",
                     "supportPrefix": "Поддержка: ",
                     "footerBadge": "Feedback · 2026"
                 },
@@ -810,9 +799,8 @@
                     "surveyDesc": "Les questions du sondage seront ajoutées prochainement.",
                     "surveySubmit": "Envoyer le sondage",
                     "surveyThanks": "Merci pour votre retour !",
-                    "accountPrefix": "Compte détecté : ",
+                    "accountPrefix": "Compte : ",
                     "uidPrefix": "ID utilisateur : ",
-                    "guestLabel": "Mode invité",
                     "supportPrefix": "Support : ",
                     "footerBadge": "Feedback · 2026"
                 },
@@ -838,9 +826,8 @@
                     "surveyDesc": "Las preguntas de la encuesta se añadirán más adelante.",
                     "surveySubmit": "Enviar encuesta",
                     "surveyThanks": "¡Gracias por tus comentarios!",
-                    "accountPrefix": "Cuenta detectada: ",
+                    "accountPrefix": "Cuenta: ",
                     "uidPrefix": "ID de usuario: ",
-                    "guestLabel": "Modo invitado",
                     "supportPrefix": "Soporte: ",
                     "footerBadge": "Feedback · 2026"
                 }
@@ -874,7 +861,6 @@
             const contactEmail = document.getElementById('contactEmail');
             const submitFeedbackBtn = document.getElementById('submitFeedbackBtn');
             const feedbackStatus = document.getElementById('feedbackStatus');
-            const contextSummary = document.getElementById('contextSummary');
             const supportPrefix = document.getElementById('supportPrefix');
             const footerBadge = document.getElementById('footerBadge');
 
@@ -980,15 +966,6 @@
                 } else {
                     identityBadge.textContent = '';
                     identityBadge.classList.remove('is-visible');
-                }
-
-                const entries = Object.keys(fragmentCtx);
-                if (entries.length > 0) {
-                    contextSummary.textContent = 'Context: ' + entries.map(function (k) {
-                        return k + '=' + fragmentCtx[k];
-                    }).join(' · ');
-                } else {
-                    contextSummary.textContent = 'Context: ' + pack.guestLabel;
                 }
             }
 
