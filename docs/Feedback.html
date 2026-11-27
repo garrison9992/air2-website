@@ -269,25 +269,35 @@
             color: #ffffff;
         }
 
-        .survey-trigger-btn {
-            display: inline-flex;
+        .survey-bar-btn {
+            width: 100%;
+            display: flex;
             align-items: center;
-            gap: 6px;
-            background: rgba(255, 255, 255, 0.12);
-            border: 1px solid rgba(255, 255, 255, 0.32);
+            justify-content: space-between;
+            gap: 12px;
+            background: rgba(0, 0, 0, 0.28);
+            border: 1px solid rgba(255, 255, 255, 0.24);
             color: #ffffff;
-            font-size: 0.78rem;
-            font-weight: 500;
-            padding: 7px 14px;
-            border-radius: 999px;
+            font-family: inherit;
+            font-size: 0.94rem;
+            font-weight: 600;
+            padding: 14px 18px;
+            border-radius: 14px;
             cursor: pointer;
+            text-align: left;
             transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
         }
 
-        .survey-trigger-btn:hover {
-            background: rgba(255, 255, 255, 0.22);
-            border-color: #ffffff;
+        .survey-bar-btn:hover {
+            background: rgba(255, 255, 255, 0.14);
+            border-color: rgba(255, 255, 255, 0.55);
             transform: translateY(-1px);
+        }
+
+        .survey-bar-sub {
+            font-size: 0.78rem;
+            font-weight: 400;
+            color: var(--text-muted);
         }
 
         .panel-card {
@@ -422,7 +432,7 @@
         }
 
         .submit-btn:disabled {
-            opacity: 0.55;
+            opacity: 0.45;
             cursor: not-allowed;
         }
 
@@ -479,12 +489,12 @@
 
         .survey-modal-dialog {
             width: 100%;
-            max-width: 560px;
-            max-height: 86vh;
-            max-height: 86dvh;
+            max-width: 540px;
+            max-height: 88vh;
+            max-height: 88dvh;
             display: flex;
             flex-direction: column;
-            background: rgba(24, 24, 28, 0.9);
+            background: rgba(24, 24, 28, 0.95);
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
             border: 1px solid rgba(255, 255, 255, 0.28);
@@ -533,14 +543,145 @@
             gap: 14px;
         }
 
-        .survey-placeholder-box {
-            border-radius: 10px;
-            border: 1px dashed rgba(255, 255, 255, 0.26);
+        .survey-progress-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .survey-progress-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.72);
+        }
+
+        .survey-progress-track {
+            width: 100%;
+            height: 4px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.14);
+            overflow: hidden;
+        }
+
+        .survey-progress-fill {
+            height: 100%;
+            width: 20%;
+            border-radius: 999px;
+            background: var(--accent-ok);
+            transition: width 0.25s ease;
+        }
+
+        .survey-single-card {
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: rgba(255, 255, 255, 0.04);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            touch-action: pan-y;
+        }
+
+        .survey-question-title {
+            font-size: 0.96rem;
+            font-weight: 600;
+            line-height: 1.45;
+            color: #ffffff;
+        }
+
+        .survey-options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .survey-option-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: left;
             background: rgba(255, 255, 255, 0.05);
-            padding: 12px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 10px;
+            padding: 10px 12px;
+            color: rgba(255, 255, 255, 0.92);
+            font-family: inherit;
+            font-size: 0.84rem;
+            line-height: 1.4;
+            cursor: pointer;
+            transition: background-color 0.18s ease, border-color 0.18s ease;
+        }
+
+        .survey-option-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.42);
+        }
+
+        .survey-option-btn.is-selected {
+            background: rgba(154, 230, 180, 0.18);
+            border-color: rgba(154, 230, 180, 0.75);
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* 选项左侧圆圈单选框 */
+        .survey-radio-circle {
+            flex-shrink: 0;
+            width: 18px;
+            height: 18px;
+            border-radius: 999px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.18s ease, background-color 0.18s ease;
+        }
+
+        .survey-option-btn.is-selected .survey-radio-circle {
+            border-color: var(--accent-ok);
+            background: var(--accent-ok);
+        }
+
+        .survey-option-btn.is-selected .survey-radio-circle::after {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            background: #141418;
+        }
+
+        .survey-nav-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 2px;
+        }
+
+        .survey-nav-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            color: #ffffff;
+            font-family: inherit;
             font-size: 0.82rem;
-            line-height: 1.55;
-            color: rgba(255, 255, 255, 0.82);
+            font-weight: 500;
+            padding: 9px 16px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: background-color 0.18s ease, border-color 0.18s ease, opacity 0.18s ease;
+        }
+
+        .survey-nav-btn:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: #ffffff;
+        }
+
+        .survey-nav-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
         }
 
         .page-footer {
@@ -624,10 +765,12 @@
         <div class="page-body">
             <div class="page-header-row">
                 <h2 id="pageTitle">Feedback</h2>
-                <button type="button" class="survey-trigger-btn" id="openSurveyBtn">
-                    <span id="surveyBtnText">Quick Survey ↗</span>
-                </button>
             </div>
+
+            <button type="button" class="survey-bar-btn" id="openSurveyBtn">
+                <span id="surveyBtnText">Quick Survey (5 questions)</span>
+                <span class="survey-bar-sub" id="surveyBarSub">~15s · Tap to open ↗</span>
+            </button>
 
             <section class="panel-card" aria-labelledby="freeFeedbackTitle">
                 <div class="panel-head">
@@ -669,7 +812,7 @@
         </footer>
     </div>
 
-    <!-- 调查问卷弹出框 -->
+    <!-- 单题切换式调查问卷弹出框 -->
     <div class="survey-modal-backdrop" id="surveyModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="surveyModalTitle">
         <div class="survey-modal-dialog" id="surveyModalDialog">
             <div class="survey-modal-header">
@@ -677,10 +820,24 @@
                 <button type="button" class="survey-modal-close" id="surveyModalClose" aria-label="Close">×</button>
             </div>
             <div class="survey-modal-body">
-                <div class="survey-placeholder-box" id="surveyPlaceholderDesc">
-                    Survey questions will be added here in a future step.
+                <div class="survey-progress-wrap">
+                    <div class="survey-progress-meta">
+                        <span id="surveyStepText">Question 1 / 5</span>
+                        <span id="surveySwipeHint">Swipe left/right or use buttons</span>
+                    </div>
+                    <div class="survey-progress-track">
+                        <div class="survey-progress-fill" id="surveyProgressFill"></div>
+                    </div>
                 </div>
-                <button type="button" class="submit-btn" id="submitSurveyBtn">Submit Survey</button>
+
+                <div class="survey-single-card" id="surveySingleCard"></div>
+
+                <div class="survey-nav-row">
+                    <button type="button" class="survey-nav-btn" id="prevQuestionBtn">Previous</button>
+                    <button type="button" class="survey-nav-btn" id="nextQuestionBtn">Next</button>
+                    <button type="button" class="submit-btn" id="submitSurveyBtn" style="display:none;">Submit Survey</button>
+                </div>
+
                 <div class="status-msg" id="surveyStatus" role="status" aria-live="polite"></div>
             </div>
         </div>
@@ -695,6 +852,247 @@
             const MAX_CHARS = 1000;
             const PARAM_KEYS = ['lang', 'email', 'uid', 'version', 'platform', 'os_version', 'sdk', 'brand', 'manufacturer', 'model'];
 
+            // === [SURVEY_QUESTIONS_START] ===
+            // 以后只修改下面 SURVEY_QUESTIONS 里的题目与选项即可，无需改动页面其他功能代码
+            const SURVEY_QUESTIONS = {
+                zh: [
+                    {
+                        id: 'q1',
+                        q: '1. 你这次主要试了哪个功能？',
+                        options: {
+                            A: 'A. 语音记事 / 记灵感',
+                            B: 'B. 语音设提醒 / 闹钟',
+                            C: 'C. 随便看看，还没细用'
+                        }
+                    },
+                    {
+                        id: 'q2',
+                        q: '2. 它听懂你的话、定准时间了吗？',
+                        options: {
+                            A: 'A. 很准，不用改就能用',
+                            B: 'B. 大概能懂，偶尔要手动改',
+                            C: 'C. 不太准，经常听错或定错'
+                        }
+                    },
+                    {
+                        id: 'q3',
+                        q: '3. 刚上手用的时候，顺畅吗？',
+                        options: {
+                            A: 'A. 很顺畅，一看就会',
+                            B: 'B. 权限或提醒设置没太看懂',
+                            C: 'C. 遇到卡顿、报错或没反应'
+                        }
+                    },
+                    {
+                        id: 'q4',
+                        q: '4. 你最想在什么时候用它？',
+                        options: {
+                            A: 'A. 开车、走路不方便打字时',
+                            B: 'B. 怕忘事，想开口随手记下时',
+                            C: 'C. 替代现在用的闹钟或日历'
+                        }
+                    },
+                    {
+                        id: 'q5',
+                        q: '5. 接下来你还会继续用吗？',
+                        options: {
+                            A: 'A. 会，打算留着日常用',
+                            B: 'B. 再看看，等后续更新',
+                            C: 'C. 暂时不用，不太适合我'
+                        }
+                    }
+                ],
+                en: [
+                    {
+                        id: 'q1',
+                        q: '1. Which feature did you try most?',
+                        options: {
+                            A: 'A. Voice notes / quick ideas',
+                            B: 'B. Voice reminders / alarms',
+                            C: 'C. Just browsing for now'
+                        }
+                    },
+                    {
+                        id: 'q2',
+                        q: '2. Did it catch your words and time right?',
+                        options: {
+                            A: 'A. Spot on, ready to use',
+                            B: 'B. Mostly right, minor edits needed',
+                            C: 'C. Often off on words or time'
+                        }
+                    },
+                    {
+                        id: 'q3',
+                        q: '3. How smooth was getting started?',
+                        options: {
+                            A: 'A. Smooth and clear right away',
+                            B: 'B. Permissions or alerts were unclear',
+                            C: 'C. Hit lag, errors, or no response'
+                        }
+                    },
+                    {
+                        id: 'q4',
+                        q: '4. When would you use voice capture most?',
+                        options: {
+                            A: 'A. Driving or walking hands-free',
+                            B: 'B. Capturing thoughts before forgetting',
+                            C: 'C. Replacing alarms or calendar apps'
+                        }
+                    },
+                    {
+                        id: 'q5',
+                        q: '5. Will you keep using AIR²Aim?',
+                        options: {
+                            A: 'A. Yes, for daily use',
+                            B: 'B. Maybe later after updates',
+                            C: 'C. Not for me right now'
+                        }
+                    }
+                ],
+                ru: [
+                    {
+                        id: 'q1',
+                        q: '1. Какую функцию вы попробовали в первую очередь?',
+                        options: {
+                            A: 'A. Голосовые заметки и идеи',
+                            B: 'B. Напоминания и будильники голосом',
+                            C: 'C. Пока просто посмотрел интерфейс'
+                        }
+                    },
+                    {
+                        id: 'q2',
+                        q: '2. Точно ли поняло слова и время?',
+                        options: {
+                            A: 'A. Очень точно, править не нужно',
+                            B: 'B. В целом понятно, изредка правлю',
+                            C: 'C. Часто ошибается в словах или времени'
+                        }
+                    },
+                    {
+                        id: 'q3',
+                        q: '3. Насколько удобно было начать?',
+                        options: {
+                            A: 'A. Всё понятно с первого взгляда',
+                            B: 'B. Не сразу разобрался с правами/уведомлениями',
+                            C: 'C. Были тормоза, ошибки или зависания'
+                        }
+                    },
+                    {
+                        id: 'q4',
+                        q: '4. Когда удобнее всего говорить, а не печатать?',
+                        options: {
+                            A: 'A. За рулём или на ходу',
+                            B: 'B. Чтобы сразу записать мысль и не забыть',
+                            C: 'C. Вместо будильника или календаря'
+                        }
+                    },
+                    {
+                        id: 'q5',
+                        q: '5. Продолжите пользоваться дальше?',
+                        options: {
+                            A: 'A. Да, оставлю на каждый день',
+                            B: 'B. Посмотрю после обновлений',
+                            C: 'C. Пока нет, не совсем мой формат'
+                        }
+                    }
+                ],
+                fr: [
+                    {
+                        id: 'q1',
+                        q: '1. Quelle fonction avez-vous surtout testée ?',
+                        options: {
+                            A: 'A. Notes vocales / idées rapides',
+                            B: 'B. Rappels / alarmes à la voix',
+                            C: 'C. Juste un coup d’œil pour l’instant'
+                        }
+                    },
+                    {
+                        id: 'q2',
+                        q: '2. A-t-il bien compris vos mots et l’heure ?',
+                        options: {
+                            A: 'A. Très précis, rien à retoucher',
+                            B: 'B. Globalement bon, quelques retouches',
+                            C: 'C. Souvent imprécis sur le texte ou l’heure'
+                        }
+                    },
+                    {
+                        id: 'q3',
+                        q: '3. La prise en main a-t-elle été fluide ?',
+                        options: {
+                            A: 'A. Fluide et intuitif dès le début',
+                            B: 'B. Autorisations ou rappels peu clairs',
+                            C: 'C. Ralentissements, bugs ou aucune réponse'
+                        }
+                    },
+                    {
+                        id: 'q4',
+                        q: '4. Quand en auriez-vous le plus besoin ?',
+                        options: {
+                            A: 'A. En voiture ou en marchant sans les mains',
+                            B: 'B. Pour noter une idée avant d’oublier',
+                            C: 'C. À la place d’une alarme ou d’un agenda'
+                        }
+                    },
+                    {
+                        id: 'q5',
+                        q: '5. Allez-vous continuer à l’utiliser ?',
+                        options: {
+                            A: 'A. Oui, au quotidien',
+                            B: 'B. À voir après les prochaines mises à jour',
+                            C: 'C. Pas pour l’instant'
+                        }
+                    }
+                ],
+                es: [
+                    {
+                        id: 'q1',
+                        q: '1. ¿Qué función probaste principalmente?',
+                        options: {
+                            A: 'A. Notas de voz o ideas rápidas',
+                            B: 'B. Recordatorios o alarmas por voz',
+                            C: 'C. Solo estuve mirando por encima'
+                        }
+                    },
+                    {
+                        id: 'q2',
+                        q: '2. ¿Entendió bien lo que dijiste y la hora?',
+                        options: {
+                            A: 'A. Muy preciso, listo para usar',
+                            B: 'B. Bastante bien, algún retoque ocasional',
+                            C: 'C. Suele fallar en palabras o en la hora'
+                        }
+                    },
+                    {
+                        id: 'q3',
+                        q: '3. ¿Qué tal fue empezar a usarlo?',
+                        options: {
+                            A: 'A. Fluido y claro desde el inicio',
+                            B: 'B. Dudas con permisos o avisos',
+                            C: 'C. Lentitud, errores o sin respuesta'
+                        }
+                    },
+                    {
+                        id: 'q4',
+                        q: '4. ¿Cuándo lo usarías más?',
+                        options: {
+                            A: 'A. Conduciendo o caminando sin manos',
+                            B: 'B. Para anotar algo antes de olvidarlo',
+                            C: 'C. En lugar de alarmas o calendario'
+                        }
+                    },
+                    {
+                        id: 'q5',
+                        q: '5. ¿Seguirás usando AIR²Aim?',
+                        options: {
+                            A: 'A. Sí, para el día a día',
+                            B: 'B. Veré más adelante con mejoras',
+                            C: 'C. Por ahora no, no encaja conmigo'
+                        }
+                    }
+                ]
+            };
+            // === [SURVEY_QUESTIONS_END] ===
+
             const I18N = {
                 "zh": {
                     "htmlLang": "zh",
@@ -702,7 +1100,8 @@
                     "label": "中文",
                     "docTitle": "意见反馈 — AIR²Aim",
                     "heading": "意见反馈",
-                    "surveyBtn": "调查问卷 ↗",
+                    "surveyBtn": "调查问卷（5题）",
+                    "surveyBarSub": "约15秒 · 点击填写 ↗",
                     "freeTitle": "自由填写意见反馈",
                     "textLabel": "您的想法、建议或遇到的问题（最多 1000 字）",
                     "textPlaceholder": "请写下您的意见或建议……",
@@ -712,12 +1111,17 @@
                     "submitBtn": "提交反馈",
                     "submittingBtn": "正在提交...",
                     "emptyWarn": "请先填写反馈内容后再提交。",
+                    "surveyIncompleteWarn": "请先完成全部 5 道选择题后再提交。",
                     "thanksMsg": "谢谢您的反馈！我们已收到您的留言。",
                     "errorMsg": "提交未成功，请检查网络后重试，或发邮件至 support@air2aim.com。",
-                    "surveyTitle": "调查问卷",
-                    "surveyDesc": "问卷题项将在后续步骤中补充，表内已预留对应字段。",
+                    "surveyTitle": "初次体验调查问卷",
+                    "surveyStepPrefix": "第 ",
+                    "surveyStepSuffix": " / 5 题",
+                    "surveySwipeHint": "可左右滑动或点下方按钮翻页",
+                    "prevBtn": "上一题",
+                    "nextBtn": "下一题",
                     "surveySubmit": "提交问卷",
-                    "surveyThanks": "谢谢您的反馈！",
+                    "surveyThanks": "谢谢您的反馈！问卷已收到。",
                     "accountPrefix": "用户账号：",
                     "uidPrefix": "用户 ID：",
                     "supportPrefix": "联系支持：",
@@ -729,7 +1133,8 @@
                     "label": "EN",
                     "docTitle": "Feedback — AIR²Aim",
                     "heading": "Feedback",
-                    "surveyBtn": "Quick Survey ↗",
+                    "surveyBtn": "Quick Survey (5 questions)",
+                    "surveyBarSub": "~15s · Tap to open ↗",
                     "freeTitle": "Free-form Feedback",
                     "textLabel": "Your comments, suggestions, or issues (up to 1,000 characters)",
                     "textPlaceholder": "Share your thoughts or feedback...",
@@ -739,12 +1144,17 @@
                     "submitBtn": "Submit Feedback",
                     "submittingBtn": "Submitting...",
                     "emptyWarn": "Please enter your feedback before submitting.",
+                    "surveyIncompleteWarn": "Please answer all 5 questions before submitting.",
                     "thanksMsg": "Thank you for your feedback! Your message has been received.",
                     "errorMsg": "Submission failed. Please check your connection and try again, or email support@air2aim.com.",
-                    "surveyTitle": "Quick Survey",
-                    "surveyDesc": "Survey questions will be added in a later step. Database fields are already prepared.",
+                    "surveyTitle": "First-Time Experience Survey",
+                    "surveyStepPrefix": "Question ",
+                    "surveyStepSuffix": " / 5",
+                    "surveySwipeHint": "Swipe left/right or use buttons below",
+                    "prevBtn": "Previous",
+                    "nextBtn": "Next",
                     "surveySubmit": "Submit Survey",
-                    "surveyThanks": "Thank you for your feedback!",
+                    "surveyThanks": "Thank you for your feedback! Survey received.",
                     "accountPrefix": "Account: ",
                     "uidPrefix": "User ID: ",
                     "supportPrefix": "Support: ",
@@ -756,7 +1166,8 @@
                     "label": "RU",
                     "docTitle": "Обратная связь — AIR²Aim",
                     "heading": "Обратная связь",
-                    "surveyBtn": "Опрос ↗",
+                    "surveyBtn": "Опрос (5 вопросов)",
+                    "surveyBarSub": "~15 сек · Открыть ↗",
                     "freeTitle": "Свободный отзыв",
                     "textLabel": "Ваши идеи, предложения или замечания (до 1000 символов)",
                     "textPlaceholder": "Напишите ваш отзыв...",
@@ -766,12 +1177,17 @@
                     "submitBtn": "Отправить отзыв",
                     "submittingBtn": "Отправка...",
                     "emptyWarn": "Пожалуйста, введите текст отзыва перед отправкой.",
+                    "surveyIncompleteWarn": "Пожалуйста, ответьте на все 5 вопросов перед отправкой.",
                     "thanksMsg": "Спасибо за ваш отзыв! Ваше сообщение получено.",
                     "errorMsg": "Не удалось отправить. Проверьте подключение и повторите попытку или напишите на support@air2aim.com.",
-                    "surveyTitle": "Быстрый опрос",
-                    "surveyDesc": "Вопросы опроса будут добавлены позже. Поля в базе данных уже подготовлены.",
+                    "surveyTitle": "Опрос о первом опыте",
+                    "surveyStepPrefix": "Вопрос ",
+                    "surveyStepSuffix": " / 5",
+                    "surveySwipeHint": "Свайпайте влево/вправо или жмите кнопки",
+                    "prevBtn": "Назад",
+                    "nextBtn": "Далее",
                     "surveySubmit": "Отправить опрос",
-                    "surveyThanks": "Спасибо за ваш отзыв!",
+                    "surveyThanks": "Спасибо за ваш отзыв! Опрос отправлен.",
                     "accountPrefix": "Аккаунт: ",
                     "uidPrefix": "ID пользователя: ",
                     "supportPrefix": "Поддержка: ",
@@ -783,7 +1199,8 @@
                     "label": "FR",
                     "docTitle": "Retour d’expérience — AIR²Aim",
                     "heading": "Retour d’expérience",
-                    "surveyBtn": "Sondage ↗",
+                    "surveyBtn": "Sondage rapide (5 questions)",
+                    "surveyBarSub": "~15 s · Ouvrir ↗",
                     "freeTitle": "Commentaire libre",
                     "textLabel": "Vos remarques, suggestions ou problèmes (1 000 caractères max.)",
                     "textPlaceholder": "Écrivez votre message...",
@@ -793,12 +1210,17 @@
                     "submitBtn": "Envoyer",
                     "submittingBtn": "Envoi...",
                     "emptyWarn": "Veuillez saisir un message avant l’envoi.",
+                    "surveyIncompleteWarn": "Veuillez répondre aux 5 questions avant l’envoi.",
                     "thanksMsg": "Merci pour votre retour ! Votre message a bien été enregistré.",
                     "errorMsg": "Échec de l’envoi. Vérifiez votre connexion et réessayez, ou écrivez à support@air2aim.com.",
-                    "surveyTitle": "Sondage rapide",
-                    "surveyDesc": "Les questions du sondage seront ajoutées prochainement.",
+                    "surveyTitle": "Sondage découverte",
+                    "surveyStepPrefix": "Question ",
+                    "surveyStepSuffix": " / 5",
+                    "surveySwipeHint": "Glissez à gauche/droite ou utilisez les boutons",
+                    "prevBtn": "Précédent",
+                    "nextBtn": "Suivant",
                     "surveySubmit": "Envoyer le sondage",
-                    "surveyThanks": "Merci pour votre retour !",
+                    "surveyThanks": "Merci pour votre retour ! Sondage envoyé.",
                     "accountPrefix": "Compte : ",
                     "uidPrefix": "ID utilisateur : ",
                     "supportPrefix": "Support : ",
@@ -810,7 +1232,8 @@
                     "label": "ES",
                     "docTitle": "Comentarios — AIR²Aim",
                     "heading": "Comentarios",
-                    "surveyBtn": "Encuesta ↗",
+                    "surveyBtn": "Encuesta rápida (5 preguntas)",
+                    "surveyBarSub": "~15 s · Abrir ↗",
                     "freeTitle": "Comentarios libres",
                     "textLabel": "Tus ideas, sugerencias o problemas (máx. 1 000 caracteres)",
                     "textPlaceholder": "Escribe tus comentarios...",
@@ -820,12 +1243,17 @@
                     "submitBtn": "Enviar comentario",
                     "submittingBtn": "Enviando...",
                     "emptyWarn": "Escribe un comentario antes de enviar.",
+                    "surveyIncompleteWarn": "Responde las 5 preguntas antes de enviar.",
                     "thanksMsg": "¡Gracias por tus comentarios! Hemos recibido tu mensaje.",
                     "errorMsg": "Error al enviar. Revisa tu conexión e inténtalo de nuevo, o escribe a support@air2aim.com.",
-                    "surveyTitle": "Encuesta rápida",
-                    "surveyDesc": "Las preguntas de la encuesta se añadirán más adelante.",
+                    "surveyTitle": "Encuesta de primera experiencia",
+                    "surveyStepPrefix": "Pregunta ",
+                    "surveyStepSuffix": " / 5",
+                    "surveySwipeHint": "Desliza izq./der. o usa los botones",
+                    "prevBtn": "Anterior",
+                    "nextBtn": "Siguiente",
                     "surveySubmit": "Enviar encuesta",
-                    "surveyThanks": "¡Gracias por tus comentarios!",
+                    "surveyThanks": "¡Gracias por tus comentarios! Encuesta recibida.",
                     "accountPrefix": "Cuenta: ",
                     "uidPrefix": "ID de usuario: ",
                     "supportPrefix": "Soporte: ",
@@ -850,6 +1278,7 @@
 
             const pageTitle = document.getElementById('pageTitle');
             const surveyBtnText = document.getElementById('surveyBtnText');
+            const surveyBarSub = document.getElementById('surveyBarSub');
             const freeFeedbackTitle = document.getElementById('freeFeedbackTitle');
             const identityBadge = document.getElementById('identityBadge');
             const feedbackForm = document.getElementById('feedbackForm');
@@ -875,16 +1304,24 @@
             const surveyModalBackdrop = document.getElementById('surveyModalBackdrop');
             const surveyModalClose = document.getElementById('surveyModalClose');
             const surveyModalTitle = document.getElementById('surveyModalTitle');
-            const surveyPlaceholderDesc = document.getElementById('surveyPlaceholderDesc');
+            const surveyStepText = document.getElementById('surveyStepText');
+            const surveySwipeHint = document.getElementById('surveySwipeHint');
+            const surveyProgressFill = document.getElementById('surveyProgressFill');
+            const surveySingleCard = document.getElementById('surveySingleCard');
+            const prevQuestionBtn = document.getElementById('prevQuestionBtn');
+            const nextQuestionBtn = document.getElementById('nextQuestionBtn');
             const submitSurveyBtn = document.getElementById('submitSurveyBtn');
             const surveyStatus = document.getElementById('surveyStatus');
 
             const supportsTTS = 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
             let isTtsEnabled = supportsTTS;
             let activeLang = 'en';
+            let currentQuestionIndex = 0;
             let isSubmitting = false;
+            let isSurveySubmitting = false;
             let speechSessionId = 0;
             const activeUtterances = [];
+            const selectedSurveyAnswers = {};
 
             function detectInitialLanguage() {
                 const fragLang = (fragmentCtx.lang || '').toLowerCase().split('-')[0];
@@ -969,6 +1406,68 @@
                 }
             }
 
+            function renderCurrentQuestion() {
+                const pack = I18N[activeLang] || I18N.en;
+                const questions = SURVEY_QUESTIONS[activeLang] || SURVEY_QUESTIONS.en;
+                const total = questions.length;
+                if (currentQuestionIndex < 0) currentQuestionIndex = 0;
+                if (currentQuestionIndex >= total) currentQuestionIndex = total - 1;
+
+                const item = questions[currentQuestionIndex];
+                surveyStepText.textContent = pack.surveyStepPrefix + (currentQuestionIndex + 1) + pack.surveyStepSuffix;
+                surveySwipeHint.textContent = pack.surveySwipeHint;
+                surveyProgressFill.style.width = (((currentQuestionIndex + 1) / total) * 100) + '%';
+
+                surveySingleCard.innerHTML = '';
+
+                const title = document.createElement('div');
+                title.className = 'survey-question-title';
+                title.textContent = item.q;
+                surveySingleCard.appendChild(title);
+
+                const optList = document.createElement('div');
+                optList.className = 'survey-options-list';
+
+                ['A', 'B', 'C'].forEach(function (optKey) {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'survey-option-btn';
+                    if (selectedSurveyAnswers[item.id] === optKey) {
+                        btn.classList.add('is-selected');
+                    }
+
+                    const circle = document.createElement('span');
+                    circle.className = 'survey-radio-circle';
+                    circle.setAttribute('aria-hidden', 'true');
+
+                    const textSpan = document.createElement('span');
+                    textSpan.textContent = item.options[optKey];
+
+                    btn.appendChild(circle);
+                    btn.appendChild(textSpan);
+
+                    btn.addEventListener('click', function () {
+                        selectedSurveyAnswers[item.id] = optKey;
+                        optList.querySelectorAll('.survey-option-btn').forEach(function (b) {
+                            b.classList.remove('is-selected');
+                        });
+                        btn.classList.add('is-selected');
+                    });
+
+                    optList.appendChild(btn);
+                });
+
+                surveySingleCard.appendChild(optList);
+
+                prevQuestionBtn.textContent = pack.prevBtn;
+                nextQuestionBtn.textContent = pack.nextBtn;
+                prevQuestionBtn.disabled = currentQuestionIndex === 0;
+
+                const isLast = currentQuestionIndex === total - 1;
+                nextQuestionBtn.style.display = isLast ? 'none' : 'inline-block';
+                submitSurveyBtn.style.display = isLast ? 'inline-block' : 'none';
+            }
+
             function renderLanguage(langKey) {
                 const pack = I18N[langKey] || I18N.en;
                 activeLang = Object.prototype.hasOwnProperty.call(I18N, langKey) ? langKey : 'en';
@@ -978,6 +1477,7 @@
                 document.title = pack.docTitle;
                 pageTitle.textContent = pack.heading;
                 surveyBtnText.textContent = pack.surveyBtn;
+                surveyBarSub.textContent = pack.surveyBarSub;
                 freeFeedbackTitle.textContent = pack.freeTitle;
                 feedbackTextLabel.textContent = pack.textLabel;
                 feedbackText.placeholder = pack.textPlaceholder;
@@ -987,8 +1487,7 @@
                 submitFeedbackBtn.textContent = isSubmitting ? pack.submittingBtn : pack.submitBtn;
 
                 surveyModalTitle.textContent = pack.surveyTitle;
-                surveyPlaceholderDesc.textContent = pack.surveyDesc;
-                submitSurveyBtn.textContent = pack.surveySubmit;
+                submitSurveyBtn.textContent = isSurveySubmitting ? pack.submittingBtn : pack.surveySubmit;
 
                 supportPrefix.textContent = pack.supportPrefix;
                 footerBadge.textContent = pack.footerBadge;
@@ -999,6 +1498,7 @@
                 });
 
                 renderIdentity(pack);
+                renderCurrentQuestion();
             }
 
             function showStatus(el, msg, typeClass) {
@@ -1084,6 +1584,8 @@
             function openSurveyModal() {
                 surveyStatus.className = 'status-msg';
                 surveyStatus.textContent = '';
+                currentQuestionIndex = 0;
+                renderCurrentQuestion();
                 surveyModalBackdrop.classList.add('is-visible');
                 document.body.style.overflow = 'hidden';
             }
@@ -1093,6 +1595,45 @@
                 document.body.style.overflow = '';
             }
 
+            prevQuestionBtn.addEventListener('click', function () {
+                if (currentQuestionIndex > 0) {
+                    currentQuestionIndex -= 1;
+                    surveyStatus.className = 'status-msg';
+                    renderCurrentQuestion();
+                }
+            });
+
+            nextQuestionBtn.addEventListener('click', function () {
+                const questions = SURVEY_QUESTIONS[activeLang] || SURVEY_QUESTIONS.en;
+                if (currentQuestionIndex < questions.length - 1) {
+                    currentQuestionIndex += 1;
+                    surveyStatus.className = 'status-msg';
+                    renderCurrentQuestion();
+                }
+            });
+
+            // 触摸左右滑动切题
+            let touchStartX = 0;
+            let touchStartY = 0;
+            surveySingleCard.addEventListener('touchstart', function (e) {
+                if (!e.touches || e.touches.length === 0) return;
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+            }, { passive: true });
+
+            surveySingleCard.addEventListener('touchend', function (e) {
+                if (!e.changedTouches || e.changedTouches.length === 0) return;
+                const dx = e.changedTouches[0].clientX - touchStartX;
+                const dy = e.changedTouches[0].clientY - touchStartY;
+                if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+                    if (dx < 0) {
+                        nextQuestionBtn.click();
+                    } else {
+                        prevQuestionBtn.click();
+                    }
+                }
+            }, { passive: true });
+
             openSurveyBtn.addEventListener('click', openSurveyModal);
             surveyModalClose.addEventListener('click', closeSurveyModal);
             surveyModalBackdrop.addEventListener('click', function (e) {
@@ -1101,10 +1642,70 @@
                 }
             });
 
-            submitSurveyBtn.addEventListener('click', function () {
+            submitSurveyBtn.addEventListener('click', async function () {
+                if (isSurveySubmitting) return;
                 const pack = I18N[activeLang] || I18N.en;
-                showStatus(surveyStatus, pack.surveyThanks, 'is-thanks');
-                speakText(pack.surveyThanks);
+                const questions = SURVEY_QUESTIONS[activeLang] || SURVEY_QUESTIONS.en;
+
+                const firstUnansweredIndex = questions.findIndex(function (item) {
+                    return !selectedSurveyAnswers[item.id];
+                });
+
+                if (firstUnansweredIndex !== -1) {
+                    currentQuestionIndex = firstUnansweredIndex;
+                    renderCurrentQuestion();
+                    showStatus(surveyStatus, pack.surveyIncompleteWarn, 'is-warn');
+                    return;
+                }
+
+                const summaryLines = questions.map(function (item) {
+                    const chosenKey = selectedSurveyAnswers[item.id];
+                    return item.q + ' -> ' + item.options[chosenKey];
+                });
+
+                const emailVal = contactEmail.value.trim() || fragmentCtx.email || null;
+                const payload = {
+                    feedback_type: 'survey',
+                    content: summaryLines.join('\n'),
+                    survey_answers: {
+                        q1: selectedSurveyAnswers.q1,
+                        q2: selectedSurveyAnswers.q2,
+                        q3: selectedSurveyAnswers.q3,
+                        q4: selectedSurveyAnswers.q4,
+                        q5: selectedSurveyAnswers.q5,
+                        ui_lang: activeLang
+                    },
+                    contact_email: emailVal,
+                    uid: fragmentCtx.uid || null,
+                    lang: fragmentCtx.lang || activeLang,
+                    app_version: fragmentCtx.version || null,
+                    platform: fragmentCtx.platform || 'web',
+                    os_version: fragmentCtx.os_version || null,
+                    sdk: fragmentCtx.sdk || null,
+                    brand: fragmentCtx.brand || null,
+                    manufacturer: fragmentCtx.manufacturer || null,
+                    model: fragmentCtx.model || null,
+                    page_url: window.location.pathname
+                };
+
+                isSurveySubmitting = true;
+                submitSurveyBtn.disabled = true;
+                submitSurveyBtn.textContent = pack.submittingBtn;
+                surveyStatus.className = 'status-msg';
+
+                try {
+                    await insertToSupabase(payload);
+                    showStatus(surveyStatus, pack.surveyThanks, 'is-thanks');
+                    speakText(pack.surveyThanks);
+                } catch (err) {
+                    console.error('Survey submit failed:', err);
+                    showStatus(surveyStatus, pack.errorMsg, 'is-err');
+                } finally {
+                    isSurveySubmitting = false;
+                    submitSurveyBtn.disabled = false;
+                    const currentPack = I18N[activeLang] || I18N.en;
+                    submitSurveyBtn.textContent = currentPack.surveySubmit;
+                }
             });
 
             document.addEventListener('keydown', function (e) {
