@@ -25,6 +25,7 @@
             overflow-y: auto;
             color: var(--text-primary);
             font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-weight: 400;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
@@ -121,8 +122,9 @@
         }
 
         .page-brand-sm {
-            font-size: 1.15rem;
-            font-weight: 600;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 1.2rem;
+            font-weight: 500;
             letter-spacing: -0.02em;
             word-spacing: -0.15em;
             color: #ffffff;
@@ -152,7 +154,9 @@
             background: rgba(0, 0, 0, 0.35);
             border: 1px solid rgba(255, 255, 255, 0.35);
             color: #ffffff;
-            font-size: 0.72rem;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 0.82rem;
+            font-weight: 400;
             letter-spacing: 0.04em;
             padding: 5px 11px;
             border-radius: 999px;
@@ -191,7 +195,9 @@
             background: transparent;
             border: none;
             color: #ffffff;
-            font-size: 0.8rem;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 0.92rem;
+            font-weight: 400;
             text-align: left;
             padding: 7px 10px;
             border-radius: 7px;
@@ -208,7 +214,7 @@
 
         .lang-option.active {
             background: rgba(255, 255, 255, 0.2);
-            font-weight: 600;
+            font-weight: 500;
         }
 
         /* --- 喇叭 TTS 开关 --- */
@@ -219,7 +225,9 @@
             background: rgba(0, 0, 0, 0.35);
             border: 1px solid rgba(255, 255, 255, 0.35);
             color: #ffffff;
-            font-size: 0.72rem;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 0.82rem;
+            font-weight: 400;
             letter-spacing: 0.04em;
             padding: 5px 11px;
             border-radius: 999px;
@@ -261,7 +269,8 @@
         }
 
         .page-body h1 {
-            font-size: clamp(1.65rem, 3.2vw, 2.35rem);
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: clamp(1.7rem, 3.2vw, 2.35rem);
             font-weight: 400;
             letter-spacing: -0.025em;
             line-height: 1.15;
@@ -270,7 +279,9 @@
         }
 
         .page-lead {
-            font-size: 0.9rem;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 0.98rem;
+            font-weight: 400;
             line-height: 1.55;
             color: var(--text-muted);
         }
@@ -291,7 +302,8 @@
             border: 1px solid rgba(255, 255, 255, 0.42);
             color: #ffffff;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 0.98rem;
             font-weight: 500;
             padding: 10px 22px;
             border-radius: 999px;
@@ -305,7 +317,9 @@
         }
 
         .version-tag {
-            font-size: 0.78rem;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 0.86rem;
+            font-weight: 400;
             letter-spacing: 0.04em;
             color: var(--text-muted);
         }
@@ -332,7 +346,8 @@
 
         .guide-summary {
             padding: 11px 16px;
-            font-size: 0.92rem;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 1.02rem;
             font-weight: 500;
             cursor: pointer;
             list-style: none;
@@ -345,7 +360,7 @@
 
         .guide-summary::after {
             content: "+";
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: 300;
             line-height: 1;
             transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
@@ -378,7 +393,9 @@
 
         .guide-content {
             padding: 11px 16px 14px 16px;
-            font-size: 0.85rem;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 0.98rem;
+            font-weight: 400;
             line-height: 1.6;
             color: rgba(255, 255, 255, 0.92);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -405,7 +422,9 @@
             justify-content: space-between;
             align-items: center;
             gap: 8px 16px;
-            font-size: 0.76rem;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 0.84rem;
+            font-weight: 400;
             color: var(--text-muted);
         }
 
@@ -907,6 +926,7 @@
 
             function setCardOpen(cardEl, shouldOpen) {
                 const detailEl = cardEl.querySelector('details');
+                if (!detailEl) return;
                 if (shouldOpen) {
                     detailEl.open = true;
                     cardEl.classList.add('is-open');
@@ -1045,3 +1065,8 @@
 <script src="../docs/docs-nav.js"></script>
 </body>
 </html>
+```[cite: 9]
+
+---
+
+还有其他页面要按这个字体字号风格修改吗？继续发过来即可。
