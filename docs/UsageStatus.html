@@ -262,10 +262,8 @@
 
         .page-header-row {
             display: flex;
-            flex-wrap: wrap;
-            align-items: baseline;
-            justify-content: space-between;
-            gap: 8px 16px;
+            flex-direction: column;
+            gap: 6px;
             margin-bottom: 12px;
         }
 
@@ -282,7 +280,7 @@
             font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
             font-size: 0.96rem;
             font-weight: 400;
-            line-height: 1.45;
+            line-height: 1.5;
             color: var(--text-muted);
         }
 
@@ -326,6 +324,7 @@
             line-height: 1;
             transition: transform 0.25s ease;
             margin-left: 12px;
+            flex-shrink: 0;
         }
 
         .info-details[open] .info-summary::after {
@@ -441,7 +440,7 @@
         <div class="page-body">
             <div class="page-header-row">
                 <h2 id="pageTitle">Usage Status</h2>
-                <p class="page-lead" id="pageLead">Limits on creating new items never delete existing data or stop scheduled reminders.</p>
+                <p class="page-lead" id="pageLead">Limits on creating new items never delete existing data or stop scheduled reminders, and help cover real AI service costs.</p>
             </div>
 
             <div class="accordion-section" id="accordionSection"></div>
@@ -466,20 +465,21 @@
                     label: '中文',
                     docTitle: '使用状态说明 — AIR²Aim',
                     heading: '使用状态说明',
-                    lead: '限制新建内容不会删除已有数据，也不会停止已设提醒。',
+                    lead: '限制新建内容不会删除已有数据，也不会停止已设提醒；语音识别与语义整理依赖外部 AI 服务，存在实际调用成本，因此需要设置合理额度。',
                     supportPrefix: '联系支持：',
                     footerBadge: 'Usage Status · 2026',
                     items: [
                         {
-                            summary: '1. 什么是使用状态',
+                            summary: '1. 什么是使用状态与额度说明',
                             paragraphs: [
                                 '使用状态反映您当前账户在 AIR²Aim 中的可用资格与功能权限。',
+                                '语音转写和内容整理等 AI 能力需要调用外部服务接口并产生实际算力与服务成本，因此产品会通过试用期或每日额度来控制资源消耗，保障服务可持续运行。',
                                 'App 内展示的状态和额度以当前账户的实际同步结果为准，方便随时了解能否新建记录或提醒。'
                             ],
-                            speech: '什么是使用状态。使用状态反映您当前账户在 Air 2 Aim 中的可用资格与功能权限。App 内展示的状态和额度以实际同步结果为准。'
+                            speech: '什么是使用状态与额度说明。使用状态反映您当前账户在 Air 2 Aim 中的可用资格与功能权限。语音转写和内容整理等 AI 能力需要调用外部服务接口并产生实际算力与服务成本，因此产品会通过试用期或每日额度来控制资源消耗，保障服务可持续运行。App 内展示的状态和额度以当前账户的实际同步结果为准。'
                         },
                         {
-                            summary: '2. 账户使用状态（Trial / Active / Limited）',
+                            summary: '2. 账户使用状态',
                             paragraphs: [
                                 '• <strong>试用中（Trial）</strong>：处于免费体验阶段，可按规则体验核心记录与提醒功能。',
                                 '• <strong>正常使用（Active）</strong>：订阅已激活或处于正常可用资格内，可正常使用对应权益。',
@@ -496,7 +496,7 @@
                             speech: '免费体验规则。新用户可获得基础免费体验资格，用于了解语音记录、整理与提醒的核心流程。体验结束后若未激活订阅或超出免费使用范围，账户将转为受限状态，仅影响新的创建操作。'
                         },
                         {
-                            summary: '4. 每日使用额度（每日最多 10 条）',
+                            summary: '4. 每日使用额度',
                             paragraphs: [
                                 '在适用每日额度规则的模式下，账户每天最多可创建 <strong>10 条</strong>内容。',
                                 '新增记录或新建提醒等创建类操作会计入当日额度；达到上限后次日按规则恢复，具体以 App 内显示为准。'
@@ -523,12 +523,13 @@
                         {
                             summary: '7. 常见问题（FAQ）',
                             paragraphs: [
+                                '<strong>为什么会有使用限制或收费规则？</strong>因为语音识别与 AI 语义处理需要持续的外部接口与算力成本，合理的额度与订阅规则有助于维持服务长期稳定。',
                                 '<strong>为什么我的使用状态发生变化？</strong>通常与体验期状态、订阅激活状态或账户资格同步有关，可在 App 内刷新查看。',
                                 '<strong>为什么我和其他用户的额度不同？</strong>不同账户的注册时间、体验状态或订阅权益可能不同，因此可用额度存在差异。',
                                 '<strong>如何查看剩余额度？</strong>请在 AIR²Aim App 内的使用状态或账户相关页面查看当前实时额度。',
                                 '<strong>使用限制是否影响已有提醒？</strong>不会。限制仅针对新建内容，已保存的记录和已设置的提醒仍会保留并继续提醒。'
                             ],
-                            speech: '常见问题。为什么我的使用状态发生变化？通常与体验期状态、订阅激活状态或账户资格同步有关。为什么我和其他用户的额度不同？不同账户的注册时间、体验状态或订阅权益可能不同。如何查看剩余额度？请在 Air 2 Aim App 内的使用状态或账户相关页面查看。使用限制是否影响已有提醒？不会，限制仅针对新建内容。'
+                            speech: '常见问题。为什么会有使用限制或收费规则？因为语音识别与 AI 语义处理需要持续的外部接口与算力成本。为什么我的使用状态发生变化？通常与体验期状态、订阅激活状态或账户资格同步有关。为什么我和其他用户的额度不同？不同账户的注册时间、体验状态或订阅权益可能不同。如何查看剩余额度？请在 Air 2 Aim App 内的使用状态或账户相关页面查看。使用限制是否影响已有提醒？不会，限制仅针对新建内容。'
                         }
                     ]
                 },
@@ -538,20 +539,21 @@
                     label: 'EN',
                     docTitle: 'Usage Status — AIR²Aim',
                     heading: 'Usage Status',
-                    lead: 'Limits on creating new items never delete existing data or stop scheduled reminders.',
+                    lead: 'Limits on creating new items never delete existing data or stop scheduled reminders, and help cover real AI service costs.',
                     supportPrefix: 'Support: ',
                     footerBadge: 'Usage Status · 2026',
                     items: [
                         {
-                            summary: '1. What Is Usage Status',
+                            summary: '1. What Is Usage Status & Quota',
                             paragraphs: [
                                 'Usage Status reflects your account eligibility and feature access in AIR²Aim.',
+                                'Speech recognition and semantic structuring rely on external AI providers with real compute and API costs, so trial rules and daily quotas help keep the service sustainable.',
                                 'Status and quota shown in the app follow your current account sync so you can check whether new items can be created.'
                             ],
-                            speech: 'What is Usage Status. Usage Status reflects your account eligibility and feature access in Air 2 Aim. Status and quota shown in the app follow your current account sync.'
+                            speech: 'What is Usage Status and Quota. Usage Status reflects your account eligibility and feature access in Air 2 Aim. Speech recognition and semantic structuring rely on external AI providers with real costs, so trial rules and daily quotas help keep the service sustainable.'
                         },
                         {
-                            summary: '2. Account Usage States (Trial / Active / Limited)',
+                            summary: '2. Account Usage States',
                             paragraphs: [
                                 '• <strong>Trial</strong>: In the free trial stage, allowing you to try core recording and reminder features under trial rules.',
                                 '• <strong>Active</strong>: Subscription is active or within standard eligible access.',
@@ -568,7 +570,7 @@
                             speech: 'Free Trial Rules. New users can receive basic free trial access to experience voice capture, structuring, and reminders. Once the trial ends, only new creations are affected.'
                         },
                         {
-                            summary: '4. Daily Usage Quota (Up to 10 per day)',
+                            summary: '4. Daily Usage Quota',
                             paragraphs: [
                                 'Under daily quota rules, an account can create up to <strong>10 items</strong> per day.',
                                 'Creating new notes or reminders counts toward the daily quota, which resets according to app rules.'
@@ -595,12 +597,13 @@
                         {
                             summary: '7. FAQ',
                             paragraphs: [
+                                '<strong>Why are there usage limits or paid plans?</strong> Speech transcription and AI parsing carry ongoing external API and compute costs, so quotas and plans help keep the service reliable.',
                                 '<strong>Why did my usage status change?</strong> It usually relates to trial status, subscription activation, or account sync; refresh inside the app to check.',
                                 '<strong>Why does my quota differ from other users?</strong> Accounts may differ by registration timing, trial status, or subscription eligibility.',
                                 '<strong>How do I check remaining quota?</strong> Check the usage status or account section inside the AIR²Aim app.',
                                 '<strong>Do limits affect existing reminders?</strong> No. Limits only apply to creating new items; existing records and reminders remain.'
                             ],
-                            speech: 'FAQ. Why did my usage status change? Usually due to trial status, subscription activation, or account sync. Do limits affect existing reminders? No, limits only apply to creating new items.'
+                            speech: 'FAQ. Why are there usage limits or paid plans? Speech transcription and AI parsing carry ongoing external API and compute costs. Do limits affect existing reminders? No, limits only apply to creating new items.'
                         }
                     ]
                 },
@@ -610,20 +613,21 @@
                     label: 'RU',
                     docTitle: 'Статус использования — AIR²Aim',
                     heading: 'Статус использования',
-                    lead: 'Ограничение на создание новых записей не удаляет данные и не отключает уже заданные напоминания.',
+                    lead: 'Ограничение на создание новых записей не удаляет данные и не отключает напоминания, а помогает покрывать расходы на AI-сервисы.',
                     supportPrefix: 'Поддержка: ',
                     footerBadge: 'Usage Status · 2026',
                     items: [
                         {
-                            summary: '1. Что такое статус использования',
+                            summary: '1. Что такое статус использования и лимиты',
                             paragraphs: [
                                 'Статус использования показывает текущие права доступа и лимиты вашего аккаунта в AIR²Aim.',
+                                'Распознавание речи и обработка текста используют внешние AI-сервисы с реальной стоимостью вызовов, поэтому пробный период и дневной лимит помогают поддерживать стабильную работу.',
                                 'Статус и остаток лимита в приложении отражают актуальную синхронизацию аккаунта.'
                             ],
-                            speech: 'Что такое статус использования. Статус использования показывает текущие права доступа и лимиты вашего аккаунта в Air 2 Aim.'
+                            speech: 'Что такое статус использования и лимиты. Распознавание речи и обработка текста используют внешние AI-сервисы с реальной стоимостью вызовов, поэтому лимиты помогают поддерживать работу сервиса.'
                         },
                         {
-                            summary: '2. Состояния аккаунта (Trial / Active / Limited)',
+                            summary: '2. Состояния аккаунта',
                             paragraphs: [
                                 '• <strong>Trial</strong>: период бесплатного знакомства с записью и напоминаниями по правилам триала.',
                                 '• <strong>Active</strong>: подписка активна или действуют стандартные права доступа.',
@@ -640,7 +644,7 @@
                             speech: 'Правила бесплатного доступа. Новым пользователям доступен базовый бесплатный период для проверки записей и напоминаний.'
                         },
                         {
-                            summary: '4. Дневной лимит (до 10 в день)',
+                            summary: '4. Дневной лимит',
                             paragraphs: [
                                 'При действии дневного лимита можно создать до <strong>10 записей</strong> в день.',
                                 'Создание новых записей и напоминаний расходует дневной лимит и восстанавливается по правилам в приложении.'
@@ -667,6 +671,7 @@
                         {
                             summary: '7. Частые вопросы (FAQ)',
                             paragraphs: [
+                                '<strong>Зачем нужны лимиты и подписка?</strong> Обработка речи и AI-разбор требуют внешних API и вычислительных ресурсов, поэтому лимиты помогают сохранять сервис доступным.',
                                 '<strong>Почему изменился статус?</strong> Обычно это связано со статусом пробного периода, подпиской или синхронизацией аккаунта.',
                                 '<strong>Почему лимиты отличаются у разных пользователей?</strong> Они могут зависеть от даты регистрации, статуса триала или подписки.',
                                 '<strong>Как посмотреть остаток?</strong> Откройте раздел статуса или аккаунта внутри приложения AIR²Aim.',
@@ -682,20 +687,21 @@
                     label: 'FR',
                     docTitle: 'État d’utilisation — AIR²Aim',
                     heading: 'État d’utilisation',
-                    lead: 'Limiter la création de nouveaux éléments ne supprime pas vos données ni vos rappels existants.',
+                    lead: 'Limiter la création de nouveaux éléments ne supprime pas vos données ni vos rappels et aide à couvrir les coûts des services AI.',
                     supportPrefix: 'Support : ',
                     footerBadge: 'Usage Status · 2026',
                     items: [
                         {
-                            summary: '1. Qu’est-ce que l’état d’utilisation',
+                            summary: '1. Qu’est-ce que l’état d’utilisation et les quotas',
                             paragraphs: [
                                 'L’état d’utilisation indique les droits et quotas actuels de votre compte dans AIR²Aim.',
+                                'La reconnaissance vocale et l’analyse reposent sur des fournisseurs AI externes qui entraînent des coûts réels ; l’essai et les quotas quotidiens aident à maintenir le service.',
                                 'L’état et le quota affichés dans l’application reflètent la synchronisation de votre compte.'
                             ],
-                            speech: 'Qu’est-ce que l’état d’utilisation. Il indique les droits et quotas actuels de votre compte dans Air 2 Aim.'
+                            speech: 'Qu’est-ce que l’état d’utilisation et les quotas. Les fonctions vocales et d’analyse utilisent des services AI externes avec des coûts réels.'
                         },
                         {
-                            summary: '2. États du compte (Trial / Active / Limited)',
+                            summary: '2. États du compte',
                             paragraphs: [
                                 '• <strong>Trial</strong> : phase d’essai gratuit selon les règles en vigueur.',
                                 '• <strong>Active</strong> : abonnement actif ou accès normal activé.',
@@ -712,7 +718,7 @@
                             speech: 'Règles d’essai gratuit. Les nouveaux utilisateurs peuvent découvrir la capture vocale et les rappels pendant l’essai.'
                         },
                         {
-                            summary: '4. Quota quotidien (jusqu’à 10 par jour)',
+                            summary: '4. Quota quotidien',
                             paragraphs: [
                                 'Lorsque le quota quotidien s’applique, vous pouvez créer jusqu’à <strong>10 éléments</strong> par jour.',
                                 'La création d’enregistrements ou de rappels consomme le quota du jour selon les règles affichées dans l’app.'
@@ -739,6 +745,7 @@
                         {
                             summary: '7. FAQ',
                             paragraphs: [
+                                '<strong>Pourquoi existe-t-il des limites ou un abonnement ?</strong> La transcription et le traitement AI engendrent des coûts d’API et de calcul continus.',
                                 '<strong>Pourquoi mon état a-t-il changé ?</strong> Cela dépend généralement de l’essai, de l’abonnement ou de la synchronisation du compte.',
                                 '<strong>Pourquoi mon quota diffère-t-il ?</strong> Il peut varier selon la date d’inscription, l’essai ou l’abonnement.',
                                 '<strong>Où voir le quota restant ?</strong> Consultez l’état d’utilisation ou votre compte dans l’application AIR²Aim.',
@@ -754,20 +761,21 @@
                     label: 'ES',
                     docTitle: 'Estado de uso — AIR²Aim',
                     heading: 'Estado de uso',
-                    lead: 'Limitar la creación de elementos nuevos no borra datos existentes ni detiene recordatorios ya creados.',
+                    lead: 'Limitar la creación de elementos nuevos no borra datos ni detiene recordatorios, y ayuda a cubrir los costos reales de los servicios de AI.',
                     supportPrefix: 'Soporte: ',
                     footerBadge: 'Usage Status · 2026',
                     items: [
                         {
-                            summary: '1. Qué es el estado de uso',
+                            summary: '1. Qué es el estado de uso y el cupo',
                             paragraphs: [
                                 'El estado de uso muestra los permisos y cuotas vigentes de tu cuenta en AIR²Aim.',
+                                'El reconocimiento de voz y el procesamiento dependen de proveedores de AI externos con costos reales, por lo que la prueba y el cupo diario ayudan a sostener el servicio.',
                                 'El estado y el cupo en la app reflejan la sincronización actual de tu cuenta.'
                             ],
-                            speech: 'Qué es el estado de uso. Muestra los permisos y cuotas vigentes de tu cuenta en Air 2 Aim.'
+                            speech: 'Qué es el estado de uso y el cupo. La voz y el procesamiento usan servicios de AI externos con costos reales, por lo que los cupos ayudan a sostener el servicio.'
                         },
                         {
-                            summary: '2. Estados de la cuenta (Trial / Active / Limited)',
+                            summary: '2. Estados de la cuenta',
                             paragraphs: [
                                 '• <strong>Trial</strong>: en etapa de prueba gratuita según las reglas vigentes.',
                                 '• <strong>Active</strong>: suscripción activa o dentro del acceso habilitado.',
@@ -784,7 +792,7 @@
                             speech: 'Reglas de prueba gratuita. Los usuarios nuevos pueden probar notas por voz y recordatorios durante la prueba.'
                         },
                         {
-                            summary: '4. Cupo diario (hasta 10 al día)',
+                            summary: '4. Cupo diario',
                             paragraphs: [
                                 'Cuando aplica el cupo diario, puedes crear hasta <strong>10 elementos</strong> por día.',
                                 'Crear registros o recordatorios consume el cupo diario y se restablece según las reglas de la app.'
@@ -811,6 +819,7 @@
                         {
                             summary: '7. Preguntas frecuentes (FAQ)',
                             paragraphs: [
+                                '<strong>¿Por qué hay límites o planes de pago?</strong> La transcripción y el análisis de AI implican costos continuos de API y cómputo para mantener el servicio estable.',
                                 '<strong>¿Por qué cambió mi estado de uso?</strong> Suele deberse al estado de prueba, la suscripción o la sincronización de la cuenta.',
                                 '<strong>¿Por qué mi cupo es distinto al de otros usuarios?</strong> Puede variar según la fecha de registro, prueba o suscripción.',
                                 '<strong>¿Cómo ver el cupo restante?</strong> Revisa el estado de uso o tu cuenta dentro de la app AIR²Aim.',
