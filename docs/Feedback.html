@@ -340,87 +340,11 @@
             display: inline-flex;
         }
 
-        .textarea-header-bar {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-            margin-bottom: 6px;
-        }
-
         .form-label {
             display: block;
             font-size: 0.8rem;
             color: rgba(255, 255, 255, 0.85);
             margin-bottom: 6px;
-        }
-
-        .textarea-header-bar .form-label {
-            margin-bottom: 0;
-        }
-
-        /* 未点击/默认时与喇叭开关一致；录音转文字工作时为淡粉红色 */
-        .voice-input-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(255, 255, 255, 0.16);
-            border: 1px solid rgba(255, 255, 255, 0.55);
-            color: #ffffff;
-            font-family: inherit;
-            font-size: 0.72rem;
-            letter-spacing: 0.04em;
-            font-weight: 500;
-            padding: 5px 11px;
-            border-radius: 999px;
-            cursor: pointer;
-            transition: background-color 0.25s ease, border-color 0.25s ease, opacity 0.25s ease, color 0.25s ease;
-        }
-
-        .voice-input-btn:hover:not(:disabled):not(.is-listening) {
-            background: rgba(255, 255, 255, 0.24);
-            border-color: #ffffff;
-        }
-
-        .voice-input-btn.is-listening {
-            background: rgba(244, 114, 182, 0.28);
-            border-color: rgba(244, 114, 182, 0.9);
-            color: #fce7f3;
-        }
-
-        .voice-input-btn:disabled {
-            opacity: 0.45;
-            cursor: not-allowed;
-        }
-
-        .voice-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 999px;
-            background: currentColor;
-            flex-shrink: 0;
-        }
-
-        .voice-input-btn.is-listening .voice-dot {
-            animation: voicePulse 1s infinite;
-        }
-
-        @keyframes voicePulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.35); opacity: 0.55; }
-        }
-
-        .voice-fallback-tip {
-            display: none;
-            margin-top: 6px;
-            font-size: 0.73rem;
-            line-height: 1.45;
-            color: rgba(255, 255, 255, 0.68);
-        }
-
-        .voice-fallback-tip.is-visible {
-            display: block;
         }
 
         .form-textarea {
@@ -703,6 +627,7 @@
             font-weight: 600;
         }
 
+        /* 选项左侧圆圈单选框 */
         .survey-radio-circle {
             flex-shrink: 0;
             width: 18px;
@@ -855,15 +780,8 @@
 
                 <form id="feedbackForm" novalidate>
                     <div>
-                        <div class="textarea-header-bar">
-                            <label class="form-label" for="feedbackText" id="feedbackTextLabel">Your comments, suggestions, or issues (up to 1,000 characters)</label>
-                            <button type="button" class="voice-input-btn" id="voiceInputBtn">
-                                <span class="voice-dot" aria-hidden="true"></span>
-                                <span id="voiceInputLabel">Voice Input</span>
-                            </button>
-                        </div>
+                        <label class="form-label" for="feedbackText" id="feedbackTextLabel">Your comments, suggestions, or issues (up to 1,000 characters)</label>
                         <textarea id="feedbackText" class="form-textarea" maxlength="1000" required></textarea>
-                        <div class="voice-fallback-tip" id="voiceFallbackTip"></div>
                         <div class="field-meta-row">
                             <span id="feedbackHint">Plain text only · No login required</span>
                             <span class="char-counter" id="charCounter">0 / 1000</span>
@@ -894,6 +812,7 @@
         </footer>
     </div>
 
+    <!-- 单题切换式调查问卷弹出框 -->
     <div class="survey-modal-backdrop" id="surveyModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="surveyModalTitle">
         <div class="survey-modal-dialog" id="surveyModalDialog">
             <div class="survey-modal-header">
@@ -1185,12 +1104,8 @@
                     "surveyBarSub": "约15秒 · 点击填写 ↗",
                     "freeTitle": "自由填写意见反馈",
                     "textLabel": "您的想法、建议或遇到的问题（最多 1000 字）",
-                    "voiceInputBtn": "语音输入",
-                    "voiceListeningBtn": "正在聆听，点击停止",
-                    "voiceUnsupportedTip": "当前浏览器暂不支持网页语音识别，可直接点击输入框使用输入法自带语音。",
-                    "voiceDeniedTip": "麦克风权限未开启或语音识别受限，可直接用键盘语音输入或手动打字。",
                     "textPlaceholder": "请写下您的意见或建议……",
-                    "textHint": "最多 1000 个字符 · 支持语音输入 · 免登录提交",
+                    "textHint": "最多 1000 个字符 · 免登录提交",
                     "emailLabel": "联系邮箱（选填，用于需要回复时联系您）",
                     "emailPlaceholder": "name@example.com",
                     "submitBtn": "提交反馈",
@@ -1222,12 +1137,8 @@
                     "surveyBarSub": "~15s · Tap to open ↗",
                     "freeTitle": "Free-form Feedback",
                     "textLabel": "Your comments, suggestions, or issues (up to 1,000 characters)",
-                    "voiceInputBtn": "Voice Input",
-                    "voiceListeningBtn": "Listening · Tap to stop",
-                    "voiceUnsupportedTip": "Browser voice recognition isn't available here. You can use your keyboard's mic or type directly.",
-                    "voiceDeniedTip": "Microphone access or browser speech service was unavailable. You can use keyboard voice or type directly.",
                     "textPlaceholder": "Share your thoughts or feedback...",
-                    "textHint": "Up to 1,000 characters · Voice supported · No login required",
+                    "textHint": "Up to 1,000 characters · No login required",
                     "emailLabel": "Reply email (optional)",
                     "emailPlaceholder": "name@example.com",
                     "submitBtn": "Submit Feedback",
@@ -1259,12 +1170,8 @@
                     "surveyBarSub": "~15 сек · Открыть ↗",
                     "freeTitle": "Свободный отзыв",
                     "textLabel": "Ваши идеи, предложения или замечания (до 1000 символов)",
-                    "voiceInputBtn": "Голос",
-                    "voiceListeningBtn": "Слушаю · Нажмите для стопа",
-                    "voiceUnsupportedTip": "Распознавание речи в браузере недоступно. Используйте микрофон клавиатуры или введите текст.",
-                    "voiceDeniedTip": "Нет доступа к микрофону или сервису речи. Можно ввести текст вручную или с клавиатуры.",
                     "textPlaceholder": "Напишите ваш отзыв...",
-                    "textHint": "Максимум 1000 символов · Поддержка голоса · Без входа",
+                    "textHint": "Максимум 1000 символов · Без входа в аккаунт",
                     "emailLabel": "Email для ответа (необязательно)",
                     "emailPlaceholder": "name@example.com",
                     "submitBtn": "Отправить отзыв",
@@ -1296,12 +1203,8 @@
                     "surveyBarSub": "~15 s · Ouvrir ↗",
                     "freeTitle": "Commentaire libre",
                     "textLabel": "Vos remarques, suggestions ou problèmes (1 000 caractères max.)",
-                    "voiceInputBtn": "Dictée vocale",
-                    "voiceListeningBtn": "Écoute · Toucher pour arrêter",
-                    "voiceUnsupportedTip": "La dictée web n’est pas disponible ici. Utilisez le micro du clavier ou saisissez votre texte.",
-                    "voiceDeniedTip": "Accès micro ou service vocal indisponible. Vous pouvez saisir votre message manuellement.",
                     "textPlaceholder": "Écrivez votre message...",
-                    "textHint": "1 000 caractères maximum · Dictée vocale · Sans connexion",
+                    "textHint": "1 000 caractères maximum · Sans connexion",
                     "emailLabel": "E-mail de réponse (facultatif)",
                     "emailPlaceholder": "nom@exemple.com",
                     "submitBtn": "Envoyer",
@@ -1333,12 +1236,8 @@
                     "surveyBarSub": "~15 s · Abrir ↗",
                     "freeTitle": "Comentarios libres",
                     "textLabel": "Tus ideas, sugerencias o problemas (máx. 1 000 caracteres)",
-                    "voiceInputBtn": "Voz",
-                    "voiceListeningBtn": "Escuchando · Toca para parar",
-                    "voiceUnsupportedTip": "El dictado web no está disponible aquí. Puedes usar el micrófono del teclado o escribir.",
-                    "voiceDeniedTip": "Permiso de micrófono o servicio de voz no disponible. Puedes escribir directamente.",
                     "textPlaceholder": "Escribe tus comentarios...",
-                    "textHint": "Máximo 1 000 caracteres · Voz disponible · Sin iniciar sesión",
+                    "textHint": "Máximo 1 000 caracteres · Sin iniciar sesión",
                     "emailLabel": "Correo de respuesta (opcional)",
                     "emailPlaceholder": "nombre@ejemplo.com",
                     "submitBtn": "Enviar comentario",
@@ -1384,9 +1283,6 @@
             const identityBadge = document.getElementById('identityBadge');
             const feedbackForm = document.getElementById('feedbackForm');
             const feedbackTextLabel = document.getElementById('feedbackTextLabel');
-            const voiceInputBtn = document.getElementById('voiceInputBtn');
-            const voiceInputLabel = document.getElementById('voiceInputLabel');
-            const voiceFallbackTip = document.getElementById('voiceFallbackTip');
             const feedbackText = document.getElementById('feedbackText');
             const feedbackHint = document.getElementById('feedbackHint');
             const charCounter = document.getElementById('charCounter');
@@ -1418,16 +1314,11 @@
             const surveyStatus = document.getElementById('surveyStatus');
 
             const supportsTTS = 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
-            const SpeechRecognitionCtor = window.SpeechRecognition || window.webkitSpeechRecognition || null;
-            const supportsSpeechInput = Boolean(SpeechRecognitionCtor);
-
             let isTtsEnabled = supportsTTS;
             let activeLang = 'en';
             let currentQuestionIndex = 0;
             let isSubmitting = false;
             let isSurveySubmitting = false;
-            let isListening = false;
-            let recognitionInstance = null;
             let speechSessionId = 0;
             const activeUtterances = [];
             const selectedSurveyAnswers = {};
@@ -1480,111 +1371,6 @@
                 };
                 activeUtterances.push(utterance);
                 window.speechSynthesis.speak(utterance);
-            }
-
-            function showVoiceTip(msg) {
-                if (!msg) {
-                    voiceFallbackTip.textContent = '';
-                    voiceFallbackTip.classList.remove('is-visible');
-                    return;
-                }
-                voiceFallbackTip.textContent = msg;
-                voiceFallbackTip.classList.add('is-visible');
-            }
-
-            function updateVoiceButtonUI() {
-                const pack = I18N[activeLang] || I18N.en;
-                if (!supportsSpeechInput) {
-                    voiceInputBtn.disabled = true;
-                    voiceInputBtn.classList.remove('is-listening');
-                    voiceInputLabel.textContent = pack.voiceInputBtn;
-                    showVoiceTip(pack.voiceUnsupportedTip);
-                    return;
-                }
-                voiceInputBtn.disabled = isSubmitting;
-                voiceInputBtn.classList.toggle('is-listening', isListening);
-                voiceInputLabel.textContent = isListening ? pack.voiceListeningBtn : pack.voiceInputBtn;
-            }
-
-            function stopVoiceInput() {
-                isListening = false;
-                if (recognitionInstance) {
-                    try {
-                        recognitionInstance.stop();
-                    } catch (err) {}
-                }
-                updateVoiceButtonUI();
-            }
-
-            function appendTranscript(transcript) {
-                const clean = String(transcript || '').trim();
-                if (!clean) return;
-                const current = feedbackText.value;
-                const needsSpace = current.length > 0 && !/\s$/.test(current);
-                const nextValue = current + (needsSpace ? ' ' : '') + clean;
-                feedbackText.value = nextValue.slice(0, MAX_CHARS);
-                updateCharCounter();
-            }
-
-            function toggleVoiceInput() {
-                const pack = I18N[activeLang] || I18N.en;
-                if (!supportsSpeechInput) {
-                    showVoiceTip(pack.voiceUnsupportedTip);
-                    return;
-                }
-                if (isListening) {
-                    stopVoiceInput();
-                    return;
-                }
-
-                stopSpeaking();
-                showVoiceTip('');
-
-                const rec = new SpeechRecognitionCtor();
-                rec.lang = pack.ttsLang || 'en-US';
-                rec.interimResults = false;
-                rec.maxAlternatives = 1;
-
-                rec.onstart = function () {
-                    isListening = true;
-                    updateVoiceButtonUI();
-                };
-
-                rec.onresult = function (event) {
-                    if (!event || !event.results) return;
-                    let finalText = '';
-                    for (let i = event.resultIndex; i < event.results.length; i++) {
-                        if (event.results[i].isFinal && event.results[i][0]) {
-                            finalText += event.results[i][0].transcript;
-                        }
-                    }
-                    if (finalText) {
-                        appendTranscript(finalText);
-                    }
-                };
-
-                rec.onerror = function (event) {
-                    isListening = false;
-                    updateVoiceButtonUI();
-                    const code = event && event.error ? String(event.error) : '';
-                    if (code === 'not-allowed' || code === 'service-not-allowed' || code === 'audio-capture') {
-                        showVoiceTip(pack.voiceDeniedTip);
-                    }
-                };
-
-                rec.onend = function () {
-                    isListening = false;
-                    updateVoiceButtonUI();
-                };
-
-                recognitionInstance = rec;
-                try {
-                    rec.start();
-                } catch (err) {
-                    isListening = false;
-                    updateVoiceButtonUI();
-                    showVoiceTip(pack.voiceDeniedTip);
-                }
             }
 
             function updateToggleUI() {
@@ -1686,9 +1472,6 @@
                 const pack = I18N[langKey] || I18N.en;
                 activeLang = Object.prototype.hasOwnProperty.call(I18N, langKey) ? langKey : 'en';
                 stopSpeaking();
-                if (isListening) {
-                    stopVoiceInput();
-                }
 
                 document.documentElement.lang = pack.htmlLang;
                 document.title = pack.docTitle;
@@ -1714,7 +1497,6 @@
                     opt.classList.toggle('active', opt.getAttribute('data-lang') === activeLang);
                 });
 
-                updateVoiceButtonUI();
                 renderIdentity(pack);
                 renderCurrentQuestion();
             }
@@ -1741,8 +1523,6 @@
                 }
             }
 
-            voiceInputBtn.addEventListener('click', toggleVoiceInput);
-
             feedbackText.addEventListener('input', function () {
                 if (feedbackText.value.length > MAX_CHARS) {
                     feedbackText.value = feedbackText.value.slice(0, MAX_CHARS);
@@ -1753,9 +1533,6 @@
             feedbackForm.addEventListener('submit', async function (e) {
                 e.preventDefault();
                 if (isSubmitting) return;
-                if (isListening) {
-                    stopVoiceInput();
-                }
 
                 const pack = I18N[activeLang] || I18N.en;
                 const content = feedbackText.value.trim();
@@ -1784,7 +1561,6 @@
 
                 isSubmitting = true;
                 submitFeedbackBtn.disabled = true;
-                voiceInputBtn.disabled = true;
                 submitFeedbackBtn.textContent = pack.submittingBtn;
                 feedbackStatus.className = 'status-msg';
 
@@ -1800,16 +1576,12 @@
                 } finally {
                     isSubmitting = false;
                     submitFeedbackBtn.disabled = false;
-                    updateVoiceButtonUI();
                     const currentPack = I18N[activeLang] || I18N.en;
                     submitFeedbackBtn.textContent = currentPack.submitBtn;
                 }
             });
 
             function openSurveyModal() {
-                if (isListening) {
-                    stopVoiceInput();
-                }
                 surveyStatus.className = 'status-msg';
                 surveyStatus.textContent = '';
                 currentQuestionIndex = 0;
@@ -1840,6 +1612,7 @@
                 }
             });
 
+            // 触摸左右滑动切题
             let touchStartX = 0;
             let touchStartY = 0;
             surveySingleCard.addEventListener('touchstart', function (e) {
@@ -1974,18 +1747,11 @@
                 }
             });
 
-            window.addEventListener('pagehide', function () {
-                stopSpeaking();
-                stopVoiceInput();
-            });
-            window.addEventListener('beforeunload', function () {
-                stopSpeaking();
-                stopVoiceInput();
-            });
+            window.addEventListener('pagehide', stopSpeaking);
+            window.addEventListener('beforeunload', stopSpeaking);
             document.addEventListener('visibilitychange', function () {
                 if (document.hidden) {
                     stopSpeaking();
-                    stopVoiceInput();
                 }
             });
 
