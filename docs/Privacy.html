@@ -328,6 +328,7 @@
             line-height: 1;
             transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
             margin-left: 12px;
+            flex-shrink: 0;
         }
 
         .info-details.is-open .info-summary::after {
@@ -459,7 +460,7 @@
         <div class="page-body">
             <div class="page-header-row">
                 <h2 id="pageTitle">AIR²Aim Privacy Policy</h2>
-                <p class="page-lead" id="pageLead">Effective date: September 22, 2026 · How information may be processed, used, and managed in AIR²Aim.</p>
+                <p class="page-lead" id="pageLead">Effective date: September 22, 2026 · How AIR²Aim collects, uses, stores, and protects your information, and how you manage your account and data.</p>
             </div>
 
             <div class="accordion-section" id="accordionSection"></div>
@@ -479,291 +480,376 @@
         (function () {
             const I18N = {
                 "zh": {
-                                "htmlLang": "zh",
-                                "ttsLang": "zh-CN",
-                                "label": "中文",
-                                "docTitle": "隐私政策 — AIR²Aim",
-                                "heading": "AIR²Aim 隐私政策",
-                                "lead": "生效日期：2026 年 9 月 22 日 · 本政策说明 AIR²Aim 如何处理、使用与保护你的信息。",
-                                "supportPrefix": "联系支持：",
-                                "footerBadge": "Privacy Policy · 2026",
-                                "items": [
-                                                {
-                                                                "summary": "1. 我们可能处理的信息",
-                                                                "paragraphs": [
-                                                                                "• <strong>账号信息</strong>：登录或使用账号相关功能时，可能处理电子邮箱、账号标识及身份验证所需信息。",
-                                                                                "• <strong>记录与提醒信息</strong>：创建记录或提醒时，可能包括文字内容、提醒事项、日期和时间、重复规则、完成状态及其他由你输入的内容。",
-                                                                                "• <strong>语音输入信息</strong>：使用语音输入时，应用采集你主动提交的语音；为提供语音识别与内容理解，语音数据及识别结果可能发送给相关第三方服务处理。识别与 AI 处理可能出现错误，保存前请核对。",
-                                                                                "• <strong>设备与运行信息</strong>：可能处理支持语音输入、提醒触发、账号验证、数据同步及故障排查所需的设备、网络、通知权限和运行状态信息。"
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "2. 我们如何使用这些信息",
-                                                                "paragraphs": [
-                                                                                "用于创建、显示、编辑、管理和删除记录及提醒；将语音输入转换为文字或结构化提醒信息；在设备支持且权限已开启时触发提醒通知；提供账号验证与云端存储或同步；维护应用运行、排查故障、改善服务及响应用户咨询与合理的数据管理请求。",
-                                                                                "我们不会因为你使用某项功能，就推定你同意与该功能无关的数据处理。"
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "3. 数据存储与第三方服务",
-                                                                "paragraphs": [
-                                                                                "AIR²Aim 可能使用设备本地缓存及云端服务支持应用运行与同步。实际存储位置与方式取决于所用功能和服务配置；不能假定所有信息只存储在本地或都会自动同步至云端。",
-                                                                                "为提供功能，AIR²Aim 可能使用云服务提供商（账号认证与云端存储）、语音识别服务（语音转文字）及 AI 处理服务（理解输入与协助生成结构化提醒）。向第三方传输的信息以提供相应功能所需为限，并受其各自条款与隐私政策约束。"
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "4. 权限、信息共享与数据安全",
-                                                                "paragraphs": [
-                                                                                "• <strong>权限</strong>：可能请求麦克风权限、通知或提醒相关权限以及网络访问权限，你可在设备系统设置中管理。",
-                                                                                "• <strong>信息共享</strong>：AIR²Aim 不会仅因你使用应用而公开个人信息；仅在提供服务所需范围或法律要求、合法请求及保护用户与服务安全时涉及处理或披露。",
-                                                                                "• <strong>安全与保存</strong>：我们根据实际服务配置采取合理安全措施，但任何系统均无法承诺绝对安全。保存时间取决于服务需要、账号状态、适用法律与服务配置。"
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "5. 用户的选择与权利",
-                                                                "paragraphs": [
-                                                                                "你可在应用内管理记录和提醒，并在设备设置中调整权限。如需查询、更正或删除相关信息，可通过下方邮箱联系我们，我们将依据实际情况、身份核验要求和适用法律处理。",
-                                                                                "删除设备中的信息不一定会同时删除云端副本；退出登录也不应被理解为所有云端数据已自动删除。"
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "6. 儿童隐私、政策更新与联系我们",
-                                                                "paragraphs": [
-                                                                                "AIR²Aim 并非专门面向儿童设计的服务；若适用法律要求监护人同意或儿童数据保护措施，我们将依据相关要求处理。",
-                                                                                "我们可能根据产品功能、服务配置或适用法律更新本政策并注明新的生效日期。如有疑问，请联系：support@air2aim.com。© 2026 AIR²Aim。"
-                                                                ]
-                                                }
-                                ]
+                    "htmlLang": "zh",
+                    "ttsLang": "zh-CN",
+                    "label": "中文",
+                    "docTitle": "隐私政策 — AIR²Aim",
+                    "heading": "AIR²Aim 隐私政策",
+                    "lead": "生效日期：2026 年 9 月 22 日 · 本政策说明 AIR²Aim 如何收集、使用、存储与保护你的信息，以及你如何管理账号与数据。",
+                    "supportPrefix": "联系支持：",
+                    "footerBadge": "Privacy Policy · 2026",
+                    "items": [
+                        {
+                            "summary": "1. 我们可能处理的信息",
+                            "paragraphs": [
+                                "• <strong>账号信息</strong>：注册、登录或使用账号功能时，可能处理你的电子邮箱、账号标识及身份验证所需信息。",
+                                "• <strong>记录与提醒信息</strong>：创建或管理内容时，可能处理记录正文、提醒事项、日期与时间、重复规则、完成状态以及你主动输入或编辑的其他内容。",
+                                "• <strong>语音输入信息</strong>：使用语音输入时，应用会采集你主动提交的语音；为提供语音转文字与语义整理，语音数据及识别结果可能发送给相关第三方服务处理。语音识别与 AI 解析可能存在误差，保存或设定提醒前请核对。",
+                                "• <strong>设备与运行信息</strong>：为支持语音输入、提醒触发、账号验证、数据同步与故障排查，可能处理设备型号/系统版本、网络状态、通知或麦克风等权限状态、应用版本及运行日志等必要信息。"
+                            ]
+                        },
+                        {
+                            "summary": "2. 我们如何使用信息",
+                            "paragraphs": [
+                                "用于创建、展示、编辑、归档与删除你的记录和提醒；将语音输入转换为文字或结构化提醒信息；在系统支持且权限已开启时触发本地或推送提醒。",
+                                "用于提供账号认证、云端存储或跨设备同步、额度与订阅状态核对，以及维护应用稳定性、排查故障和响应你的支持请求。",
+                                "仅在你明确启用或使用相应功能时处理相关数据；我们不会仅因你使用某项功能，就推定你同意与该功能无关的数据处理。"
+                            ]
+                        },
+                        {
+                            "summary": "3. 数据存储与第三方服务",
+                            "paragraphs": [
+                                "AIR²Aim 可能结合设备本地存储/缓存与云端服务提供功能与同步。实际存储位置与方式取决于你使用的功能及服务配置，不应默认所有数据仅保存在本地或均已自动同步至云端。",
+                                "为实现核心能力，我们可能使用第三方云服务（如账号认证与数据库/存储服务）、语音识别服务以及 AI 语义处理服务。向第三方传输的信息仅限于完成相应功能所必需的范围，并受其各自隐私政策与服务条款约束。",
+                                "跨地区传输数据时，我们会结合实际服务架构采取合理保护措施，并依据适用法律要求处理。"
+                            ]
+                        },
+                        {
+                            "summary": "4. 权限、信息共享与数据安全",
+                            "paragraphs": [
+                                "• <strong>系统权限</strong>：麦克风、通知/提醒及网络访问等权限可在设备系统设置中随时开启、关闭或调整；关闭部分权限可能导致对应功能无法使用。",
+                                "• <strong>信息共享与不出售原则</strong>：我们不会将你的个人信息作为商品对外出售，也不会仅因你使用应用而公开你的个人数据。仅在提供服务所需、履行法定义务、响应合法合规要求，或保护用户与服务安全时，才会在必要范围内处理或披露信息。",
+                                "• <strong>安全与保存期限</strong>：我们会根据服务配置采取合理的技术与管理安全措施，但任何互联网或移动系统均无法承诺绝对安全。信息保存期限取决于提供服务所需、账号状态、安全与审计需要以及适用法律规定。"
+                            ]
+                        },
+                        {
+                            "summary": "5. 用户的选择与数据权利",
+                            "paragraphs": [
+                                "你可以在应用内随时查看、修改或删除记录与提醒，也可以在设备系统设置中管理权限，或通过退出登录结束当前会话（退出登录不代表自动清除云端已保存的数据，设备内删除也不一定同步清除云端副本）。",
+                                "在适用法律法规允许的范围内，你有权查询、更正或导出你的相关信息，或对特定处理提出异议与咨询。如需协助，请发送邮件至 <strong>support@air2aim.com</strong>，为保护账号安全，我们可能需要先完成必要的身份核验。"
+                            ]
+                        },
+                        {
+                            "summary": "6. 账号注销与数据删除",
+                            "paragraphs": [
+                                "• <strong>当前方式（人工协助）</strong>：应用内的自助一键注销功能仍在完善中，目前如需注销账号并删除关联数据，请使用注册邮箱或提供可核验的账号信息发送邮件至 <strong>support@air2aim.com</strong>，注明“注销账号”，我们将尽快为你人工核实并处理。",
+                                "• <strong>即将上线（自助注销）</strong>：自动线上注销账号功能已纳入开发计划并即将上线；届时你可在应用或账号页面中直接发起注销请求，按流程确认后完成处理。",
+                                "• <strong>注销后的影响</strong>：账号注销完成后，对应账号的登录凭证与关联云端数据将按注销规则删除或解除关联；但法律明确要求留存的记录、必要的安全/交易审计日志，以及部分服务商备份中按周期清理的数据，将在法定期限或清理周期内依法处理。"
+                            ]
+                        },
+                        {
+                            "summary": "7. 儿童隐私",
+                            "paragraphs": [
+                                "AIR²Aim 并非专门面向儿童设计的服务，我们不会在知情情况下主动向儿童收集个人信息。",
+                                "如果你认为我们在未取得适用法律要求的监护人同意的情况下收集了儿童信息，请立即通过 <strong>support@air2aim.com</strong> 联系我们，核实后我们将尽快采取措施删除相关信息。"
+                            ]
+                        },
+                        {
+                            "summary": "8. 政策更新与联系我们",
+                            "paragraphs": [
+                                "随着产品功能演进、第三方服务调整或适用法律法规变化，我们可能会不时更新本隐私政策，并在页面顶部更新“生效日期”。对于可能实质影响你权利的变更，我们会在合理范围内通过应用内或页面提示说明。",
+                                "如对本隐私政策、数据处理或账号注销有任何疑问或请求，请联系：<strong>support@air2aim.com</strong>（© 2026 AIR²Aim）。"
+                            ]
+                        }
+                    ]
                 },
                 "en": {
-                                "htmlLang": "en",
-                                "ttsLang": "en-US",
-                                "label": "EN",
-                                "docTitle": "Privacy Policy — AIR²Aim",
-                                "heading": "AIR²Aim Privacy Policy",
-                                "lead": "Effective date: September 22, 2026 · How information may be processed, used, and managed in AIR²Aim.",
-                                "supportPrefix": "Support: ",
-                                "footerBadge": "Privacy Policy · 2026",
-                                "items": [
-                                                {
-                                                                "summary": "1. Information We May Process",
-                                                                "paragraphs": [
-                                                                                "• <strong>Account information</strong>: When you sign in or use account features, we may process your email address, account identifier, and authentication details.",
-                                                                                "• <strong>Record and reminder information</strong>: Text, reminder details, dates and times, repeat rules, completion status, and other content you provide.",
-                                                                                "• <strong>Voice input information</strong>: Audio you actively submit may be transmitted with recognition results to third-party services for speech recognition and content understanding. Please review recognized details before saving.",
-                                                                                "• <strong>Device and operational information</strong>: Device, network, notification-permission, and operational-status data needed for voice input, reminders, authentication, synchronization, and troubleshooting."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "2. How We Use Information",
-                                                                "paragraphs": [
-                                                                                "To create, display, edit, manage, and delete records and reminders; convert voice input into text or structured reminders; trigger notifications where supported and permitted; provide authentication, cloud storage, or synchronization; maintain and improve the service; and respond to user inquiries and reasonable data requests.",
-                                                                                "Using a feature does not, by itself, mean you have agreed to data processing unrelated to that feature."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "3. Data Storage & Third-Party Services",
-                                                                "paragraphs": [
-                                                                                "AIR²Aim may use local device caching and cloud services depending on the features used and service configuration. You should not assume all information is stored only locally or automatically synchronized to the cloud.",
-                                                                                "AIR²Aim may use third-party cloud providers, speech recognition services, and AI processing services. Information transmitted is limited to what is needed for the relevant functionality and is subject to those providers’ own terms and privacy policies."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "4. Permissions, Sharing & Data Security",
-                                                                "paragraphs": [
-                                                                                "• <strong>Permissions</strong>: Microphone, notification/reminder, and network access permissions can be managed in your device settings.",
-                                                                                "• <strong>Information sharing</strong>: AIR²Aim does not make personal information public simply because you use the app. Processing or disclosure occurs only as needed to deliver the service, comply with law, or protect users and service security.",
-                                                                                "• <strong>Security and retention</strong>: We take reasonable protective measures based on actual service configuration, though no system is completely secure. Retention periods depend on service needs, account status, and applicable law."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "5. Your Choices and Rights",
-                                                                "paragraphs": [
-                                                                                "You can manage records and reminders in the app and adjust permissions in device settings. To request access, correction, or deletion of your information, contact us below; requests are handled according to identity-verification requirements and applicable law.",
-                                                                                "Deleting information from your device may not delete cloud copies, and signing out does not automatically delete all cloud data."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "6. Children’s Privacy, Policy Updates & Contact Us",
-                                                                "paragraphs": [
-                                                                                "AIR²Aim is not specifically designed for children; where applicable law requires parental consent or safeguards, we comply with relevant requirements.",
-                                                                                "We may update this policy with a revised effective date on the relevant page. For privacy questions, contact support@air2aim.com. © 2026 AIR²Aim."
-                                                                ]
-                                                }
-                                ]
+                    "htmlLang": "en",
+                    "ttsLang": "en-US",
+                    "label": "EN",
+                    "docTitle": "Privacy Policy — AIR²Aim",
+                    "heading": "AIR²Aim Privacy Policy",
+                    "lead": "Effective date: September 22, 2026 · How AIR²Aim collects, uses, stores, and protects your information, and how you manage your account and data.",
+                    "supportPrefix": "Support: ",
+                    "footerBadge": "Privacy Policy · 2026",
+                    "items": [
+                        {
+                            "summary": "1. Information We Process",
+                            "paragraphs": [
+                                "• <strong>Account information</strong>: When you register, sign in, or use account features, we may process your email address, account identifier, and authentication details.",
+                                "• <strong>Record and reminder information</strong>: Text, reminder details, dates and times, repeat rules, completion status, and other content you provide or edit.",
+                                "• <strong>Voice input information</strong>: Audio you actively submit may be sent with recognition results to third-party services for transcription and semantic structuring. Please review recognized details before saving.",
+                                "• <strong>Device and operational information</strong>: Device model/OS version, network status, notification or microphone permission states, app version, and operational logs needed for features, sync, and troubleshooting."
+                            ]
+                        },
+                        {
+                            "summary": "2. How We Use Information",
+                            "paragraphs": [
+                                "To create, display, edit, archive, and delete records and reminders; convert voice input into text or structured reminders; and trigger local or push notifications where supported and permitted.",
+                                "To provide account authentication, cloud storage or cross-device sync, quota and subscription checks, service stability, troubleshooting, and support responses.",
+                                "We process data only when you enable or use the relevant feature, and do not infer consent for unrelated data processing."
+                            ]
+                        },
+                        {
+                            "summary": "3. Storage & Third Parties",
+                            "paragraphs": [
+                                "AIR²Aim may combine local device storage/caching and cloud services depending on the features used and service configuration. Do not assume all information is stored only locally or automatically synced to the cloud.",
+                                "To deliver core capabilities, we may use third-party cloud providers (authentication and database/storage), speech recognition services, and AI semantic processing services. Shared data is limited to what is necessary and governed by those providers’ terms and privacy policies.",
+                                "When data is transferred across regions, we apply reasonable safeguards based on our service architecture and applicable law."
+                            ]
+                        },
+                        {
+                            "summary": "4. Permissions, Sharing & Security",
+                            "paragraphs": [
+                                "• <strong>System permissions</strong>: Microphone, notification/reminder, and network access permissions can be managed anytime in your device settings; disabling permissions may limit related features.",
+                                "• <strong>Sharing & no-sale commitment</strong>: We do not sell your personal information or make it public simply because you use the app. Disclosure occurs only as needed to provide the service, comply with legal obligations, or protect user and service security.",
+                                "• <strong>Security and retention</strong>: We apply reasonable technical and organizational safeguards based on service configuration, though no system is completely immune to risk. Retention depends on service needs, account status, security/audit requirements, and applicable law."
+                            ]
+                        },
+                        {
+                            "summary": "5. Your Choices & Rights",
+                            "paragraphs": [
+                                "You can view, edit, or delete records and reminders inside the app, adjust permissions in device settings, or sign out to end your current session (signing out or deleting local items does not automatically erase cloud copies).",
+                                "Where permitted by applicable law, you may request access to, correction of, or export of your personal information, or object to certain processing. Contact <strong>support@air2aim.com</strong> for assistance; identity verification may be required to protect account security."
+                            ]
+                        },
+                        {
+                            "summary": "6. Account Deletion",
+                            "paragraphs": [
+                                "• <strong>Current process (manual assistance)</strong>: Automated in-app self-service account deletion is still being finalized. To delete your account and associated data now, email <strong>support@air2aim.com</strong> from your registered email (or with verifiable account details) with the subject “Account Deletion,” and we will verify and process it promptly.",
+                                "• <strong>Coming soon (self-service deletion)</strong>: Online self-service account deletion is scheduled for release soon, allowing you to initiate and confirm deletion directly within the app or account settings.",
+                                "• <strong>Effect of deletion</strong>: Once completed, your login credentials and associated cloud data are deleted or disassociated under our deletion rules, except records required by law, necessary security/transaction audit logs, and backups purged on standard provider retention cycles."
+                            ]
+                        },
+                        {
+                            "summary": "7. Children’s Privacy",
+                            "paragraphs": [
+                                "AIR²Aim is not designed specifically for children, and we do not knowingly collect personal information directly from children.",
+                                "If you believe we have collected information from a child without legally required parental consent, please contact <strong>support@air2aim.com</strong> immediately so we can verify and delete it promptly."
+                            ]
+                        },
+                        {
+                            "summary": "8. Policy Updates & Contact",
+                            "paragraphs": [
+                                "We may update this Privacy Policy as features, third-party services, or applicable laws evolve, revising the “Effective date” at the top of this page. For material changes affecting your rights, we will provide reasonable notice in the app or on this page.",
+                                "For privacy questions, data requests, or account deletion, contact <strong>support@air2aim.com</strong> (© 2026 AIR²Aim)."
+                            ]
+                        }
+                    ]
                 },
                 "ru": {
-                                "htmlLang": "ru",
-                                "ttsLang": "ru-RU",
-                                "label": "RU",
-                                "docTitle": "Политика конфиденциальности — AIR²Aim",
-                                "heading": "Политика конфиденциальности AIR²Aim",
-                                "lead": "Дата вступления в силу: 22 сентября 2026 г. · Как AIR²Aim обрабатывает, использует и защищает вашу информацию.",
-                                "supportPrefix": "Поддержка: ",
-                                "footerBadge": "Privacy Policy · 2026",
-                                "items": [
-                                                {
-                                                                "summary": "1. Информация, которую мы можем обрабатывать",
-                                                                "paragraphs": [
-                                                                                "• <strong>Информация об учетной записи</strong>: адрес электронной почты, идентификатор учетной записи и данные для аутентификации.",
-                                                                                "• <strong>Информация о записях и напоминаниях</strong>: текст, сведения о напоминании, даты, время, правила повторения, статус выполнения и другой предоставленный контент.",
-                                                                                "• <strong>Информация голосового ввода</strong>: аудио, которое вы отправляете самостоятельно, и результаты распознавания могут передаваться сторонним сервисам для распознавания речи и понимания контента. Проверяйте данные перед сохранением.",
-                                                                                "• <strong>Информация об устройстве и работе приложения</strong>: сведения об устройстве, сети, разрешениях уведомлений и рабочем статусе для работы функций и устранения неполадок."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "2. Как мы используем информацию",
-                                                                "paragraphs": [
-                                                                                "Для создания, отображения, редактирования и удаления записей и напоминаний; преобразования голоса в текст и структурированные напоминания; отправки уведомлений; аутентификации, облачного хранения или синхронизации; обслуживания приложения и обработки запросов пользователей.",
-                                                                                "Использование функции не означает согласия на обработку данных, не связанную с этой функцией."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "3. Хранение данных и сторонние сервисы",
-                                                                "paragraphs": [
-                                                                                "AIR²Aim может использовать локальное кэширование на устройстве и облачные сервисы в зависимости от функций и конфигурации. Не следует предполагать, что все данные хранятся только локально или всегда автоматически синхронизируются с облаком.",
-                                                                                "Могут использоваться облачные провайдеры, сервисы распознавания речи и обработки ИИ. Передаваемые данные ограничиваются необходимым объемом и регулируются политиками этих поставщиков."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "4. Разрешения, передача и безопасность данных",
-                                                                "paragraphs": [
-                                                                                "• <strong>Разрешения</strong>: доступ к микрофону, уведомлениям/напоминаниям и сети настраивается в параметрах устройства.",
-                                                                                "• <strong>Передача информации</strong>: AIR²Aim не делает данные общедоступными; обработка или раскрытие возможны только для оказания сервиса, по требованию закона или для защиты безопасности.",
-                                                                                "• <strong>Безопасность и хранение</strong>: мы принимаем разумные меры защиты, однако ни одна система не является абсолютно защищенной. Сроки хранения зависят от требований сервиса, статуса аккаунта и закона."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "5. Ваши выборы и права",
-                                                                "paragraphs": [
-                                                                                "Вы можете управлять записями и напоминаниями в приложении и разрешениями в настройках устройства. Для запросов на доступ, исправление или удаление данных свяжитесь с нами по адресу ниже.",
-                                                                                "Удаление данных с устройства может не удалить облачные копии, а выход из учетной записи не означает автоматического удаления всех облачных данных."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "6. Конфиденциальность детей, изменения и контакты",
-                                                                "paragraphs": [
-                                                                                "AIR²Aim не предназначен специально для детей; при необходимости применяются требования законодательства о защите данных детей.",
-                                                                                "Мы можем обновлять настоящую Политику с указанием новой даты вступления в силу. Контакт: support@air2aim.com. © 2026 AIR²Aim."
-                                                                ]
-                                                }
-                                ]
+                    "htmlLang": "ru",
+                    "ttsLang": "ru-RU",
+                    "label": "RU",
+                    "docTitle": "Политика конфиденциальности — AIR²Aim",
+                    "heading": "Политика конфиденциальности AIR²Aim",
+                    "lead": "Дата вступления в силу: 22 сентября 2026 г. · Как AIR²Aim собирает, использует, хранит и защищает ваши данные, а также как управлять аккаунтом.",
+                    "supportPrefix": "Поддержка: ",
+                    "footerBadge": "Privacy Policy · 2026",
+                    "items": [
+                        {
+                            "summary": "1. Обрабатываемые данные",
+                            "paragraphs": [
+                                "• <strong>Данные аккаунта</strong>: при регистрации, входе или использовании функций аккаунта обрабатываются адрес электронной почты, идентификатор аккаунта и данные аутентификации.",
+                                "• <strong>Записи и напоминания</strong>: текст, параметры напоминаний, даты, время, правила повторения, статус выполнения и другой добавленный вами контент.",
+                                "• <strong>Голосовой ввод</strong>: отправляемое вами аудио и результаты распознавания могут передаваться сторонним сервисам для расшифровки и структурирования. Проверяйте данные перед сохранением.",
+                                "• <strong>Технические данные устройства</strong>: модель устройства, версия ОС, состояние сети, статусы разрешений уведомлений и микрофона, версия приложения и журналы работы для синхронизации и диагностики."
+                            ]
+                        },
+                        {
+                            "summary": "2. Использование данных",
+                            "paragraphs": [
+                                "Для создания, отображения, редактирования, архивирования и удаления записей и напоминаний; преобразования речи в текст и структурированные напоминания; отправки уведомлений при наличии разрешений.",
+                                "Для аутентификации, облачного хранения и синхронизации между устройствами, проверки лимитов и подписки, поддержания стабильности и ответов на обращения в поддержку.",
+                                "Данные обрабатываются только при использовании соответствующей функции; мы не подразумеваем согласие на несвязанную обработку."
+                            ]
+                        },
+                        {
+                            "summary": "3. Хранение и третьи лица",
+                            "paragraphs": [
+                                "AIR²Aim может использовать локальное кэширование на устройстве и облачные сервисы в зависимости от функций и конфигурации. Не следует считать, что все данные хранятся только локально или всегда синхронизируются с облаком.",
+                                "Для работы основных функций привлекаются сторонние облачные провайдеры (аутентификация и хранение), сервисы распознавания речи и ИИ-обработки. Передаваемые данные ограничены необходимым минимумом и регулируются политиками этих поставщиков.",
+                                "При трансграничной передаче данных применяются разумные меры защиты в соответствии с архитектурой сервиса и применимым правом."
+                            ]
+                        },
+                        {
+                            "summary": "4. Права доступа и защита",
+                            "paragraphs": [
+                                "• <strong>Системные разрешения</strong>: доступ к микрофону, уведомлениям и сети настраивается в параметрах устройства; отключение разрешений может ограничить работу функций.",
+                                "• <strong>Передача данных и отказ от продажи</strong>: мы не продаем ваши персональные данные и не делаем их общедоступными. Раскрытие возможно только для оказания сервиса, выполнения требований закона или защиты безопасности.",
+                                "• <strong>Безопасность и сроки хранения</strong>: мы применяем разумные технические и организационные меры защиты, но ни одна система не гарантирует абсолютной безопасности. Сроки хранения зависят от задач сервиса, статуса аккаунта и требований закона."
+                            ]
+                        },
+                        {
+                            "summary": "5. Ваши права и выбор",
+                            "paragraphs": [
+                                "Вы можете просматривать, изменять и удалять записи в приложении, управлять разрешениями на устройстве или выйти из аккаунта (выход или удаление с устройства не удаляет автоматически облачные копии).",
+                                "В пределах, предусмотренных законом, вы вправе запросить доступ, исправление или экспорт ваших данных. Для обращения напишите на <strong>support@air2aim.com</strong>; для защиты аккаунта может потребоваться подтверждение личности."
+                            ]
+                        },
+                        {
+                            "summary": "6. Удаление аккаунта",
+                            "paragraphs": [
+                                "• <strong>Текущий порядок (при помощи поддержки)</strong>: автоматическое удаление аккаунта в приложении находится в разработке. Чтобы удалить аккаунт и связанные данные сейчас, напишите с зарегистрированного email (или укажите проверяемые данные аккаунта) на <strong>support@air2aim.com</strong> с темой «Удаление аккаунта» — мы оперативно обработаем запрос вручную.",
+                                "• <strong>Скоро (самостоятельное удаление)</strong>: функция автоматического онлайн-удаления аккаунта скоро станет доступна прямо в приложении и настройках профиля.",
+                                "• <strong>Последствия удаления</strong>: после завершения процедуры учетные данные и связанные облачные записи удаляются или обезличиваются, за исключением сведений, хранение которых требуется законом, журналов безопасности и резервных копий, очищаемых по регламенту провайдеров."
+                            ]
+                        },
+                        {
+                            "summary": "7. Конфиденциальность детей",
+                            "paragraphs": [
+                                "AIR²Aim не предназначен специально для детей, и мы сознательно не собираем персональные данные детей.",
+                                "Если вы считаете, что данные ребенка были собраны без требуемого по закону согласия родителей или опекунов, немедленно напишите на <strong>support@air2aim.com</strong> для проверки и удаления."
+                            ]
+                        },
+                        {
+                            "summary": "8. Обновления и контакты",
+                            "paragraphs": [
+                                "Мы можем периодически обновлять настоящую Политику с указанием новой даты вступления в силу. О существенных изменениях мы уведомим в приложении или на этой странице.",
+                                "По вопросам конфиденциальности, данных или удаления аккаунта обращайтесь: <strong>support@air2aim.com</strong> (© 2026 AIR²Aim)."
+                            ]
+                        }
+                    ]
                 },
                 "fr": {
-                                "htmlLang": "fr",
-                                "ttsLang": "fr-FR",
-                                "label": "FR",
-                                "docTitle": "Politique de confidentialité — AIR²Aim",
-                                "heading": "Politique de confidentialité AIR²Aim",
-                                "lead": "Date d’entrée en vigueur : 22 septembre 2026 · Comment vos informations sont traitées, utilisées et gérées.",
-                                "supportPrefix": "Support : ",
-                                "footerBadge": "Privacy Policy · 2026",
-                                "items": [
-                                                {
-                                                                "summary": "1. Informations susceptibles d’être traitées",
-                                                                "paragraphs": [
-                                                                                "• <strong>Informations de compte</strong> : adresse e-mail, identifiant de compte et informations nécessaires à l’authentification.",
-                                                                                "• <strong>Enregistrements et rappels</strong> : texte, détails de rappel, dates, heures, règles de répétition, état d’achèvement et autres contenus saisis.",
-                                                                                "• <strong>Saisie vocale</strong> : l’audio que vous soumettez volontairement et les résultats de reconnaissance peuvent être transmis à des services tiers pour la transcription et la compréhension. Vérifiez les détails avant d’enregistrer.",
-                                                                                "• <strong>Informations sur l’appareil</strong> : données d’appareil, de réseau, d’autorisation de notification et d’état opérationnel nécessaires au fonctionnement et au dépannage."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "2. Utilisation des informations",
-                                                                "paragraphs": [
-                                                                                "Pour créer, afficher, modifier et supprimer des enregistrements et rappels ; convertir la voix en texte ou rappels structurés ; déclencher des notifications ; fournir l’authentification, le stockage cloud ou la synchronisation ; maintenir le service et répondre aux demandes des utilisateurs.",
-                                                                                "L’utilisation d’une fonctionnalité n’implique pas votre consentement à un traitement sans rapport avec celle-ci."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "3. Stockage des données et services tiers",
-                                                                "paragraphs": [
-                                                                                "AIR²Aim peut utiliser le cache local de l’appareil et des services cloud selon les fonctionnalités utilisées. Toutes les données ne sont pas nécessairement stockées uniquement en local ni synchronisées automatiquement vers le cloud.",
-                                                                                "AIR²Aim peut recourir à des fournisseurs cloud, des services de reconnaissance vocale et des services d’IA, limités aux données nécessaires et soumis à leurs propres politiques de confidentialité."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "4. Autorisations, partage et sécurité",
-                                                                "paragraphs": [
-                                                                                "• <strong>Autorisations</strong> : microphone, notifications/rappels et accès réseau gérables dans les réglages de l’appareil.",
-                                                                                "• <strong>Partage</strong> : AIR²Aim ne rend pas vos données publiques ; tout traitement ou divulgation est limité à la fourniture du service, aux obligations légales ou à la sécurité.",
-                                                                                "• <strong>Sécurité et conservation</strong> : nous appliquons des mesures raisonnables selon la configuration du service, sans pouvoir garantir une sécurité absolue."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "5. Vos choix et vos droits",
-                                                                "paragraphs": [
-                                                                                "Vous pouvez gérer vos enregistrements et rappels dans l’application et ajuster les autorisations sur votre appareil. Pour toute demande d’accès, de rectification ou de suppression, contactez-nous ci-dessous.",
-                                                                                "La suppression sur votre appareil ne supprime pas automatiquement les copies cloud, et la déconnexion n’entraîne pas la suppression automatique des données cloud."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "6. Confidentialité des enfants, mises à jour et contact",
-                                                                "paragraphs": [
-                                                                                "AIR²Aim n’est pas spécifiquement conçu pour les enfants et respecte les exigences légales applicables le cas échéant.",
-                                                                                "Cette politique peut être mise à jour avec une nouvelle date d’entrée en vigueur. Contact : support@air2aim.com. © 2026 AIR²Aim."
-                                                                ]
-                                                }
-                                ]
+                    "htmlLang": "fr",
+                    "ttsLang": "fr-FR",
+                    "label": "FR",
+                    "docTitle": "Politique de confidentialité — AIR²Aim",
+                    "heading": "Politique de confidentialité AIR²Aim",
+                    "lead": "Date d’entrée en vigueur : 22 septembre 2026 · Comment AIR²Aim collecte, utilise, stocke et protège vos informations, et comment gérer votre compte.",
+                    "supportPrefix": "Support : ",
+                    "footerBadge": "Privacy Policy · 2026",
+                    "items": [
+                        {
+                            "summary": "1. Données traitées",
+                            "paragraphs": [
+                                "• <strong>Informations de compte</strong> : adresse e-mail, identifiant de compte et informations d’authentification lors de l’inscription ou de la connexion.",
+                                "• <strong>Enregistrements et rappels</strong> : texte, détails des rappels, dates, heures, règles de récurrence, état d’achèvement et autres contenus saisis.",
+                                "• <strong>Saisie vocale</strong> : l’audio que vous soumettez volontairement et les résultats de transcription peuvent être transmis à des prestataires tiers pour la reconnaissance vocale et l’analyse sémantique. Vérifiez les détails avant d’enregistrer.",
+                                "• <strong>Données techniques et d’appareil</strong> : modèle d’appareil, version du système, état du réseau, statut des autorisations (micro, notifications), version de l’application et journaux techniques nécessaires au fonctionnement et au dépannage."
+                            ]
+                        },
+                        {
+                            "summary": "2. Utilisation des données",
+                            "paragraphs": [
+                                "Pour créer, afficher, modifier, archiver et supprimer vos notes et rappels ; convertir la voix en texte ou rappels structurés ; déclencher des notifications lorsque les autorisations sont activées.",
+                                "Pour assurer l’authentification, le stockage cloud ou la synchronisation multi-appareils, la gestion des quotas et abonnements, la stabilité du service et le support utilisateur.",
+                                "Les données ne sont traitées que lorsque vous utilisez la fonctionnalité concernée, sans consentement présumé pour d’autres finalités."
+                            ]
+                        },
+                        {
+                            "summary": "3. Stockage et tiers",
+                            "paragraphs": [
+                                "AIR²Aim peut combiner stockage/cache local sur l’appareil et services cloud selon les fonctions utilisées. Ne présumez pas que toutes les données restent uniquement en local ni qu’elles sont automatiquement synchronisées vers le cloud.",
+                                "Nous pouvons recourir à des prestataires cloud (authentification et base de données/stockage), de reconnaissance vocale et de traitement par IA. Les données transmises sont limitées au strict nécessaire et régies par leurs propres politiques.",
+                                "En cas de transfert international de données, des garanties raisonnables sont appliquées conformément à notre architecture et aux lois applicables."
+                            ]
+                        },
+                        {
+                            "summary": "4. Autorisations et sécurité",
+                            "paragraphs": [
+                                "• <strong>Autorisations système</strong> : microphone, notifications/rappels et accès réseau gérables à tout moment dans les réglages de l’appareil ; leur désactivation peut limiter certaines fonctions.",
+                                "• <strong>Partage et non-vente</strong> : nous ne vendons jamais vos données personnelles et ne les rendons pas publiques. Toute divulgation est limitée à la fourniture du service, aux obligations légales ou à la sécurité.",
+                                "• <strong>Sécurité et conservation</strong> : des mesures techniques et organisationnelles raisonnables sont mises en œuvre, sans pouvoir garantir un risque nul. La durée de conservation dépend des besoins du service, de l’état du compte et de la loi."
+                            ]
+                        },
+                        {
+                            "summary": "5. Vos choix et droits",
+                            "paragraphs": [
+                                "Vous pouvez consulter, modifier ou supprimer vos notes et rappels dans l’application, gérer les autorisations sur l’appareil ou vous déconnecter (la déconnexion ou la suppression locale n’efface pas automatiquement les copies cloud).",
+                                "Dans les limites prévues par la loi applicable, vous pouvez demander l’accès, la rectification ou l’exportation de vos données via <strong>support@air2aim.com</strong> ; une vérification d’identité peut être demandée."
+                            ]
+                        },
+                        {
+                            "summary": "6. Suppression du compte",
+                            "paragraphs": [
+                                "• <strong>Procédure actuelle (assistance manuelle)</strong> : la suppression automatique en libre-service dans l’application est en cours de finalisation. Pour supprimer votre compte et les données associées dès maintenant, écrivez à <strong>support@air2aim.com</strong> depuis votre adresse inscrite (ou avec des éléments vérifiables) avec l’objet « Suppression de compte » ; nous traiterons votre demande rapidement.",
+                                "• <strong>Bientôt disponible (suppression automatique)</strong> : la suppression en ligne en libre-service sera prochainement déployée directement dans l’application et les paramètres du compte.",
+                                "• <strong>Effets de la suppression</strong> : une fois finalisée, vos identifiants et données cloud associées sont supprimés ou dissociés, à l’exception des éléments exigés par la loi, des journaux de sécurité/transaction nécessaires et des sauvegardes purgées selon les cycles standards des hébergeurs."
+                            ]
+                        },
+                        {
+                            "summary": "7. Protection des mineurs",
+                            "paragraphs": [
+                                "AIR²Aim n’est pas destiné spécifiquement aux enfants et nous ne collectons pas sciemment de données personnelles auprès d’enfants.",
+                                "Si vous pensez que des données concernant un enfant ont été collectées sans l’autorisation parentale requise, contactez immédiatement <strong>support@air2aim.com</strong> pour vérification et suppression."
+                            ]
+                        },
+                        {
+                            "summary": "8. Mises à jour et contact",
+                            "paragraphs": [
+                                "Cette politique peut être mise à jour avec une nouvelle date d’entrée en vigueur en haut de page. En cas de modification importante affectant vos droits, une notification raisonnable sera affichée dans l’application ou sur cette page.",
+                                "Pour toute question ou demande relative à vos données ou à la suppression de compte : <strong>support@air2aim.com</strong> (© 2026 AIR²Aim)."
+                            ]
+                        }
+                    ]
                 },
                 "es": {
-                                "htmlLang": "es",
-                                "ttsLang": "es-ES",
-                                "label": "ES",
-                                "docTitle": "Política de privacidad — AIR²Aim",
-                                "heading": "Política de privacidad de AIR²Aim",
-                                "lead": "Fecha de entrada en vigor: 22 de septiembre de 2026 · Cómo se tratan, usan y gestionan tus datos en AIR²Aim.",
-                                "supportPrefix": "Soporte: ",
-                                "footerBadge": "Privacy Policy · 2026",
-                                "items": [
-                                                {
-                                                                "summary": "1. Información que podemos tratar",
-                                                                "paragraphs": [
-                                                                                "• <strong>Información de la cuenta</strong>: correo electrónico, identificador de cuenta y datos necesarios para la autenticación.",
-                                                                                "• <strong>Registros y recordatorios</strong>: texto, detalles del recordatorio, fechas, horas, reglas de repetición, estado de finalización y otros contenidos proporcionados.",
-                                                                                "• <strong>Entrada de voz</strong>: el audio que envías activamente y los resultados de reconocimiento pueden transmitirse a servicios de terceros para reconocimiento de voz y comprensión. Revisa los datos antes de guardar.",
-                                                                                "• <strong>Información del dispositivo</strong>: datos del dispositivo, red, permisos de notificación y estado operativo necesarios para el servicio y la resolución de problemas."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "2. Cómo usamos la información",
-                                                                "paragraphs": [
-                                                                                "Para crear, mostrar, editar y eliminar registros y recordatorios; convertir la voz en texto o recordatorios estructurados; enviar notificaciones; ofrecer autenticación, almacenamiento en la nube o sincronización; mantener el servicio y atender consultas.",
-                                                                                "El uso de una función no implica tu consentimiento para un tratamiento no relacionado con ella."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "3. Almacenamiento de datos y servicios de terceros",
-                                                                "paragraphs": [
-                                                                                "AIR²Aim puede usar caché local en el dispositivo y servicios en la nube según las funciones utilizadas. No debe asumirse que toda la información se guarda solo en el dispositivo ni que se sincroniza automáticamente con la nube.",
-                                                                                "AIR²Aim puede emplear proveedores de nube, reconocimiento de voz y procesamiento con IA, limitando los datos transmitidos a lo estrictamente necesario."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "4. Permisos, compartición y seguridad",
-                                                                "paragraphs": [
-                                                                                "• <strong>Permisos</strong>: micrófono, notificaciones/recordatorios y acceso a red gestionables en los ajustes del dispositivo.",
-                                                                                "• <strong>Compartición</strong>: AIR²Aim no hace pública tu información personal; el tratamiento o divulgación se limita a prestar el servicio, cumplir la ley o proteger la seguridad.",
-                                                                                "• <strong>Seguridad y conservación</strong>: aplicamos medidas razonables según la configuración del servicio, aunque ningún sistema es completamente invulnerable."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "5. Tus opciones y derechos",
-                                                                "paragraphs": [
-                                                                                "Puedes gestionar tus registros y recordatorios en la app y ajustar permisos en tu dispositivo. Para solicitar acceso, corrección o eliminación de tus datos, contáctanos abajo.",
-                                                                                "Eliminar información del dispositivo no elimina automáticamente las copias en la nube, ni cerrar sesión implica la eliminación automática de los datos en la nube."
-                                                                ]
-                                                },
-                                                {
-                                                                "summary": "6. Privacidad de menores, cambios y contacto",
-                                                                "paragraphs": [
-                                                                                "AIR²Aim no está diseñado específicamente para menores y cumple con las normas aplicables sobre consentimiento parental cuando corresponda.",
-                                                                                "Podemos actualizar esta política publicando una nueva fecha de entrada en vigor. Contacto: support@air2aim.com. © 2026 AIR²Aim."
-                                                                ]
-                                                }
-                                ]
+                    "htmlLang": "es",
+                    "ttsLang": "es-ES",
+                    "label": "ES",
+                    "docTitle": "Política de privacidad — AIR²Aim",
+                    "heading": "Política de privacidad de AIR²Aim",
+                    "lead": "Fecha de entrada en vigor: 22 de septiembre de 2026 · Cómo AIR²Aim recopila, usa, almacena y protege tu información, y cómo gestionar tu cuenta.",
+                    "supportPrefix": "Soporte: ",
+                    "footerBadge": "Privacy Policy · 2026",
+                    "items": [
+                        {
+                            "summary": "1. Datos que tratamos",
+                            "paragraphs": [
+                                "• <strong>Datos de la cuenta</strong>: correo electrónico, identificador de cuenta y credenciales de autenticación al registrarte, iniciar sesión o usar funciones de cuenta.",
+                                "• <strong>Registros y recordatorios</strong>: texto, detalles del recordatorio, fechas, horas, reglas de repetición, estado de finalización y otros contenidos que aportes o edites.",
+                                "• <strong>Entrada de voz</strong>: el audio que envías activamente y los resultados de reconocimiento pueden transmitirse a terceros para transcripción y estructuración semántica. Revisa los datos antes de guardar.",
+                                "• <strong>Información técnica y del dispositivo</strong>: modelo de dispositivo, versión del sistema, estado de red, permisos de micrófono o notificaciones, versión de la app y registros operativos para sincronización y soporte."
+                            ]
+                        },
+                        {
+                            "summary": "2. Uso de los datos",
+                            "paragraphs": [
+                                "Para crear, mostrar, editar, archivar y eliminar registros y recordatorios; convertir la voz en texto o recordatorios estructurados; y activar notificaciones cuando existan permisos.",
+                                "Para ofrecer autenticación, almacenamiento en la nube o sincronización entre dispositivos, control de cupos y suscripciones, estabilidad del servicio y atención al usuario.",
+                                "Solo tratamos los datos necesarios cuando utilizas la función correspondiente, sin presumir consentimiento para fines no relacionados."
+                            ]
+                        },
+                        {
+                            "summary": "3. Almacenamiento y terceros",
+                            "paragraphs": [
+                                "AIR²Aim puede combinar almacenamiento/caché local en el dispositivo y servicios en la nube según las funciones utilizadas. No debe asumirse que toda la información se guarda solo localmente ni que se sincroniza automáticamente con la nube.",
+                                "Podemos emplear proveedores externos de nube (autenticación y base de datos/almacenamiento), reconocimiento de voz y procesamiento con IA. Los datos compartidos se limitan a lo estrictamente necesario y se rigen por sus propias políticas.",
+                                "Cuando existan transferencias internacionales de datos, aplicamos medidas razonables acordes con nuestra arquitectura y la legislación aplicable."
+                            ]
+                        },
+                        {
+                            "summary": "4. Permisos y seguridad",
+                            "paragraphs": [
+                                "• <strong>Permisos del sistema</strong>: micrófono, notificaciones/recordatorios y acceso a red gestionables en cualquier momento en los ajustes del dispositivo; desactivarlos puede limitar funciones.",
+                                "• <strong>Compartición y compromiso de no venta</strong>: no vendemos tus datos personales ni los hacemos públicos. Solo se divulgan cuando es necesario para prestar el servicio, cumplir obligaciones legales o proteger la seguridad.",
+                                "• <strong>Seguridad y conservación</strong>: aplicamos medidas técnicas y organizativas razonables, aunque ningún sistema es completamente invulnerable. Los plazos de conservación dependen del servicio, el estado de la cuenta y la ley."
+                            ]
+                        },
+                        {
+                            "summary": "5. Tus opciones y derechos",
+                            "paragraphs": [
+                                "Puedes consultar, editar o eliminar registros y recordatorios en la app, ajustar permisos en tu dispositivo o cerrar sesión (cerrar sesión o borrar datos locales no elimina automáticamente las copias en la nube).",
+                                "En la medida permitida por la ley aplicable, puedes solicitar acceso, rectificación o exportación de tus datos escribiendo a <strong>support@air2aim.com</strong>; podremos requerir verificación de identidad para proteger tu cuenta."
+                            ]
+                        },
+                        {
+                            "summary": "6. Eliminación de cuenta",
+                            "paragraphs": [
+                                "• <strong>Proceso actual (asistencia manual)</strong>: la eliminación automática de cuenta desde la app aún está en desarrollo. Si deseas eliminar tu cuenta y los datos asociados ahora, escribe a <strong>support@air2aim.com</strong> desde tu correo registrado (o con datos verificables de la cuenta) con el asunto «Eliminación de cuenta» y lo gestionaremos manualmente a la brevedad.",
+                                "• <strong>Próximamente (autoservicio en línea)</strong>: la función de eliminación automática en línea se lanzará pronto, permitiéndote iniciar y confirmar la baja directamente desde la app o los ajustes de cuenta.",
+                                "• <strong>Efectos de la eliminación</strong>: una vez completada, tus credenciales y datos asociados en la nube se eliminan o desvinculan, salvo registros exigidos por ley, registros necesarios de seguridad/transacciones y copias de seguridad purgadas según los ciclos habituales de los proveedores."
+                            ]
+                        },
+                        {
+                            "summary": "7. Privacidad de menores",
+                            "paragraphs": [
+                                "AIR²Aim no está diseñado específicamente para menores y no recopilamos intencionadamente datos personales de menores.",
+                                "Si crees que hemos recopilado información de un menor sin el consentimiento parental exigido por la ley, contáctanos de inmediato en <strong>support@air2aim.com</strong> para verificarlo y eliminarla."
+                            ]
+                        },
+                        {
+                            "summary": "8. Cambios y contacto",
+                            "paragraphs": [
+                                "Podemos actualizar esta Política de privacidad revisando la «Fecha de entrada en vigor» en la parte superior. Si realizamos cambios relevantes que afecten tus derechos, lo notificaremos razonablemente en la app o en esta página.",
+                                "Para consultas sobre privacidad, solicitudes de datos o eliminación de cuenta, escribe a <strong>support@air2aim.com</strong> (© 2026 AIR²Aim)."
+                            ]
+                        }
+                    ]
                 }
-};
+            };
 
             const accordionSection = document.getElementById('accordionSection');
             const pageTitle = document.getElementById('pageTitle');
